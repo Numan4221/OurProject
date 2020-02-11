@@ -19,10 +19,29 @@ public class OurProjectController {
 	@Autowired
 	private UserRepository userRepo;
 	
+	@Autowired 
+	private ProjectRepository projectRepo;
+	
 	@PostConstruct
 	public void init() {
-		User us = new User("sergjio","1234");
+		Project p1 = new Project("takeMe","Jueguito rico", " DanielJ",null);
+		Project p2 = new Project("BiruBiru","A Beber", " ChonoOut",null);
+		
+		projectRepo.save(p1);
+		projectRepo.save(p2);
+		
+		User us = new User("sergjio","1234","soyfeo@sergio.com","sergio","plaza");
+		User us1 = new User("dani","1234","soyfeo@dani.com","daniel","jimenez");
+		
+		us.getFinancedProjects().add(p1);
+		us1.getFinancedProjects().add(p1);
+		us1.getFinancedProjects().add(p2);
+		
 		userRepo.save(us);
+		userRepo.save(us1);
+		
+		
+		
 	}
 	
 }
