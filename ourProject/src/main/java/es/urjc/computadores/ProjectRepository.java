@@ -11,7 +11,7 @@ public interface ProjectRepository extends JpaRepository<Project,Long>{
 	 * 
 	 * @param projectName
 	 * @param developer
-	 * @return Una lista de Proyectos con ese nombr ey de ese desarrollador
+	 * @return Una lista de Proyectos con ese nombre y de ese desarrollador
 	 */
 	List<Project> findByProjectNameAndDeveloper(String projectName,String developer);
 	

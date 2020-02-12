@@ -10,6 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import es.urjc.computadores.User.paymentMethod;
 
 @Entity
 public class Project {
@@ -20,15 +24,24 @@ public class Project {
 	
 	public String projectName;
 	public String description;
-	// Developer aun no esta
-	public String developer;
+
 	@Embedded
 	public List<Double> goals = new ArrayList<Double>();
 	// Reward
 	public double moneyCollected;
 	
-	@ManyToMany(mappedBy="financedProjects")
+	public paymentMethod getPaidWay;
+	
+	private String accountID;
+	
+	
+	@ManyToMany
 	private List<User> contributors = new ArrayList<User>();
+	@OneToMany(mappedBy="project")
+	private List<Contract> myProjectContracts = new ArrayList<Contract>();
+	
+	@ManyToOne
+	public Developer developer;
 	
 	// comentarios
 	
@@ -46,11 +59,12 @@ public class Project {
 	 * @param developer
 	 * @param goals
 	 */
-	public Project(String projectName, String description, String developer, List<Double> goals) {
+	public Project(String projectName, String description,List<Double> goals, paymentMethod getPaidWay, String accountID) {
 		super();
 		this.projectName = projectName;
 		this.description = description;
-		this.developer = developer;
+		this.getPaidWay = getPaidWay;
+		this.accountID = accountID;
 		//this.goals = goals;
 	}
 	
@@ -67,6 +81,14 @@ public class Project {
 	}
 	public void setContributors(List<User> contributors) {
 		this.contributors = contributors;
+	}
+
+	public String getAccountID() {
+		return accountID;
+	}
+
+	public void setAccountID(String accountID) {
+		this.accountID = accountID;
 	}
 	
 	
