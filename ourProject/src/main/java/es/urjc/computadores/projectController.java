@@ -5,14 +5,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class InitSessionController {
-	
-	@RequestMapping("/ourProject/initSession")
+public class projectController {
+
+	@RequestMapping("/ourProject/project")
 	public String initSession(Model model) {
 		
 		//model.addAttribute(attributeName, attributeValue);
 		
-		return "initSessionView";
+		return "project";
 	}
-
 }
