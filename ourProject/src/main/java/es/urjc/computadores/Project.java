@@ -29,7 +29,6 @@ public class Project {
 	@OneToMany(mappedBy="project")
 	public List<Goal> goals = new ArrayList<Goal>();
 	
-	
 	// Reward
 	public double moneyCollected;
 	
@@ -44,13 +43,13 @@ public class Project {
 	private List<Contract> myProjectContracts = new ArrayList<Contract>();
 	
 	@OneToMany(mappedBy="project")
-	private List<Comment> myComments = new ArrayList<Comment>();
+	public List<Comment> myComments = new ArrayList<Comment>();
 	
 	@ManyToOne
 	public Developer developer;
 	
 	@OneToMany(mappedBy="project")
-	private List<Reward> rewards = new ArrayList<Reward>();
+	public List<Reward> rewards = new ArrayList<Reward>();
 	
 	@Lob
 	public byte[] projectPic;

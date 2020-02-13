@@ -76,13 +76,11 @@ public class OurProjectController {
 		User us = new User("sergjio","1234","soyfeo@sergio.com","sergio","plaza");
 		User us1 = new User("dani","1234","soyfeo@dani.com","daniel","jimenez");
 		
-		
 		Developer dev = new Developer("axwel","3565","soyfeo@axwel.com","alejandro", "garcia");
 		
 		userRepo.save(dev);
 		userRepo.save(us);
 		userRepo.save(us1);
-
 		
 		Project p1 = new Project("takeMe","Jueguito rico",paymentMethod.CREDITCARD,"ES-51561321518",dev);
 		Project p2 = new Project("BiruBiru","A Beber",paymentMethod.PAYPAL,"PAY-54215",dev);
@@ -98,7 +96,7 @@ public class OurProjectController {
 		projectRepo.save(p2);
 		
 		Goal g1 = new Goal(p1,100.0,"video exclusivo");
-		Goal g2 = new Goal(p2,2000.0,"Claves juego");
+		Goal g2 = new Goal(p1,2000.0,"Claves juego");
 		
 		goalRepo.save(g1);
 		goalRepo.save(g2);
@@ -122,7 +120,7 @@ public class OurProjectController {
 		contractRepo.save(c4);
 		
 		Comment com1 = new Comment(us1,p1,"Vaya proyecto guapo",new Date());
-		Comment com2 = new Comment(dev,p2,"Yo doy pasta aqui",new Date());
+		Comment com2 = new Comment(dev,p1,"Yo doy pasta aqui",new Date());
 		
 		commentRepo.save(com1);
 		commentRepo.save(com2);
