@@ -5,17 +5,66 @@
 <title>OurProject</title>
 </head>
 <body>
-	{{#username}}
-	<script >
-		print(username)
-	</script>
-	<p> Hello, {{username}}</p>
+	<ul>
+	{{#arrayProjects}}
+		<li>{{projectName}}</li>
+		<li>{{description}}</li>
+	{{/arrayProjects}}
+	</ul>
+	<!--  
+	{{#usern}}
+	<p> Hello, {{usern}}</p>
 	<a href= "/ourProject/myProfile">Mi perfil</a>
-	{{/username}}
-	{{^username}}
+	{{/usern}}
+	{{^usern}}
 	<a href= "/ourProject/initSession">Iniciar Sesion!</a>
-	{{/username}}
+	{{/usern}}
 	<a href= "/ourProject/project">Un proyecto</a>
 	
+	
+	{{#name_p0}}
+	<p> Nombre del proyecto: {{name_p0}}
+	{{/name_p0}}
+	{{#desc_p0}}
+	<p> Descripcion del proyecto: {{desc_p0}}
+	{{/desc_p0}}
+	{{#devName_p0}}
+	<p> Desarrollador del proyecto: {{devName_p0}}
+	{{/devName_p0}}
+	
+	{{#moneyCollected_p0}}
+	<p> Dinero conseguido: {{moneyCollected_p0}}
+	{{/moneyCollected_p0}}
+	
+	
+	{{#name_p1}}
+	<p> Nombre del proyecto: {{name_p1}}
+	{{/name_p1}}
+	{{#desc_p1}}
+	<p> Descripcion del proyecto: {{desc_p1}}
+	{{/desc_p1}}
+	{{#devName_p1}}
+	<p> Desarrollador del proyecto: {{devName_p1}}
+	{{/devName_p1}}
+	
+	{{#moneyCollected_p1}}
+	<p> Dinero conseguido: {{moneyCollected_p1}}
+	{{/moneyCollected_p1}}
+	
+	
+	{{#name_p2}}
+	<p> Nombre del proyecto: {{name_p2}}
+	{{/name_p2}}
+	{{#desc_p2}}
+	<p> Descripcion del proyecto: {{desc_p2}}
+	{{/desc_p2}}
+	{{#devName_p2}}
+	<p> Desarrollador del proyecto: {{devName_p2}}
+	{{/devName_p2}}
+	
+	{{#moneyCollected_p2}}
+	<p> Dinero conseguido: {{moneyCollected_p2}}
+	{{/moneyCollected_p2}}
+	-->
 </body>
 </html>

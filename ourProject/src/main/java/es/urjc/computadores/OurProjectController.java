@@ -21,12 +21,29 @@ import es.urjc.computadores.User.paymentMethod;
 public class OurProjectController {
 	
 	@GetMapping("/ourProject")
-	public String ourProject(Model model, /*@RequestParam*/ String username) {
-		if (username != null) {
-		model.addAttribute("username", username);
-		System.out.println("username: " + username);
+	public String ourProject(Model model, /*@RequestParam*/ String usern) {
+		if (usern != null) {
+			model.addAttribute("usern", usern);
 		}
-		return "ourProject_template";
+		
+		List<Project> listProject = projectRepo.findAll();
+		Project[] arrayProjects = listProject.toArray(new Project[listProject.size()]);
+		model.addAttribute("arrayProjects", arrayProjects);
+		/*
+		for (int i = 0; i< arrayProjects.length; i++) {
+			String name = "name_p" + i;
+			String desc = "desc_p" + i;
+			String dev = "devName_p" + i;
+			String goal = "goal_p" + i;
+			String money = "moneyCollected_p" + i;
+			model.addAttribute(name, arrayProjects[i].projectName);
+			model.addAttribute(desc, arrayProjects[i].description);
+			model.addAttribute(dev, arrayProjects[i].developer.nickname);
+			//model.addAttribute(goal, arrayProjects[i].goals.get(0));
+			model.addAttribute(money, arrayProjects[i].moneyCollected);
+		}
+		*/
+		return "index - copia";
 	}
 	
 	// me pones aqui una isntancia de este repo
