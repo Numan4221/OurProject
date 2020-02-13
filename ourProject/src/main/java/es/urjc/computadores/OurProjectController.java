@@ -1,7 +1,14 @@
 package es.urjc.computadores;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
+import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,14 +38,22 @@ public class OurProjectController {
 	
 	@Autowired
 	private ContractRepository contractRepo;
+	
+	@Autowired
+	private CommentRepository commentRepo;
+	
+	@Autowired
+	private RewardRepository rewardRepo;
+	
+	@Autowired
+	private GoalRepository goalRepo;
 	/*
 	@Autowired
 	private DeveloperRepository devRepo;
 	*/
 	@PostConstruct
 	public void init() {
-
-
+		
 		
 		
 		User us = new User("sergjio","1234","soyfeo@sergio.com","sergio","plaza");
@@ -50,19 +65,26 @@ public class OurProjectController {
 		userRepo.save(dev);
 		userRepo.save(us);
 		userRepo.save(us1);
+
 		
-		Project p1 = new Project("takeMe","Jueguito rico", null,paymentMethod.CREDITCARD,"ES-51561321518");
-		Project p2 = new Project("BiruBiru","A Beber", null,paymentMethod.PAYPAL,"PAY-54215");
+		Project p1 = new Project("takeMe","Jueguito rico",paymentMethod.CREDITCARD,"ES-51561321518",dev);
+		Project p2 = new Project("BiruBiru","A Beber",paymentMethod.PAYPAL,"PAY-54215",dev);
 		
-		p1.developer = dev;
 		
 		p1.getContributors().add(us);
 		p1.getContributors().add(us1);
 		p2.getContributors().add(us1);
 		p2.getContributors().add(dev);
 		
+		
 		projectRepo.save(p1);
 		projectRepo.save(p2);
+		
+		Goal g1 = new Goal(p1,100.0,"video exclusivo");
+		Goal g2 = new Goal(p2,2000.0,"Claves juego");
+		
+		goalRepo.save(g1);
+		goalRepo.save(g2);
 		
 		
 		/*
@@ -81,6 +103,20 @@ public class OurProjectController {
 		contractRepo.save(c2);
 		contractRepo.save(c3);
 		contractRepo.save(c4);
+		
+		Comment com1 = new Comment(us1,p1,"Vaya proyecto guapo",new Date());
+		Comment com2 = new Comment(dev,p2,"Yo doy pasta aqui",new Date());
+		
+		commentRepo.save(com1);
+		commentRepo.save(com2);
+		
+		Reward r1 = new Reward(10,"Peluche de Axwel",p1);
+		Reward r2 = new Reward(2,"acceso a la beta",p2);
+		Reward r3 = new Reward(5,"Clave Juego",p1);
+		
+		rewardRepo.save(r1);
+		rewardRepo.save(r2);
+		rewardRepo.save(r3);
 		
 		/*
 		

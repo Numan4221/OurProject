@@ -13,7 +13,10 @@ public interface ProjectRepository extends JpaRepository<Project,Long>{
 	 * @param developer
 	 * @return Una lista de Proyectos con ese nombre y de ese desarrollador
 	 */
-	List<Project> findByProjectNameAndDeveloper(String projectName,String developer);
+	List<Project> findByProjectNameAndDeveloperNickname(String projectName,String nickname);
 	
+	List<Project> findByProjectName(String projectName);
+	
+	List<Project> findByDeveloperNickname(String nickname);
 	
 }

@@ -44,6 +44,11 @@ public class User {
 	@OneToMany(mappedBy="contributor")
 	private List<Contract> myContracts = new ArrayList<Contract>();
 	
+	@OneToMany(mappedBy="user")
+	private List<Comment> myComments = new ArrayList<Comment>();
+	
+	
+	
 	
 
 	/***

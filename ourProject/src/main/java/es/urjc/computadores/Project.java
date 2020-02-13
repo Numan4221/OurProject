@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -25,8 +26,10 @@ public class Project {
 	public String projectName;
 	public String description;
 
-	@Embedded
-	public List<Double> goals = new ArrayList<Double>();
+	@OneToMany(mappedBy="project")
+	public List<Goal> goals = new ArrayList<Goal>();
+	
+	
 	// Reward
 	public double moneyCollected;
 	
@@ -40,8 +43,17 @@ public class Project {
 	@OneToMany(mappedBy="project")
 	private List<Contract> myProjectContracts = new ArrayList<Contract>();
 	
+	@OneToMany(mappedBy="project")
+	private List<Comment> myComments = new ArrayList<Comment>();
+	
 	@ManyToOne
 	public Developer developer;
+	
+	@OneToMany(mappedBy="project")
+	private List<Reward> rewards = new ArrayList<Reward>();
+	
+	@Lob
+	public byte[] projectPic;
 	
 	// comentarios
 	
@@ -59,23 +71,26 @@ public class Project {
 	 * @param developer
 	 * @param goals
 	 */
-	public Project(String projectName, String description,List<Double> goals, paymentMethod getPaidWay, String accountID) {
+	public Project(String projectName, String description, paymentMethod getPaidWay, String accountID, Developer dev) {
 		super();
 		this.projectName = projectName;
 		this.description = description;
 		this.getPaidWay = getPaidWay;
 		this.accountID = accountID;
-		//this.goals = goals;
+		this.developer = dev;
 	}
 	
 
-	public List<Double> getGoals() {
+
+
+	public List<Goal> getGoals() {
 		return goals;
 	}
-	public void setGoals(List<Double> goals) {
+
+	public void setGoals(List<Goal> goals) {
 		this.goals = goals;
 	}
-	
+
 	public List<User> getContributors() {
 		return contributors;
 	}
