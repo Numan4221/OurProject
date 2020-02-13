@@ -12,6 +12,10 @@ public class projectController {
 		
 		//model.addAttribute(attributeName, attributeValue);
 		
+
+
+		
+		
 		return "project";
 	}
 }
