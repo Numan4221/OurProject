@@ -1,5 +1,9 @@
 package es.urjc.computadores;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +18,28 @@ import es.urjc.computadores.User.paymentMethod;
 public class OurProjectController {
 	
 	@GetMapping("/ourProject")
-	public String ourProject(Model model, /*@RequestParam*/ String username) {
-		if (username != null) {
-		model.addAttribute("username", username);
-		System.out.println("username: " + username);
+	public String ourProject(Model model, /*@RequestParam*/ String usern) {
+		if (usern != null) {
+		model.addAttribute("usern", usern);
+		System.out.println("username: " + usern);
 		}
+		
+		List<Project> listProject = projectRepo.findAll();
+		Project[] arrayProjects = listProject.toArray(new Project[listProject.size()]);
+		
+		for (int i = 0; i< arrayProjects.length; i++) {
+			String name = "name_p" + i;
+			String desc = "desc_p" + i;
+			String dev = "devName_p" + i;
+			String goal = "goal_p" + i;
+			String money = "moneyCollected_p" + i;
+			model.addAttribute(name, arrayProjects[i].projectName);
+			model.addAttribute(desc, arrayProjects[i].description);
+			model.addAttribute(dev, arrayProjects[i].developer.nickname);
+			model.addAttribute(goal, arrayProjects[i].goals.get(0));
+			model.addAttribute(money, arrayProjects[i].moneyCollected);
+		}
+		
 		return "ourProject_template";
 	}
 	
@@ -55,6 +76,9 @@ public class OurProjectController {
 		Project p2 = new Project("BiruBiru","A Beber", null,paymentMethod.PAYPAL,"PAY-54215");
 		
 		p1.developer = dev;
+		List<Double> list = new ArrayList<Double>();
+		list.add(0,100.0);
+		p1.setGoals( list);
 		
 		p1.getContributors().add(us);
 		p1.getContributors().add(us1);
@@ -81,6 +105,10 @@ public class OurProjectController {
 		contractRepo.save(c2);
 		contractRepo.save(c3);
 		contractRepo.save(c4);
+		
+		//Recogemos los proyectos existentes para pasarlos al html
+		
+		
 		
 		/*
 		

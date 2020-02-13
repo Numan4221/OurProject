@@ -5,17 +5,18 @@
 <title>OurProject</title>
 </head>
 <body>
-	{{#username}}
-	<script >
-		print(username)
-	</script>
-	<p> Hello, {{username}}</p>
+	{{#usern}}
+	<p> Hello, {{usern}}</p>
 	<a href= "/ourProject/myProfile">Mi perfil</a>
-	{{/username}}
-	{{^username}}
+	{{/usern}}
+	{{^usern}}
 	<a href= "/ourProject/initSession">Iniciar Sesion!</a>
-	{{/username}}
+	{{/usern}}
 	<a href= "/ourProject/project">Un proyecto</a>
+	
+	{{#name_p0}}
+	<p> Nombre del proyecto: {{name_p0}}
+	{{/name_p0}}
 	
 </body>
 </html>
