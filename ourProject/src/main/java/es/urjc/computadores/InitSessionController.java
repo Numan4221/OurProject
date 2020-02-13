@@ -12,7 +12,7 @@ public class InitSessionController {
 		
 		//model.addAttribute(attributeName, attributeValue);
 		
-		return "initSessionView";
+		return "login";
 	}
 
 }
