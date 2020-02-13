@@ -20,13 +20,13 @@ public class OurProjectController {
 	@GetMapping("/ourProject")
 	public String ourProject(Model model, /*@RequestParam*/ String usern) {
 		if (usern != null) {
-		model.addAttribute("usern", usern);
-		System.out.println("username: " + usern);
+			model.addAttribute("usern", usern);
 		}
 		
 		List<Project> listProject = projectRepo.findAll();
 		Project[] arrayProjects = listProject.toArray(new Project[listProject.size()]);
-		
+		model.addAttribute("arrayProjects", arrayProjects);
+		/*
 		for (int i = 0; i< arrayProjects.length; i++) {
 			String name = "name_p" + i;
 			String desc = "desc_p" + i;
@@ -36,11 +36,11 @@ public class OurProjectController {
 			model.addAttribute(name, arrayProjects[i].projectName);
 			model.addAttribute(desc, arrayProjects[i].description);
 			model.addAttribute(dev, arrayProjects[i].developer.nickname);
-			model.addAttribute(goal, arrayProjects[i].goals.get(0));
+			//model.addAttribute(goal, arrayProjects[i].goals.get(0));
 			model.addAttribute(money, arrayProjects[i].moneyCollected);
 		}
-		
-		return "ourProject_template";
+		*/
+		return "index - copia";
 	}
 	
 	// me pones aqui una isntancia de este repo
@@ -72,13 +72,14 @@ public class OurProjectController {
 		userRepo.save(us);
 		userRepo.save(us1);
 		
-		Project p1 = new Project("takeMe","Jueguito rico", null,paymentMethod.CREDITCARD,"ES-51561321518");
+		Project p1 = new Project("takeMe","Jueguito rico wwwwwwwwww wwwwwww wwwwwwww wwwwwwwwwwwww wwwwwwww wwww ddddd dddddddddd ddddddd ddddd dddj jjjjj jjjjj jjjjjjjj jjjjj jjjj jjj jjj jjjjj jjjj jjjjj jjj wwwwww wwwwwwwww wwwwwwww wwwww wwww", null,paymentMethod.CREDITCARD,"ES-51561321518");
 		Project p2 = new Project("BiruBiru","A Beber", null,paymentMethod.PAYPAL,"PAY-54215");
 		
 		p1.developer = dev;
-		List<Double> list = new ArrayList<Double>();
-		list.add(0,100.0);
-		p1.setGoals( list);
+		p2.developer = dev;
+		
+		p1.getGoals().add(100.0);
+		p2.getGoals().add(100.0);
 		
 		p1.getContributors().add(us);
 		p1.getContributors().add(us1);
@@ -88,7 +89,7 @@ public class OurProjectController {
 		projectRepo.save(p1);
 		projectRepo.save(p2);
 		
-		
+		userRepo.save(dev);
 		/*
 		us.getFinancedProjects().add(p1);
 		us1.getFinancedProjects().add(p1);
