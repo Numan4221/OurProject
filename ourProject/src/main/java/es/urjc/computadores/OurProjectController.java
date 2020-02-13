@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class OurProjectController {
 	
 	@GetMapping("/ourProject")
-	public String ourProject(Model model, @RequestParam String username) {
+	public String ourProject(Model model, /*@RequestParam*/ String username) {
 		if (username != null) {
 		model.addAttribute("username", username);
 		System.out.println("username: " + username);
