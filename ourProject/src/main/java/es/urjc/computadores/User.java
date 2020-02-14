@@ -36,6 +36,7 @@ public class User {
 	public String surname;
 	private paymentMethod myPaymentMethod;
 	public boolean isDeveloper;
+	private String accountID;
 	
 
 	@ManyToMany(mappedBy="contributors")

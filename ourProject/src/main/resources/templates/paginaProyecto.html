@@ -56,7 +56,7 @@
         <!-- Author -->
         <p class="lead">
           by
-          <a href="#">{{developer}}</a>
+          <a>{{developer}}</a>
         </p>
 
         <hr>
@@ -75,8 +75,10 @@
 		<p style="text-align: right">Posted on January 1, 2019 at 12:00 PM</p>
         <p>{{desc}}</p>
 
-		<button class=" col-md-4 text-center btn btn-warning" type="button">Donar</button>
-
+		<form method= "post" action = "paginaDonacion">
+			<input name = "id" type= "hidden" value = {{id}}>
+			<button class=" col-md-4 text-center btn btn-warning" type="submit">Donar</button>
+		</form>
         <hr>
 
         <!-- Comments Form -->
