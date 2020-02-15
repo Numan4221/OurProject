@@ -3,6 +3,7 @@ package es.urjc.computadores;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -26,7 +27,7 @@ public class Project {
 	public String projectName;
 	public String description;
 
-	@OneToMany(mappedBy="project")
+	@OneToMany(mappedBy="project", cascade = CascadeType.ALL,orphanRemoval = true)
 	public List<Goal> goals = new ArrayList<Goal>();
 	
 	// Reward
@@ -39,18 +40,18 @@ public class Project {
 	private String accountID;
 	
 	
-	@ManyToMany
+	@ManyToMany 
 	private List<User> contributors = new ArrayList<User>();
-	@OneToMany(mappedBy="project")
+	@OneToMany(mappedBy="project",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Contract> myProjectContracts = new ArrayList<Contract>();
 	
-	@OneToMany(mappedBy="project")
+	@OneToMany(mappedBy="project",cascade = CascadeType.ALL,orphanRemoval = true)
 	public List<Comment> myComments = new ArrayList<Comment>();
 	
 	@ManyToOne
 	public Developer developer;
 	
-	@OneToMany(mappedBy="project")
+	@OneToMany(mappedBy="project", cascade = CascadeType.ALL,orphanRemoval = true)
 	public List<Reward> rewards = new ArrayList<Reward>();
 	
 	@Lob

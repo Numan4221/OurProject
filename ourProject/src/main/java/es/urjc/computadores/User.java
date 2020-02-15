@@ -3,6 +3,7 @@ package es.urjc.computadores;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,10 +51,10 @@ public class User {
 	@ManyToMany(mappedBy="contributors")
 	private List<Project> financedProjects = new ArrayList<Project>();
 	
-	@OneToMany(mappedBy="contributor")
+	@OneToMany(mappedBy="contributor", cascade = CascadeType.REMOVE)
 	private List<Contract> myContracts = new ArrayList<Contract>();
 	
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user", cascade = CascadeType.REMOVE)
 	private List<Comment> myComments = new ArrayList<Comment>();
 	
 	

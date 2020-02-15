@@ -77,6 +77,7 @@ public class OurProjectController {
 		
 		User us = new User("sergjio","1234","soyfeo@sergio.com","sergio","plaza");
 		User us1 = new User("dani","1234","soyfeo@dani.com","daniel","jimenez");
+		User us2 = new User("dani2","1234","soyfeo@dani2.com","daniel2","jimenez");
 		/*
 		User us2 = new User("dani","1234","soyfeo@dani2.com","daniel2","jimenez");
 		User us3 = new User("dani","1234","soyfeo@dani3.com","daniel3","jimenez");
@@ -88,6 +89,7 @@ public class OurProjectController {
 		userRepo.save(dev);
 		userRepo.save(us);
 		userRepo.save(us1);
+		userRepo.save(us2);
 		/*
 		userRepo.save(us2);
 		userRepo.save(us3);
@@ -116,7 +118,7 @@ public class OurProjectController {
 		*/
 		
 		Goal g1 = new Goal(p1,100.0,"video exclusivo");
-		Goal g2 = new Goal(p1,2000.0,"Claves juego");
+		Goal g2 = new Goal(p2,2000.0,"Claves juego");
 		
 		goalRepo.save(g1);
 		goalRepo.save(g2);
@@ -140,10 +142,13 @@ public class OurProjectController {
 		contractRepo.save(c4);
 		
 		Comment com1 = new Comment(us1,p1,"Vaya proyecto guapo",new Date());
-		Comment com2 = new Comment(dev,p1,"Yo doy pasta aqui",new Date());
+		Comment com2 = new Comment(dev,p2,"Yo doy pasta aqui",new Date());
 		
 		commentRepo.save(com1);
 		commentRepo.save(com2);
+		
+		
+		
 		
 		Reward r1 = new Reward(10,"Peluche de Axwel",p1);
 		Reward r2 = new Reward(2,"acceso a la beta",p2);
@@ -152,6 +157,14 @@ public class OurProjectController {
 		rewardRepo.save(r1);
 		rewardRepo.save(r2);
 		rewardRepo.save(r3);
+		
+		userRepo.delete(us2);
+		rewardRepo.delete(r3);
+		//userRepo.delete(us1);
+		//projectRepo.delete(p1);
+		
+		
+		//userRepo.delete(dev);
 		
 		/*
 		Page<Project> projects = projectRepo.findByProjectName("BiruBiru", PageRequest.of(0, 2));

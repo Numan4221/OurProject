@@ -19,8 +19,10 @@ public class Comment {
 	@ManyToOne
 	public User user;
 	
+	
 	@ManyToOne
 	public Project project;
+	
 	
 	public String comment;
 	
@@ -41,7 +43,16 @@ public class Comment {
 		this.numberOfLikes = 0;
 	}
 	
+
+	/*
+	public Comment(User user, String comment, Date date) {
+		super();
+		this.user = user;
+		this.comment = comment;
+		this.date = date;
+		this.numberOfLikes = 0;
+	}
 	
-	
+	*/
 
 }

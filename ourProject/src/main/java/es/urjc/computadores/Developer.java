@@ -3,6 +3,7 @@ package es.urjc.computadores;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -11,7 +12,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @PrimaryKeyJoinColumn(referencedColumnName="id")
 public class Developer extends User {
 	
-	@OneToMany(mappedBy="developer")
+	@OneToMany(mappedBy="developer", cascade = CascadeType.REMOVE)
 	private List<Project> myProjects = new ArrayList<Project>();
 	
 
