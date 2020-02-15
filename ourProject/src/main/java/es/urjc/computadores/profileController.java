@@ -22,7 +22,7 @@ public class profileController {
 	@RequestMapping("/ourProject/myProfile")
 	public String profileMode(Model model, String id, String username, String name, String surname, String email, String option, String accountNumber, String newDev) {
 		
-		User user = (User) userRepo.findFirstByNickname("dani");
+		User user = (User) userRepo.findFirstByNickname("axwel");
 		
 		List<Contract> misContratos = contractRepo.findByContributorNickname(user.nickname);
 	

@@ -36,7 +36,7 @@ public class projectController {
 		long n = 1;
 		Optional<User> usuario = userRepo.findById(n);
 		User myUser = usuario.get();*/
-		User myUser = (User) userRepo.findFirstByNickname("dani");
+		User myUser = (User) userRepo.findFirstByNickname("axwel");
 
 		if (comentario!= null) {
 			Comment myComment = new Comment (myUser, proyectoReal, comentario, new Date());

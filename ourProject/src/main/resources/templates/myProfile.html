@@ -119,7 +119,7 @@
 		<div style = "padding-top: 20px">
 		{{#user.isDeveloper}}
 			<form method = "post" action = "/ourProject/myProfile/newProject">
-				<input type="hidden"  name = "nickname" value = {{user.id}}>
+				<input type="hidden"  name = "nickname" value = {{user.nickname}}>
 				<button tpye="submit">Subir un proyecto</button>
 			</form>
 		{{/user.isDeveloper}}
