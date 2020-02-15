@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import es.urjc.computadores.User.paymentMethod;
+
 @Controller
 public class profileController {
 
@@ -18,13 +20,58 @@ public class profileController {
 	private ContractRepository contractRepo;
 	
 	@RequestMapping("/ourProject/myProfile")
-	public String profileMode(Model model) {
+	public String profileMode(Model model, String id, String username, String name, String surname, String email, String option, String accountNumber) {
 		
-		//User miUsuario = (User) userRepo.findByNickname("axwel");
+		User user = (User) userRepo.findFirstByNickname("axwel");
 		
-		List<Contract> misContratos = contractRepo.findByContributorNickname("axwel");
+		List<Contract> misContratos = contractRepo.findByContributorNickname(user.nickname);
+	
 		
-		model.addAttribute("usern", "axwel");
+		if (option != "" && option != null) {
+			
+			if (option.equals("Paypal")) {
+				user.setMyPaymentMethod(paymentMethod.PAYPAL);
+			}else {
+				user.setMyPaymentMethod(paymentMethod.CREDITCARD);
+			}
+			userRepo.save(user);
+		}
+		
+		if (accountNumber != "" && accountNumber != null) {		
+			user.setAccountID(accountNumber);
+			userRepo.save(user);
+		}
+		
+		if (username != "" && username != null) {		
+			user.nickname = username;
+			userRepo.save(user);
+		}
+		
+		if (name != "" && name != null) {		
+			user.name = name;
+			userRepo.save(user);
+		}
+		
+		if (surname != "" && surname != null) {		
+			user.surname = surname;
+			userRepo.save(user);
+		}
+		
+		if (email != "" && email != null) {		
+			user.email = email;
+			userRepo.save(user);
+		}
+		
+		
+		model.addAttribute("user", user);
+		
+		if (user.getMyPaymentMethod() != null) {
+			if (user.getMyPaymentMethod() == paymentMethod.PAYPAL) {
+				model.addAttribute("paypal", true);
+			} else {
+				model.addAttribute("paypal", false);
+			}
+		}
 		
 		model.addAttribute("misContratos", misContratos);
 		

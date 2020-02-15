@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import es.urjc.computadores.User.paymentMethod;
+
 @Controller
 public class projectController {
 
@@ -21,8 +23,11 @@ public class projectController {
 	@Autowired
 	private UserRepository userRepo;
 	
+	@Autowired
+	private ContractRepository contractRepo;
+	
 	@RequestMapping("/ourProject/project")
-	public String initSession(Model model, @RequestParam long id, String comentario, String donation, String accountNumber) {
+	public String load(Model model, @RequestParam long id, String comentario, String donation, String accountNumber, String service) {
 		
 		//model.addAttribute(attributeName, attributeValue);
 		Optional<Project> proyecto = projectRepo.findById(id);
@@ -43,6 +48,18 @@ public class projectController {
 			myUser.setAccountID(accountNumber);
 			userRepo.save(myUser);
 			model.addAttribute("comeFromDonation", true);
+			
+			Contract cont = new Contract(myUser, proyectoReal, "Gracias por su donación", quantity);
+			contractRepo.save(cont);
+		}
+		
+		if (service != "" && service != null) {
+			if (service.equals("Paypal")) {
+				myUser.setMyPaymentMethod(paymentMethod.PAYPAL);
+			} else {
+				myUser.setMyPaymentMethod(paymentMethod.CREDITCARD);
+			}
+			userRepo.save(myUser);
 		}
 			
 		
@@ -60,4 +77,6 @@ public class projectController {
 		
 		return "paginaProyecto";
 	}
+
+
 }

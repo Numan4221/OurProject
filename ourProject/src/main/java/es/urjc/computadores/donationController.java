@@ -19,7 +19,7 @@ public class donationController {
 	
 	
 	@RequestMapping("/ourProject/paginaDonacion")
-	public String initSession(Model model, @RequestParam long id) {
+	public String load(Model model, @RequestParam long id) {
 		
 		Optional<Project> proyecto = projectRepo.findById(id);
 		Project proyectoReal = proyecto.get();
