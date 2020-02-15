@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>{{titulo}} - OurProject</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="/css/blog-post.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/ourProject">OurProject</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/ourProject">Inicio
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Perfil</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+
+        <!-- Title -->
+        <h1 class="mt-4">{{titulo}}</h1>
+
+        <!-- Author -->
+        <p class="lead">
+          by
+          <a href="#">{{developer}}</a>
+        </p>
+
+        <hr>
+
+        <!-- Date/Time -->
+        <p>Dinero recaudado: {{moneyCollected}}</p>
+
+        <hr>
+
+        <!-- Preview Image -->
+        <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+
+        <hr>
+
+        <!-- Post Content -->
+		<p style="text-align: right">Posted on January 1, 2019 at 12:00 PM</p>
+        <p>{{desc}}</p>
+
+		<button class=" col-md-4 text-center btn btn-warning" type="button">Donar</button>
+
+        <hr>
+
+        <!-- Comments Form -->
+        <div class="card my-4">
+          <h5 class="card-header">Deja un comentario:</h5>
+          <div class="card-body">
+            <form action = "project" method = "post">
+                	<input name = "id" type= "hidden" value = {{id}}>
+              <div class="form-group">
+                <textarea name="comentario" class="form-control" rows="3"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Comentar</button>
+            </form>
+          </div>
+        </div>
+
+		{{#comments}}
+        <!-- Single Comment -->
+        <div class="media mb-4">
+          <div class="media-body">
+            <h5 class="mt-0">{{user.nickname}}</h5>
+            {{comment}}
+          </div>
+        </div>
+        {{/comments}}
+
+      </div>
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+
+        <!-- Side Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Metas</h5>
+          {{#goals}}
+		  <div class="container bg-secondary text-white" style="border:1px solid black">
+				<!-- Content here -->
+				<p class="lead">Meta {{-index}}&nbsp;&nbsp;&nbsp;&nbsp;Precio {{goal}}€</p>
+				<p> {{description}} </p>
+				<p> </p>
+		  </div>
+		  {{/goals}}
+        </div>
+
+		<!-- Side Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Recompensas</h5>
+          {{#recompensas}}
+		  <div class="container  bg-primary text-white" style="border:1px solid black">
+				<!-- Content here -->
+				<p class="lead">Recompensa {{-index}}&nbsp;&nbsp;&nbsp;&nbsp;Precio {{recompensa}}€</p>
+				<p> {{descripcion}} </p>
+				<p> </p>
+		  </div>
+		  {{/recompensas}}
+        </div>
+
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
