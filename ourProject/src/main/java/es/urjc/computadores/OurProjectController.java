@@ -10,6 +10,8 @@ import javax.annotation.PostConstruct;
 
 import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,16 +77,29 @@ public class OurProjectController {
 		
 		User us = new User("sergjio","1234","soyfeo@sergio.com","sergio","plaza");
 		User us1 = new User("dani","1234","soyfeo@dani.com","daniel","jimenez");
+		/*
+		User us2 = new User("dani","1234","soyfeo@dani2.com","daniel2","jimenez");
+		User us3 = new User("dani","1234","soyfeo@dani3.com","daniel3","jimenez");
+		User us4 = new User("dani","1234","soyfeo@dani4.com","daniel4","jimenez");
+		*/
 		
 		Developer dev = new Developer("axwel","3565","soyfeo@axwel.com","alejandro", "garcia");
 		
 		userRepo.save(dev);
 		userRepo.save(us);
 		userRepo.save(us1);
+		/*
+		userRepo.save(us2);
+		userRepo.save(us3);
+		userRepo.save(us4);
+		*/
 		
 		Project p1 = new Project("takeMe","Jueguito rico",paymentMethod.CREDITCARD,"ES-51561321518",dev);
 		Project p2 = new Project("BiruBiru","A Beber",paymentMethod.PAYPAL,"PAY-54215",dev);
-		
+		/*Project p3 = new Project("BiruBiru","A Beber2",paymentMethod.PAYPAL,"PAY-54215",dev);
+		Project p4 = new Project("BiruBiru","A Beber3",paymentMethod.PAYPAL,"PAY-54215",dev);
+		Project p5 = new Project("BiruBiru","A Beber4",paymentMethod.PAYPAL,"PAY-54215",dev);
+		*/
 		
 		p1.getContributors().add(us);
 		p1.getContributors().add(us1);
@@ -94,6 +109,10 @@ public class OurProjectController {
 		
 		projectRepo.save(p1);
 		projectRepo.save(p2);
+		/*projectRepo.save(p3);
+		projectRepo.save(p4);
+		projectRepo.save(p5);
+		*/
 		
 		Goal g1 = new Goal(p1,100.0,"video exclusivo");
 		Goal g2 = new Goal(p1,2000.0,"Claves juego");
@@ -132,6 +151,28 @@ public class OurProjectController {
 		rewardRepo.save(r1);
 		rewardRepo.save(r2);
 		rewardRepo.save(r3);
+		
+		/*
+		Page<Project> projects = projectRepo.findByProjectName("BiruBiru", PageRequest.of(0, 2));
+		List<Project> aux = projects.getContent();
+		for(int x = 0; x < aux.size();x++) {
+			System.out.println(aux.get(x).description);
+			
+		}
+		*/
+		
+		/*
+		for (int i = 0; i < 3; i++) {
+			Page<User> users =  userRepo.findAllByNickname("dani",PageRequest.of(0, 10));
+			List<User> aux = users.getContent();
+			System.out.println("Iterracion: " + i);
+			for(int x = 0; x < aux.size();x++) {
+				System.out.println(aux.get(x).email);
+				
+			}
+		}
+		*/
+		
 		
 		/*
 		

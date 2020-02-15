@@ -1,16 +1,24 @@
 package es.urjc.computadores;
 
-import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
 
 public interface UserRepository extends JpaRepository<User,Long>{
-	// consulta por nombres de usuario
-	List<User> findByNickname(String nickname);
 	
-	// consulta por enmail
-	List<User> findByEmail(String email);
+	/***
+	 * Devuelve el usuario con dicho nombre
+	 * @param nickname
+	 * @return
+	 */
+	User findFirstByNickname(String nickname);
+	
+	/***
+	 * Devuelve el usuario con dicho email
+	 * @param email
+	 * @return
+	 */
+	User findFirstByEmail(String email);
 	
 }
