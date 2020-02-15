@@ -20,9 +20,9 @@ public class profileController {
 	private ContractRepository contractRepo;
 	
 	@RequestMapping("/ourProject/myProfile")
-	public String profileMode(Model model, String id, String username, String name, String surname, String email, String option, String accountNumber) {
+	public String profileMode(Model model, String id, String username, String name, String surname, String email, String option, String accountNumber, String newDev) {
 		
-		User user = (User) userRepo.findFirstByNickname("axwel");
+		User user = (User) userRepo.findFirstByNickname("dani");
 		
 		List<Contract> misContratos = contractRepo.findByContributorNickname(user.nickname);
 	
@@ -71,6 +71,12 @@ public class profileController {
 			} else {
 				model.addAttribute("paypal", false);
 			}
+		}
+		
+		System.out.println(newDev);
+		if (newDev != "" && newDev != null) {
+			user.isDeveloper= true;
+			userRepo.save(user);
 		}
 		
 		model.addAttribute("misContratos", misContratos);

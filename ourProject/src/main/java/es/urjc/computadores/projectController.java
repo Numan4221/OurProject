@@ -32,9 +32,11 @@ public class projectController {
 		//model.addAttribute(attributeName, attributeValue);
 		Optional<Project> proyecto = projectRepo.findById(id);
 		Project proyectoReal = proyecto.get();
+		/*
 		long n = 1;
 		Optional<User> usuario = userRepo.findById(n);
-		User myUser = usuario.get();
+		User myUser = usuario.get();*/
+		User myUser = (User) userRepo.findFirstByNickname("dani");
 
 		if (comentario!= null) {
 			Comment myComment = new Comment (myUser, proyectoReal, comentario, new Date());
@@ -61,8 +63,8 @@ public class projectController {
 			}
 			userRepo.save(myUser);
 		}
-			
 		
+			
 		
 		model.addAttribute("titulo", proyectoReal.projectName);
 		model.addAttribute("desc", proyectoReal.description);

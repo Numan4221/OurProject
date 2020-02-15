@@ -116,7 +116,22 @@
 			<input name = id type = "hidden" value = {{user.id}}>
 			<button tpye="submit">Guardar cambios</button>
 		</form>
+		<div style = "padding-top: 20px">
+		{{#user.isDeveloper}}
+			<form method = "post" action = "/ourProject/myProfile/newProject">
+				<input type="hidden"  name = "nickname" value = {{user.id}}>
+				<button tpye="submit">Subir un proyecto</button>
+			</form>
+		{{/user.isDeveloper}}
+		{{^user.isDeveloper}}
+			<form method = "post" action = "/ourProject/myProfile">
+				<input type="hidden"  name="newDev" value = {{user.id}}>
+				<button tpye="submit">Convertirse en desarrollador</button>
+			</form>
+		{{/user.isDeveloper}}
 	</div>
+	</div>
+	
 	<!-- /.container -->
 
 	<!-- Bootstrap core JavaScript -->
