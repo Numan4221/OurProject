@@ -18,13 +18,13 @@ public class profileController {
 	private ContractRepository contractRepo;
 	
 	@RequestMapping("/ourProject/myProfile")
-	public String profileMode(Model model, @RequestParam String nombre) {
+	public String profileMode(Model model) {
 		
-		User miUsuario = (User) userRepo.findByNickname(nombre);
+		//User miUsuario = (User) userRepo.findByNickname("axwel");
 		
-		List<Contract> misContratos = contractRepo.findByContributorNickname(nombre);
+		List<Contract> misContratos = contractRepo.findByContributorNickname("axwel");
 		
-		model.addAttribute("usern", nombre);
+		model.addAttribute("usern", "axwel");
 		
 		model.addAttribute("misContratos", misContratos);
 		
