@@ -49,7 +49,12 @@
 
       <!-- Post Content Column -->
       <div class="col-lg-8">
-
+      	{{#comeFromDonation}}
+      	<div style = "padding-top: 10px;background-color: red">
+      		<p> Gracias por su donación. Puede consultar el recibo en su perfil.</p>
+      	</div>
+		
+		{{/comeFromDonation}}
         <!-- Title -->
         <h1 class="mt-4">{{titulo}}</h1>
 

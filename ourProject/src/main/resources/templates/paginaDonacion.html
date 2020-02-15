@@ -24,19 +24,19 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">OurProject</a>
+      <a class="navbar-brand" href="/ourProject">OurProject</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Inicio
+            <a class="nav-link" href="/ourProject">Inicio
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Perfil</a>
+            <a class="nav-link" href="/ourProject/myProfile">Perfil</a>
           </li>
         </ul>
       </div>
@@ -63,24 +63,30 @@
 
         <p>Descripci&oacute;n del proyecto</p>
         <p>{{project.description}}</p>
-        <form method = "post">
-        <div style = "padding-bottom: 10px">
-          Método de pago:
-         {{#user.accountID}}
-          	<input type = "text" id = "paymentMethod" value = {{user.accountID}} required size= "30">
-          {{/user.accountID}}
-          {{^user.accountID}}
-          	<input type = "text" id = "paymentMethod" placeholder = "Introduzca el numero de cuenta" required size= "30">
-          {{/user.accountID}}
-        </div>
-        
-        
-        	Cantidad a donar: 
-          	<input type = "number" id = "donation" step="0.1" min="0" placeholder = "€">
-          	<div style = "padding-top: 10px;">
-            <button class=" col-md-4 text-center btn btn-warning" type="button">Donar</button>
-          </div>
-          
+        <form action = "/ourProject/project" method = "post">
+	        <div style = "padding-bottom: 10px">
+	          Método de pago:
+	         {{#user.accountID}}
+	          	<input type = "text" id = "paymentMethod" name = "accountNumber" value = {{user.accountID}} size= "30" required >
+	          {{/user.accountID}}
+	          {{^user.accountID}}
+	          <div class="form-group">
+                <p class="masthead-subheading font-weight-light mb-0">Tipo de cuenta</p>
+                <div style = "padding-bottom: 10px">
+                <select class="selection-2 select2-hidden-accessible" name="service" tabindex="-1" aria-hidden="true">
+                	<option selected>Tarjeta de crédito</option>
+               		<option>Paypal</option>
+                </select>
+              </div>
+	          	<input type = "text" id = "paymentMethod" name = "accountNumber" placeholder = "Introduzca el numero de cuenta" size= "30" required >
+	          {{/user.accountID}}
+	        </div>
+	        Cantidad a donar: 
+	        <input type = "number" name = "donation" step="0.1" min="0" placeholder = "€">
+	        <input type = "hidden" name = "id" value = "{{project.id}}" >
+	        <div style = "padding-top: 10px;">
+	           	<button class=" col-md-4 text-center btn btn-warning" type="submit">Donar</button>
+	         </div>
         </form>
 
 
@@ -94,8 +100,8 @@
 
 
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

@@ -39,6 +39,14 @@ public class User {
 	private String accountID;
 	
 
+	public String getAccountID() {
+		return accountID;
+	}
+
+	public void setAccountID(String accountID) {
+		this.accountID = accountID;
+	}
+
 	@ManyToMany(mappedBy="contributors")
 	private List<Project> financedProjects = new ArrayList<Project>();
 	

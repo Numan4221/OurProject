@@ -22,7 +22,7 @@ public class projectController {
 	private UserRepository userRepo;
 	
 	@RequestMapping("/ourProject/project")
-	public String initSession(Model model, @RequestParam long id, String comentario) {
+	public String initSession(Model model, @RequestParam long id, String comentario, String donation, String accountNumber) {
 		
 		//model.addAttribute(attributeName, attributeValue);
 		Optional<Project> proyecto = projectRepo.findById(id);
@@ -35,6 +35,17 @@ public class projectController {
 			Comment myComment = new Comment (myUser, proyectoReal, comentario, new Date());
 			commentRepo.save(myComment);
 		}
+		
+		if (donation != null && accountNumber != null) {
+			Double quantity = Double.valueOf(donation);
+			proyectoReal.moneyCollected += quantity;
+			projectRepo.save(proyectoReal);
+			myUser.setAccountID(accountNumber);
+			userRepo.save(myUser);
+			model.addAttribute("comeFromDonation", true);
+		}
+			
+		
 		
 		model.addAttribute("titulo", proyectoReal.projectName);
 		model.addAttribute("desc", proyectoReal.description);
