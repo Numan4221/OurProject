@@ -32,6 +32,8 @@ public class Project {
 	// Reward
 	public double moneyCollected;
 	
+	public String fechaCreacion;
+	
 	public paymentMethod getPaidWay;
 	
 	private String accountID;
@@ -70,13 +72,14 @@ public class Project {
 	 * @param developer
 	 * @param goals
 	 */
-	public Project(String projectName, String description, paymentMethod getPaidWay, String accountID, Developer dev) {
+	public Project(String projectName, String description, paymentMethod getPaidWay, String accountID, Developer dev, String fecha) {
 		super();
 		this.projectName = projectName;
 		this.description = description;
 		this.getPaidWay = getPaidWay;
 		this.accountID = accountID;
 		this.developer = dev;
+		this.fechaCreacion = fecha;
 	}
 	
 
@@ -93,6 +96,7 @@ public class Project {
 	public List<User> getContributors() {
 		return contributors;
 	}
+	
 	public void setContributors(List<User> contributors) {
 		this.contributors = contributors;
 	}
