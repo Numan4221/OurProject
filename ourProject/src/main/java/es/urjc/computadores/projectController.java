@@ -45,6 +45,7 @@ public class projectController {
 		model.addAttribute("developer", proyectoReal.developer.nickname);
 		model.addAttribute("id", id);
 		model.addAttribute("usuarioPropio", myUser.nickname);
+		model.addAttribute("fecha", proyectoReal.fechaCreacion);
 		
 		return "paginaProyecto";
 	}

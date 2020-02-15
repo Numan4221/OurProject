@@ -19,16 +19,18 @@ public class Contract {
 	@ManyToOne
 	Project project;
 	String contractContent;
+	Double contribution;
 	
 	protected  Contract(){
 		
 	}
 
-	public Contract(User contributor, Project project, String contractContent) {
+	public Contract(User contributor, Project project, String contractContent, Double cont) {
 		super();
 		this.contributor = contributor;
 		this.project = project;
 		this.contractContent = contractContent;
+		this.contribution = cont;
 	}
 	
 	

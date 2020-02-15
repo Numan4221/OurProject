@@ -94,12 +94,13 @@ public class OurProjectController {
 		userRepo.save(us4);
 		*/
 		
-		Project p1 = new Project("takeMe","Jueguito rico",paymentMethod.CREDITCARD,"ES-51561321518",dev);
-		Project p2 = new Project("BiruBiru","A Beber",paymentMethod.PAYPAL,"PAY-54215",dev);
-		/*Project p3 = new Project("BiruBiru","A Beber2",paymentMethod.PAYPAL,"PAY-54215",dev);
-		Project p4 = new Project("BiruBiru","A Beber3",paymentMethod.PAYPAL,"PAY-54215",dev);
-		Project p5 = new Project("BiruBiru","A Beber4",paymentMethod.PAYPAL,"PAY-54215",dev);
-		*/
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	    Date date = new Date();
+	    System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
+		
+		Project p1 = new Project("takeMe","Jueguito rico",paymentMethod.CREDITCARD,"ES-51561321518",dev, dateFormat.format(date));
+		Project p2 = new Project("BiruBiru","A Beber",paymentMethod.PAYPAL,"PAY-54215",dev, dateFormat.format(date));
+		
 		
 		p1.getContributors().add(us);
 		p1.getContributors().add(us1);
@@ -127,10 +128,10 @@ public class OurProjectController {
 		us1.getFinancedProjects().add(p2);
 		*/
 		
-		Contract c1 = new Contract(us1,p1,"500€");
-		Contract c2 = new Contract(us,p1,"100€");
-		Contract c3 = new Contract(us1,p2,"1000€");
-		Contract c4 = new Contract(dev,p2,"999€");
+		Contract c1 = new Contract(us1,p1,"500€", 500.00);
+		Contract c2 = new Contract(us,p1,"100€", 100.00);
+		Contract c3 = new Contract(us1,p2,"1000€", 1000.00);
+		Contract c4 = new Contract(dev,p2,"999€", 999.99);
 
 		
 		contractRepo.save(c1);
