@@ -171,10 +171,12 @@ public class OurProjectController {
 		rewardRepo.save(r2);
 		rewardRepo.save(r3);
 		
+		/*
 		userRepo.delete(us2);
 		rewardRepo.delete(r3);
 		borrador.deleteProject(p2.projectName, dev.nickname);
 		borrador.convertirseDesarrollador(us.nickname);
+		*/
 		//userRepo.delete(us1);
 		//projectRepo.delete(p1);
 		

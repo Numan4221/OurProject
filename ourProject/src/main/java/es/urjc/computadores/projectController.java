@@ -92,9 +92,10 @@ public class projectController {
 		else if (id == -1) {
 			Project projectAux = projectRepo.findFirstByProjectNameAndDeveloperNickname(nombre, myUser.nickname);
 			
-			if (projectAux == null) {
+			if (projectAux != null) {
 				//Redirect a error
-				return "redirect:/ourProject/myProfile/newProject";
+				//model.addAttribute("nickname", myUser.nickname);
+				return "redirect:/ourProject";
 			}
 			else {
 				if (service != "" && service != null) {
