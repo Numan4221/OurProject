@@ -124,10 +124,4 @@ public class User {
 		this.myContracts = myContracts;
 	}
 	
-	
-	
-	
-	
-	
-	
 }

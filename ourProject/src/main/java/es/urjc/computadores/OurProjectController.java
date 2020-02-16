@@ -130,16 +130,18 @@ public class OurProjectController {
 		us1.getFinancedProjects().add(p2);
 		*/
 		
+		/*
 		Contract c1 = new Contract(us1,p1,"500€", 500.00);
 		Contract c2 = new Contract(us,p1,"100€", 100.00);
 		Contract c3 = new Contract(us1,p2,"1000€", 1000.00);
 		Contract c4 = new Contract(dev,p2,"999€", 999.99);
-
+		
 		
 		contractRepo.save(c1);
 		contractRepo.save(c2);
 		contractRepo.save(c3);
 		contractRepo.save(c4);
+		*/
 		
 		Comment com1 = new Comment(us1,p1,"Vaya proyecto guapo",new Date());
 		Comment com2 = new Comment(dev,p2,"Yo doy pasta aqui",new Date());

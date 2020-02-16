@@ -23,19 +23,19 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">OurProject</a>
+      <a class="navbar-brand" href="/ourProject">OurProject</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Inicio
+            <a class="nav-link" href="/ourProject">Inicio
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Perfil</a>
+            <a class="nav-link" href="/ourProject/myProfile">Perfil</a>
           </li>
         </ul>
       </div>
@@ -57,14 +57,14 @@
         <div class="card my-4">
           <h5 class="card-header">Descripción del proyecto:</h5>
           <div class="card-body">
-            <form method = "post">
+            <form method = "post" action = "/ourProject/project">
               <p class="masthead-subheading font-weight-light mb-0">Nombre</p>
               <div class="form-group">
-                  <input class="form-control" ></textarea>
+                  <input class="form-control" name = "nombre" required></textarea>
               </div>
               <p class="masthead-subheading font-weight-light mb-0">Descripción</p>
               <div class="form-group">
-                <textarea class="form-control" rows="3"></textarea>
+                <textarea class="form-control" rows="3" name = "descripcion" required></textarea>
               </div>
               <div class="form-group" >
                 <p class="masthead-subheading font-weight-light mb-0">Tipo de cuenta</p>
@@ -76,12 +76,42 @@
               </div>
               <p style = "padding-top: 10px;"    class="masthead-subheading font-weight-light mb-0">Numero de cuenta</p>
               <div class="form-group">
-                  <input class="form-control" ></textarea>
+                  <input class="form-control" name = "accountID" required></textarea>
               </div  >
+              <div>
+              	<p>Metas del proyecto</p>
+              	<div style = "padding-bottom: 10px">
+              		<p>Meta 1 </p>
+              			<input type = "number" placeholder = "Cantidad de dinero" name = "m1_cant"  required>
+              			<input type = "text" placeholder = "Descripción de la meta" name = "m1_desc" required>
+              	</div>
+              	<div style = "padding-bottom: 10px">
+              		<p>Meta 2 </p>
+              			<input type = "number" placeholder = "Cantidad de dinero" name = "m2_cant">
+              			<input type = "text" placeholder = "Descripción de la meta" name = "m2_desc">
+              	</div>
+              	<div style = "padding-bottom: 10px">
+              		<p>Meta 3 </p>
+              			<input type = "number" placeholder = "Cantidad de dinero" name = "m3_cant">
+              			<input type = "text" placeholder = "Descripción de la meta" name = "m3_desc">
+              	</div>
+              	<div style = "padding-bottom: 10px">
+              		<p>Meta 4 </p>
+              			<input type = "number" placeholder = "Cantidad de dinero" name = "m4_cant">
+              			<input type = "text" placeholder = "Descripción de la meta" name = "m4_desc">
+              	</div>
+              	<div style = "padding-bottom: 10px">
+              		<p>Meta 5 </p>
+              			<input type = "number" placeholder = "Cantidad de dinero" name = "m5_cant">
+              			<input type = "text" placeholder = "Descripción de la meta" name = "m5_desc">
+              	</div>
+              </div>
               <div class="form-group" style= "padding-bottom: 10px;">
               	<p class="masthead-subheading font-weight-light mb-0">Foto del proyecto</p>
               	<input type="file" name="file">
               </div>
+              <input type = "hidden" name = "newProject">
+              <input type = "hidden" name = "id" value = "-1">
               <button type="submit" class="btn btn-primary">Crear proyecto</button>
             </form>
           </div>

@@ -19,13 +19,15 @@ public class donationController {
 	
 	
 	@RequestMapping("/ourProject/paginaDonacion")
-	public String initSession(Model model, @RequestParam long id) {
+	public String load(Model model, @RequestParam long id) {
 		
 		Optional<Project> proyecto = projectRepo.findById(id);
 		Project proyectoReal = proyecto.get();
+		/*
 		long n = 1;
 		Optional<User> usuario = userRepo.findById(n);
-		User myUser = usuario.get();
+		User myUser = usuario.get();*/
+		User myUser = (User) userRepo.findFirstByNickname("axwel");
 		//model.addAttribute("username", username);
 		
 		model.addAttribute("project", proyectoReal);

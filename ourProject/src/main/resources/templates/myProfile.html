@@ -3,87 +3,140 @@
 
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 
-  <title>{{usern}} - OurProject</title>
+<title>{{user.nickname}} - OurProject</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Custom styles for this template -->
-  <link href="/css/blog-post.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="/css/blog-post.css" rel="stylesheet">
 
 </head>
 
 <body>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="/ourProject">OurProject</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/ourProject">Inicio
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+	<!-- Navigation -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<div class="container">
+			<a class="navbar-brand" href="/ourProject">OurProject</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarResponsive" aria-controls="navbarResponsive"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active"><a class="nav-link"
+						href="/ourProject">Inicio <span class="sr-only">(current)</span>
+					</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
-  <!-- Page Content -->
-  <div class="container">
-    <div class="row">
-	    <!-- Title -->
-	    <h1 class="mt-4">Mis donaciones</h1>
-	    
-		<table class="table">
-		  <thead>
-		    <tr>
-		      <th scope="col">#</th>
-		      <th scope="col">Nombre Proyecto</th>
-		      <th scope="col">Desarrollador</th>
-		      <th scope="col">Aportacion Realizada</th>
-		      <th scope="col">Dinero Recaudado Total</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		  	{{#misContratos}}
-		    <tr>
-		      <th scope="row">{{-index}}</th>
-		      <td>{{project.projectName}}</td>
-		      <td>{{project.developer}}</td>
-		      <td>{{contribution}}</td>
-		      <td>{{project.moneyCollected}}</td>
-		    </tr>
-		    {{/misContratos}}
-		  </tbody>
-		</table>
-   </div>
-   <!-- /.row -->
+	<!-- Page Content -->
+	<div class="container">
+		<div class="row">
+			<!-- Title -->
+			<h1 class="mt-4">Mis donaciones</h1>
 
-  </div>
-  <!-- /.container -->
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Nombre Proyecto</th>
+						<th scope="col">Desarrollador</th>
+						<th scope="col">Aportacion Realizada</th>
+						<th scope="col">Dinero Recaudado Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#misContratos}}
+					<tr>
+						<th scope="row">{{-index}}</th>
+						<td>{{project.projectName}}</td>
+						<td>{{project.developer.nickname}}</td>
+						<td>{{contribution}}</td>
+						<td>{{project.moneyCollected}}</td>
+					</tr>
+					{{/misContratos}}
+				</tbody>
+			</table>
 
-  <!-- Footer -->
-  <footer class="py-5 bg-dark">
-    <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
-    </div>
-    <!-- /.container -->
-  </footer>
+		</div>
+		<!-- /.row -->
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="/vendor/jquery/jquery.min.js"></script>
-  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<h1>Información personal</h1>
+		<form method="post" action = "/ourProject/myProfile">
+			<div style="padding-bottom: 10px">
+				<p>Nombre de usuario</p>
+				<input type="text" value={{user.nickname}} name="username">
+			</div>
+			<div style="padding-bottom: 10px">
+				<p>Nombre</p>
+				<input type="text" value={{user.name}} name="name">
+			</div>
+			<div style="padding-bottom: 10px">
+				<p>Apellido</p>
+				<input type="text" value={{user.surname}} name="surname">
+			</div>
+			<div style="padding-bottom: 10px">
+				<p>Email</p>
+				<input type="text" value={{user.email}} name="email">
+			</div>
+			<div style="padding-bottom: 10px">
+				<p>Método de pago:</p>
+				<select class="selection-2 select2-hidden-accessible" name="option"
+					tabindex="-1" aria-hidden="true"> 
+					{{#paypal}}
+					<option>Tarjeta de crédito</option>
+					<option selected>Paypal</option> 
+					{{/paypal}} 
+					{{^paypal}}
+					<option selected>Tarjeta de crédito</option>
+					<option>Paypal</option> 
+					{{/paypal}}
+				</select>
+			</div>
+			<div style="padding-bottom: 10px">
+				<p>Número de cuenta:</p>
+				{{#user.accountID}} 
+				<input type="text" id="paymentMethod" name="accountNumber" value={{user.accountID}} size="30" >
+				{{/user.accountID}} 
+				{{^user.accountID}} 
+				<input type="text" id="paymentMethod" name="accountNumber" placeholder="Introduzca el numero de cuenta" size="30" >
+				{{/user.accountID}}
+			</div>
+			<input name = id type = "hidden" value = {{user.id}}>
+			<button tpye="submit">Guardar cambios</button>
+		</form>
+		<div style = "padding-top: 20px">
+		{{#user.isDeveloper}}
+			<form method = "post" action = "/ourProject/myProfile/newProject">
+				<input type="hidden"  name = "nickname" value = {{user.nickname}}>
+				<button tpye="submit">Subir un proyecto</button>
+			</form>
+		{{/user.isDeveloper}}
+		{{^user.isDeveloper}}
+			<form method = "post" action = "/ourProject/myProfile">
+				<input type="hidden"  name="newDev" value = {{user.id}}>
+				<button tpye="submit">Convertirse en desarrollador</button>
+			</form>
+		{{/user.isDeveloper}}
+	</div>
+	</div>
+	
+	<!-- /.container -->
+
+	<!-- Bootstrap core JavaScript -->
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
