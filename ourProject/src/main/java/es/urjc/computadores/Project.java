@@ -16,6 +16,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import es.urjc.computadores.User.paymentMethod;
 
 @Entity
@@ -40,8 +43,8 @@ public class Project {
 	
 	private String accountID;
 	
-	
-	@ManyToMany (fetch = FetchType.EAGER)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToMany 
 	private List<User> contributors = new ArrayList<User>();
 	@OneToMany(mappedBy="project",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Contract> myProjectContracts = new ArrayList<Contract>();

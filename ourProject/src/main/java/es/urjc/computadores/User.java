@@ -17,6 +17,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -49,13 +51,16 @@ public class User {
 		this.accountID = accountID;
 	}
 
-	@ManyToMany(mappedBy="contributors", fetch = FetchType.EAGER)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToMany(mappedBy="contributors")
 	private List<Project> financedProjects = new ArrayList<Project>();
 	
-	@OneToMany(mappedBy="contributor", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="contributor", cascade = CascadeType.REMOVE)
 	private List<Contract> myContracts = new ArrayList<Contract>();
 	
-	@OneToMany(mappedBy="user", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="user", cascade = CascadeType.REMOVE)
 	private List<Comment> myComments = new ArrayList<Comment>();
 	
 	
