@@ -27,7 +27,7 @@ public class donationController {
 		long n = 1;
 		Optional<User> usuario = userRepo.findById(n);
 		User myUser = usuario.get();*/
-		User myUser = (User) userRepo.findFirstByNickname("axwel");
+		User myUser = (User) userRepo.findFirstByNickname("sergjio");
 		//model.addAttribute("username", username);
 		
 		model.addAttribute("project", proyectoReal);

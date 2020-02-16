@@ -19,16 +19,17 @@ public class profileController {
 	@Autowired
 	private ContractRepository contractRepo;
 	
+	@Autowired
+	private ProjectRepository projectRepo;
+	
 	@RequestMapping("/ourProject/myProfile")
 	public String profileMode(Model model, String id, String username, String name, String surname, String email, String option, String accountNumber, String newDev) {
 		
-		User user = (User) userRepo.findFirstByNickname("axwel");
+		User user = (User) userRepo.findFirstByNickname("sergjio");
 		
 		List<Contract> misContratos = contractRepo.findByContributorNickname(user.nickname);
 	
-		
 		if (option != "" && option != null) {
-			
 			if (option.equals("Paypal")) {
 				user.setMyPaymentMethod(paymentMethod.PAYPAL);
 			}else {
@@ -62,7 +63,6 @@ public class profileController {
 			userRepo.save(user);
 		}
 		
-		
 		model.addAttribute("user", user);
 		
 		if (user.getMyPaymentMethod() != null) {
@@ -79,8 +79,29 @@ public class profileController {
 			userRepo.save(user);
 		}
 		
-		model.addAttribute("misContratos", misContratos);
+		if (user.isDeveloper) {
+			List<Project> proyectosPropios = projectRepo.findByDeveloperNickname(user.nickname);
+			if (proyectosPropios.size()!= 0) {
+				model.addAttribute("proyectosPropios", proyectosPropios);
+				model.addAttribute("tieneProyectosPropios", true);
+			}
+			else 
+			{
+				model.addAttribute("tieneProyectosPropios", false);
+			}
+			
+		}
 		
+		
+		if (misContratos.size()!=0) {
+			model.addAttribute("misContratos", misContratos);
+			model.addAttribute("tieneContratos", true);
+		}else {
+			model.addAttribute("tieneContratos", false);
+		}
+		
+
+		System.out.println();
 		return "myProfile";
 	}
 }

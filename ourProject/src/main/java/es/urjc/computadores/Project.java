@@ -26,7 +26,7 @@ public class Project {
 	@Id
 	@Column(name = "ID")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	public long id;
 	
 	public String projectName;
 	public String description;
@@ -116,6 +116,4 @@ public class Project {
 	public void setAccountID(String accountID) {
 		this.accountID = accountID;
 	}
-	
-	
 }

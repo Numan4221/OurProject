@@ -75,9 +75,7 @@ public class OurProjectController {
 	*/
 	@PostConstruct
 	public void init() {
-		
-		
-		
+	    
 		User us = new User("sergjio","1234","soyfeo@sergio.com","sergio","plaza");
 		User us1 = new User("dani","1234","soyfeo@dani.com","daniel","jimenez");
 		User us2 = new User("dani2","1234","soyfeo@dani2.com","daniel2","jimenez");

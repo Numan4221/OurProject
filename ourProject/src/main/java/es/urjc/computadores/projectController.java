@@ -39,9 +39,9 @@ public class projectController {
 			String m1_cant, String m1_desc, String m2_cant, String m2_desc, String m3_cant, String m3_desc,
 			String m4_cant, String m4_desc, String m5_cant, String m5_desc) {
 
-		User myUser = (User) userRepo.findFirstByNickname("axwel");
+		User myUser = (User) userRepo.findFirstByNickname("sergjio");
 		// model.addAttribute(attributeName, attributeValue);
-		//Si id no es -1, significa que el proyecto ya estaba creado
+		// Si id no es -1, significa que el proyecto ya estaba creado
 		if (id != -1) {
 			Optional<Project> proyecto = projectRepo.findById(id);
 			Project proyectoReal = proyecto.get();
@@ -90,12 +90,15 @@ public class projectController {
 		}
 		//Si el id es -1, es que hay que crear el proyecto
 		else if (id == -1) {
-			Project projectAux = projectRepo.findFirstByProjectNameAndDeveloperNickname(nombre, myUser.nickname);
+			List<Project> projectAux = projectRepo.findByProjectName(nombre);
 			
-			if (projectAux != null) {
+			if (projectAux.size() != 0) {
 				//Redirect a error
 				//model.addAttribute("nickname", myUser.nickname);
-				return "redirect:/ourProject";
+				String url = "redirect:/ourProject/myProfile/error?nickname=";
+				String name = myUser.nickname;
+				String dest = url + name;
+				return dest;
 			}
 			else {
 				if (service != "" && service != null) {
