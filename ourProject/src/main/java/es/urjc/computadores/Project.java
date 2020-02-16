@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,7 +41,7 @@ public class Project {
 	private String accountID;
 	
 	
-	@ManyToMany 
+	@ManyToMany (fetch = FetchType.EAGER)
 	private List<User> contributors = new ArrayList<User>();
 	@OneToMany(mappedBy="project",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Contract> myProjectContracts = new ArrayList<Contract>();
@@ -50,6 +51,8 @@ public class Project {
 	
 	@ManyToOne
 	public Developer developer;
+	
+	public String developerName;
 	
 	@OneToMany(mappedBy="project", cascade = CascadeType.ALL,orphanRemoval = true)
 	public List<Reward> rewards = new ArrayList<Reward>();
@@ -80,6 +83,7 @@ public class Project {
 		this.getPaidWay = getPaidWay;
 		this.accountID = accountID;
 		this.developer = dev;
+		this.developerName = dev.nickname;
 		this.fechaCreacion = fecha;
 	}
 	
