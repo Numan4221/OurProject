@@ -7,6 +7,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Transient;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @PrimaryKeyJoinColumn(referencedColumnName="id")
@@ -15,6 +18,7 @@ public class Developer extends User {
 	@OneToMany(mappedBy="developer", cascade = CascadeType.REMOVE)
 	private List<Project> myProjects = new ArrayList<Project>();
 	
+
 
 	public List<Project> getMyProjects() {
 		return myProjects;
@@ -45,9 +49,7 @@ public class Developer extends User {
 		
 	}
 	
-	public void deleteProject() {
-		
-	}
+
 	
 	public void editProject() {
 		

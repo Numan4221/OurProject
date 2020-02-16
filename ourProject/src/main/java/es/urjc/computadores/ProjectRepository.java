@@ -12,19 +12,10 @@ public interface ProjectRepository extends JpaRepository<Project,Long>{
 	 * Busca por nombre de Usuario  y nombre del Proyecto
 	 * @param projectName
 	 * @param developer
-	 * @return Lista de Proyectos 
+	 * @return Priemr proyecto encontrado
 	 */
-	List<Project> findByProjectNameAndDeveloperNickname(String projectName,String nickname);
-	
-	/***
-	 * 
-	 * @param projectName
-	 * @param nickname
-	 * @param page
-	 * @return
-	 */
-	Page<Project> findByProjectNameAndDeveloperNickname(String projectName,String nickname, Pageable page);
-	
+	Project findFirstByProjectNameAndDeveloperNickname(String projectName,String nickname);
+
 	/***
 	 * Busca por nombre del proyecto
 	 * @param projectName

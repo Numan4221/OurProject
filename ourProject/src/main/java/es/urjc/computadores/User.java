@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,13 +49,13 @@ public class User {
 		this.accountID = accountID;
 	}
 
-	@ManyToMany(mappedBy="contributors")
+	@ManyToMany(mappedBy="contributors", fetch = FetchType.EAGER)
 	private List<Project> financedProjects = new ArrayList<Project>();
 	
-	@OneToMany(mappedBy="contributor", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy="contributor", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
 	private List<Contract> myContracts = new ArrayList<Contract>();
 	
-	@OneToMany(mappedBy="user", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy="user", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
 	private List<Comment> myComments = new ArrayList<Comment>();
 	
 	
@@ -85,6 +86,7 @@ public class User {
 		isDeveloper = false;
 	}
 
+	
 	public List<Project> getFinancedProjects() {
 		return financedProjects;
 	}
@@ -123,5 +125,14 @@ public class User {
 	public void setMyContracts(List<Contract> myContracts) {
 		this.myContracts = myContracts;
 	}
+
+	public List<Comment> getMyComments() {
+		return myComments;
+	}
+
+	public void setMyComments(List<Comment> myComments) {
+		this.myComments = myComments;
+	}
+	
 	
 }

@@ -66,6 +66,9 @@ public class OurProjectController {
 	
 	@Autowired
 	private GoalRepository goalRepo;
+	
+	@Autowired
+	private ServicioInterno borrador;
 	/*
 	@Autowired
 	private DeveloperRepository devRepo;
@@ -119,9 +122,15 @@ public class OurProjectController {
 		
 		Goal g1 = new Goal(p1,100.0,"video exclusivo");
 		Goal g2 = new Goal(p2,2000.0,"Claves juego");
+		Goal g3 = new Goal(p2,2000.0,"Claves juego");
+		Goal g4 = new Goal(p2,2000.0,"Claves juego");
+		Goal g5 = new Goal(p2,2000.0,"Claves juego");
 		
 		goalRepo.save(g1);
 		goalRepo.save(g2);
+		goalRepo.save(g3);
+		goalRepo.save(g4);
+		goalRepo.save(g5);
 		
 		
 		/*
@@ -144,10 +153,12 @@ public class OurProjectController {
 		*/
 		
 		Comment com1 = new Comment(us1,p1,"Vaya proyecto guapo",new Date());
+		Comment com3 = new Comment(us,p1,"Hostia pilotes",new Date());
 		Comment com2 = new Comment(dev,p2,"Yo doy pasta aqui",new Date());
 		
 		commentRepo.save(com1);
 		commentRepo.save(com2);
+		commentRepo.save(com3);
 		
 		
 		
@@ -162,6 +173,8 @@ public class OurProjectController {
 		
 		userRepo.delete(us2);
 		rewardRepo.delete(r3);
+		borrador.deleteProject(p2.projectName, dev.nickname);
+		borrador.convertirseDesarrollador(us.nickname);
 		//userRepo.delete(us1);
 		//projectRepo.delete(p1);
 		
