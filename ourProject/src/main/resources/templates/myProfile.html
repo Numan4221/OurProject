@@ -32,20 +32,28 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a class="nav-link"
-						href="/ourProject">Inicio <span class="sr-only">(current)</span>
-					</a></li>
+					<li class="nav-item active">
+						<a class="nav-link" href="/ourProject">Inicio <span class="sr-only">(current)</span></a>
+					</li>
+		            <li class="nav-item">
+		                <a class="nav-link" href="#misDonaciones">Mis Donaciones</a>
+		            </li>
+		             <li class="nav-item">
+		                <a class="nav-link" href="#misProyectos">Mis Proyectos</a>
+		            </li>
+		            <li class="nav-item">
+		                <a class="nav-link" href="#personal">Información Perfil</a>
+		            </li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 
 	<!-- Page Content -->
-	<div class="container">
-		<div class="row">
+	<div class="container" id="misDonaciones">
 			<!-- Title -->
 			<h1 class="mt-4">Mis donaciones</h1>
-
+			{{#tieneContratos}}
 			<table class="table">
 				<thead>
 					<tr>
@@ -54,6 +62,7 @@
 						<th scope="col">Desarrollador</th>
 						<th scope="col">Aportacion Realizada</th>
 						<th scope="col">Dinero Recaudado Total</th>
+						<th scope="col">Ver</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -64,15 +73,123 @@
 						<td>{{project.developer.nickname}}</td>
 						<td>{{contribution}}</td>
 						<td>{{project.moneyCollected}}</td>
+						<td>
+							<form action = "/ourProject/project" method = "post">
+                			<input name = "id" type= "hidden" value = {{project.id}}>
+							<button class="btn btn-primary" type = "submit">Ver</button>
+						</form>
 					</tr>
 					{{/misContratos}}
 				</tbody>
 			</table>
-
-		</div>
-		<!-- /.row -->
-
-		<h1>Información personal</h1>
+			<br></br>
+			{{/tieneContratos}}
+			{{^tieneContratos}}
+				<p>No tienes ningún contrato aún</p>
+			{{/tieneContratos}}
+			
+			{{#user.isDeveloper}}
+			<!-- Title -->
+			<h1 class="mt-4" id="misProyectos">Mis proyectos</h1>
+			{{#tieneProyectosPropios}}
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Nombre Proyecto</th>
+						<th scope="col">Aportacion Recibida</th>
+						<th scope="col">Ver</th>
+						<th scope="col">Eliminar</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#proyectosPropios}}
+					<tr>
+						<th scope="row">{{-index}}</th>
+						<td>{{projectName}}</td>
+						<td>{{moneyCollected}}</td>
+						<td>
+							<form action = "/ourProject/project" method = "post">
+                			<input name = "id" type= "hidden" value = {{id}}>
+							<button class="btn btn-primary" type = "submit">Ver</button>
+						</form>
+              			</td>
+              			<td>
+	              			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id{{-index}}">
+							  X
+							</button>
+							
+							<!-- Modal -->
+							<div class="modal fade" id="id{{-index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea eliminar el proyecto?</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+							        Todas las donaciones volverán a sus dueños y se perderán los contratos
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+							        	<form action = "/ourProject/myProfile/deleteProject" method = "post">
+						                	<input name = "projectName" type= "hidden" value = {{projectName}}>
+						                	<input name = "developerNickname" type= "hidden" value = {{user.nickname}}>
+											<button class="btn btn-primary" type ="submit">Sí, eliminar</button>
+										</form>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+              			</td>
+					</tr>
+					{{/proyectosPropios}}
+				</tbody>
+			</table>
+			{{/tieneProyectosPropios}}
+			{{^tieneProyectosPropios}}
+			<p>Aún no tienes ningún proyecto propio</p>
+			{{/tieneProyectosPropios}}
+				<form method = "post" action = "/ourProject/myProfile/newProject">
+					<input type="hidden"  name = "nickname" value = {{user.nickname}}>
+					<button class=" col-md-4 text-center btn btn-warning" type="submit">Subir un Proyecto</button>
+				</form>
+			{{/user.isDeveloper}}
+			{{^user.isDeveloper}}
+			
+				<button class=" col-md-4 text-center btn btn-warning" type="button" data-toggle="modal" data-target="#exampleModal2">
+					Convertir en Desarrollador
+				</button>
+							
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">¿Desea cambiar su cuenta a desarrollador?</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        Se mantendrán todos los contratos, pero tendrá opción de subir sus propios proyectos.
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				        	<form method= "post" action = "/ourProject/myProfile/changeToDeveloper">
+								<input name = "username" type= "hidden" value = {{user.nickname}}>
+								<button class="btn btn-primary" type ="submit">Sí, aceptar</button>
+							</form>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			{{/user.isDeveloper}}
+		
+		<br> <br>
+		<h1 class="mt-4" id = "personal">Información Personal</h1>
 		<form method="post" action = "/ourProject/myProfile">
 			<div style="padding-bottom: 10px">
 				<p>Nombre de usuario</p>
@@ -117,21 +234,9 @@
 			<button tpye="submit">Guardar cambios</button>
 		</form>
 		<div style = "padding-top: 20px">
-		{{#user.isDeveloper}}
-			<form method = "post" action = "/ourProject/myProfile/newProject">
-				<input type="hidden"  name = "nickname" value = {{user.nickname}}>
-				<button tpye="submit">Subir un proyecto</button>
-			</form>
-		{{/user.isDeveloper}}
-		{{^user.isDeveloper}}
-			<form method = "post" action = "/ourProject/myProfile">
-				<input type="hidden"  name="newDev" value = {{user.id}}>
-				<button tpye="submit">Convertirse en desarrollador</button>
-			</form>
-		{{/user.isDeveloper}}
 	</div>
 	</div>
-	
+	<br> <br>
 	<!-- /.container -->
 
 	<!-- Bootstrap core JavaScript -->

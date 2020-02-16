@@ -57,8 +57,11 @@ public class ServicioInterno {
 					projectRepo.save(pro);
 				}
 				for(Contract cont : contracts) {
-					cont.contributor = dev;
-					contractRepo.save(cont);
+					Contract cont2 = new Contract (dev, cont.project, cont.contractContent, cont.contribution);
+					
+					//cont.contributor = dev;
+					//contractRepo.delete(cont);
+					contractRepo.save(cont2);
 				}
 				for(Comment com : comments) {
 					com.user = dev;
