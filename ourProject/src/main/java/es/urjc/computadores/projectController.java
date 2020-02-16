@@ -90,15 +90,9 @@ public class projectController {
 		}
 		//Si el id es -1, es que hay que crear el proyecto
 		else if (id == -1) {
-			List <Project> listaProyectos = projectRepo.findByProjectNameAndDeveloperNickname(nombre, myUser.nickname);
-			boolean mismoNombre = false;
-			for(Project p: listaProyectos) {
-				if (p.projectName.equals(nombre)) {
-					mismoNombre = true;
-					break;
-				}
-			}
-			if (mismoNombre) {
+			Project projectAux = projectRepo.findFirstByProjectNameAndDeveloperNickname(nombre, myUser.nickname);
+			
+			if (projectAux == null) {
 				//Redirect a error
 				return "redirect:/ourProject/myProfile/newProject";
 			}
