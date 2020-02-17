@@ -31,6 +31,7 @@ public class donationController {
 		//model.addAttribute("username", username);
 		
 		model.addAttribute("project", proyectoReal);
+		model.addAttribute("account", myUser.getAccountID());
 		model.addAttribute("user", myUser);
 		
 		return "paginaDonacion";

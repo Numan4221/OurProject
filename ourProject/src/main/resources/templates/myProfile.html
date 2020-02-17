@@ -223,15 +223,15 @@
 			</div>
 			<div style="padding-bottom: 10px">
 				<p>Número de cuenta:</p>
-				{{#user.accountID}} 
-				<input type="text" id="paymentMethod" name="accountNumber" value={{user.accountID}} size="30" >
-				{{/user.accountID}} 
-				{{^user.accountID}} 
+				{{#account}} 
+				<input type="text" id="paymentMethod" name="accountNumber" value={{account}} size="30" >
+				{{/account}} 
+				{{^account}} 
 				<input type="text" id="paymentMethod" name="accountNumber" placeholder="Introduzca el numero de cuenta" size="30" >
-				{{/user.accountID}}
+				{{/account}}
 			</div>
 			<input name = id type = "hidden" value = {{user.id}}>
-			<button tpye="submit">Guardar cambios</button>
+			<button type="submit">Guardar cambios</button>
 		</form>
 		<div style = "padding-top: 20px">
 	</div>

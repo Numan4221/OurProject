@@ -48,6 +48,9 @@ public class ServicioInterno {
 				List<Contract> contracts = user.getMyContracts();
 				List<Comment> comments = user.getMyComments();
 				Developer dev = new Developer(user.nickname,user.getPassword(),user.email,user.name,user.surname);
+				dev.setAccountID(user.getAccountID());
+				dev.setMyPaymentMethod(user.getMyPaymentMethod());
+				
 				userRepo.save(dev);
 				for(Project pro : financedProjects) {
 					List <User> contributors = pro.getContributors();

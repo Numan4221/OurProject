@@ -64,6 +64,7 @@ public class profileController {
 		}
 		
 		model.addAttribute("user", user);
+		model.addAttribute("account",user.getAccountID());
 		
 		if (user.getMyPaymentMethod() != null) {
 			if (user.getMyPaymentMethod() == paymentMethod.PAYPAL) {

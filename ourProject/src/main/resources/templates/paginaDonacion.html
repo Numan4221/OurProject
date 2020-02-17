@@ -66,10 +66,10 @@
         <form action = "/ourProject/project" method = "post">
 	        <div style = "padding-bottom: 10px">
 	          Método de pago:
-	         {{#user.accountID}}
-	          	<input type = "text" id = "paymentMethod" name = "accountNumber" value = {{user.accountID}} size= "30" required >
-	          {{/user.accountID}}
-	          {{^user.accountID}}
+	         {{#account}} 
+				<input type="text" id="paymentMethod" name="accountNumber" value={{account}} size="30" >
+				{{/account}} 
+				{{^account}} 
 	          <div class="form-group">
                 <p class="masthead-subheading font-weight-light mb-0">Tipo de cuenta</p>
                 <div style = "padding-bottom: 10px">
@@ -79,7 +79,7 @@
                 </select>
               </div>
 	          	<input type = "text" id = "paymentMethod" name = "accountNumber" placeholder = "Introduzca el numero de cuenta" size= "30" required >
-	          {{/user.accountID}}
+	          {{/account}}
 	        </div>
 	        Cantidad a donar: 
 	        <input type = "number" name = "donation" step="0.1" min="0" placeholder = "€">
