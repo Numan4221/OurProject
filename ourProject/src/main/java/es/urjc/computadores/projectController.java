@@ -177,7 +177,7 @@ public class projectController {
 					model.addAttribute("moneyCollected", p.moneyCollected);
 					model.addAttribute("comments", p.myComments);
 					model.addAttribute("developer", p.developer.nickname);
-					model.addAttribute("id", id);
+					model.addAttribute("id", p.id);
 					model.addAttribute("usuarioPropio", myUser.nickname);
 					model.addAttribute("fecha", p.fechaCreacion);
 				}
