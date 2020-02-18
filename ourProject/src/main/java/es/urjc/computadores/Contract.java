@@ -1,5 +1,8 @@
 package es.urjc.computadores;
 
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +21,8 @@ public class Contract {
 	User contributor;
 	@ManyToOne
 	Project project;
+	@Column(length=1000000)
+	String information;
 	String contractContent;
 	Double contribution;
 	
@@ -29,8 +34,28 @@ public class Contract {
 		super();
 		this.contributor = contributor;
 		this.project = project;
-		this.contractContent = contractContent;
 		this.contribution = cont;
+		this.contractContent = contractContent;
+		this.information = createContractContent(project, contractContent, cont);	
+	}
+	
+	private String createContractContent(Project project, String contractContent, Double cont) {
+		
+		String cad = "<p>";
+		cad+= contractContent + "<br /><br />";
+		cad+= "<b>Contribución realizada -> </b>" + cont + "<br /><br />";
+		cad+= "<b>Recompensas Obtenidas:</b><br />";
+		
+		List<Reward> recom = project.rewards;
+		int i = 1;
+		for (Reward m : recom) {
+			if (m.recompensa <= cont) {
+				cad+="Recompensa " + i + ": " + m.descripcion + " -> " + m.recompensa + "<br />";
+				i++;
+			}
+		}
+		cad+="</p>";
+		return cad;
 	}
 	
 	

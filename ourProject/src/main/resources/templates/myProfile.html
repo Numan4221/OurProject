@@ -74,10 +74,28 @@
 						<td>{{contribution}}</td>
 						<td>{{project.moneyCollected}}</td>
 						<td>
-							<form action = "/ourProject/project" method = "post">
-                			<input name = "id" type= "hidden" value = {{project.id}}>
-							<button class="btn btn-primary" type = "submit">Ver</button>
-						</form>
+							<!-- Button trigger modal -->
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id1{{-index}}">
+							  Ver Contrato
+							</button>
+							
+							<!-- Modal -->
+							<div class="modal fade" id="id1{{-index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLongTitle">Contrato con {{project.projectName}}</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+							        {{{information}}}
+							      </div>
+							    </div>
+							  </div>
+							</div>
+						</td>
 					</tr>
 					{{/misContratos}}
 				</tbody>
@@ -115,12 +133,12 @@
 						</form>
               			</td>
               			<td>
-	              			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id{{-index}}">
+	              			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id2{{-index}}">
 							  X
 							</button>
 							
 							<!-- Modal -->
-							<div class="modal fade" id="id{{-index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal fade" id="id2{{-index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							  <div class="modal-dialog" role="document">
 							    <div class="modal-content">
 							      <div class="modal-header">
