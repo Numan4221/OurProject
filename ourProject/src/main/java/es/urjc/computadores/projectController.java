@@ -32,12 +32,16 @@ public class projectController {
 	
 	@Autowired
 	private GoalRepository goalRepo;
+	
+	
 
 	@RequestMapping("/ourProject/project")
 	public String load(Model model,  @RequestParam  long id, String comentario, String donation,
 			String accountNumber, String service, String newProject, String nombre, String descripcion, String accountID,
 			String m1_cant, String m1_desc, String m2_cant, String m2_desc, String m3_cant, String m3_desc,
-			String m4_cant, String m4_desc, String m5_cant, String m5_desc) {
+			String m4_cant, String m4_desc, String m5_cant, String m5_desc,
+			String r1_cant, String r1_desc, String r2_cant, String r2_desc, String r3_cant, String r3_desc,
+			String r4_cant, String r4_desc, String r5_cant, String r5_desc) {
 
 		User myUser = (User) userRepo.findFirstByNickname("sergjio");
 		// model.addAttribute(attributeName, attributeValue);
@@ -110,6 +114,9 @@ public class projectController {
 					} else {
 						p = new Project(nombre, descripcion, paymentMethod.CREDITCARD, accountID, (Developer) myUser, dateFormat.format(date));
 					}
+					
+					//Guardamos los objetivos o metas del proyecto
+					
 					List <Goal> lista = new ArrayList<>();
 					Goal g1, g2, g3, g4, g5;
 					if (m1_cant != "" && m1_cant != null && m1_desc != "" && m1_desc != null) {
@@ -132,6 +139,32 @@ public class projectController {
 						g5 = new Goal(p, Double.valueOf(m5_cant), m5_desc);
 						lista.add(g5);
 					}
+					
+					//Guardamos las recompensas que se ofrecen a los contribuyentes
+					List <Reward> listaRe = new ArrayList<>();
+					Reward r1, r2, r3, r4, r5;
+					if (r1_cant != "" && r1_cant != null && r1_desc != "" && r1_desc != null) {
+						r1 = new Reward(Double.valueOf(r1_cant), r1_desc, p);
+						listaRe.add(r1);
+					}
+					if (r2_cant != "" && r2_cant != null && r2_desc != "" && r2_desc != null) {
+						r2 = new Reward(Double.valueOf(r2_cant), r2_desc, p);
+						listaRe.add(r2);
+					}
+					if (r3_cant != "" && r3_cant != null && r3_desc != "" && r3_desc != null) {
+						r3 = new Reward(Double.valueOf(r3_cant), r3_desc, p);
+						listaRe.add(r3);
+					}
+					if (r4_cant != "" && r4_cant != null && r4_desc != "" && r4_desc != null) {
+						r4 = new Reward(Double.valueOf(r4_cant), r4_desc, p);
+						listaRe.add(r4);
+					}
+					if (r5_cant != "" && r5_cant != null && r5_desc != "" && r5_desc != null) {
+						r5 = new Reward(Double.valueOf(r5_cant), r5_desc, p);
+						listaRe.add(r5);
+					}
+					
+					p.setRewards(listaRe);
 					p.setGoals(lista);
 					projectRepo.save(p);
 					goalRepo.saveAll(lista);

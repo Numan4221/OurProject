@@ -116,4 +116,13 @@ public class Project {
 	public void setAccountID(String accountID) {
 		this.accountID = accountID;
 	}
+
+	public List<Reward> getRewards() {
+		return rewards;
+	}
+
+	public void setRewards(List<Reward> rewards) {
+		this.rewards = rewards;
+	}
+	
 }
