@@ -1,6 +1,8 @@
 package es.urjc.computadores;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -98,6 +100,15 @@ public class Project {
 	}
 
 	public void setGoals(List<Goal> goals) {
+		Collections.sort(goals, new Comparator() {
+			@Override
+			public int compare(Object o1, Object o2) {
+				// TODO Auto-generated method stub
+				Goal g1 = (Goal) o1;
+				Goal g2 = (Goal) o2;
+				return new Double(g1.goal).compareTo(new Double(g2.goal));
+			}
+		});
 		this.goals = goals;
 	}
 
@@ -122,6 +133,15 @@ public class Project {
 	}
 
 	public void setRewards(List<Reward> rewards) {
+		Collections.sort(rewards, new Comparator() {
+			@Override
+			public int compare(Object o1, Object o2) {
+				// TODO Auto-generated method stub
+				Reward g1 = (Reward) o1;
+				Reward g2 = (Reward) o2;
+				return new Double(g1.recompensa).compareTo(new Double(g2.recompensa));
+			}
+		});
 		this.rewards = rewards;
 	}
 	

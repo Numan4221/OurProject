@@ -129,8 +129,8 @@ public class OurProjectController {
 			Goal g3 = new Goal(p2, 150.0, "Juego extra: Naufragos en Ron");
 			Goal g4 = new Goal(p2, 300.0, "Herramienta para incluir preguntas y retos");
 			Goal g5 = new Goal(p1, 250.0, " 3 malos nuevos y niveles hasta el 150");
-			Goal g6 = new Goal(p3, 120.0, "DLC");
-			Goal g7 = new Goal(p3, 50.0, "Mision especial: Capitalismo salvaje");
+			Goal g6 = new Goal(p3, 50.0, "Mision especial: Capitalismo salvaje");
+			Goal g7 = new Goal(p3, 120.0, "DLC");
 			Goal g8 = new Goal(p4, 80.0, "DLC Fire3");
 			Goal g9 = new Goal(p4, 320.0, "Editor de escenarios gratuito");
 
@@ -139,8 +139,8 @@ public class OurProjectController {
 			goalRepo.save(g3);
 			goalRepo.save(g4);
 			goalRepo.save(g5);
-			goalRepo.save(g7);
 			goalRepo.save(g6);
+			goalRepo.save(g7);
 			goalRepo.save(g8);
 			goalRepo.save(g9);
 
