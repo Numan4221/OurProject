@@ -81,7 +81,7 @@
 		<p style="text-align: right">Posted on {{fecha}}</p>
         <p>{{desc}}</p>
 
-		<form method= "post" action = "paginaDonacion">
+		<form method= "post" action = "/ourProject/project/paginaDonacion">
 			<input name = "id" type= "hidden" value = {{id}}>
 			<button class=" col-md-4 text-center btn btn-warning" type="submit">Donar</button>
 		</form>
@@ -91,7 +91,7 @@
         <div class="card my-4">
           <h5 class="card-header">Deja un comentario:</h5>
           <div class="card-body">
-            <form action = "project" method = "post">
+            <form action = "/ourProject/project/comment" method = "post">
                 	<input name = "id" type= "hidden" value = {{id}}>
               <div class="form-group">
                 <textarea name="comentario" class="form-control" rows="3"></textarea>

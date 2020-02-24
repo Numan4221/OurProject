@@ -74,7 +74,6 @@ public class profileController {
 			}
 		}
 		
-		System.out.println(newDev);
 		if (newDev != "" && newDev != null) {
 			user.isDeveloper= true;
 			userRepo.save(user);
@@ -102,7 +101,6 @@ public class profileController {
 		}
 		
 
-		System.out.println();
 		return "myProfile";
 	}
 }

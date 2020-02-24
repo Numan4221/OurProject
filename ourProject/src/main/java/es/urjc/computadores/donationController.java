@@ -18,7 +18,7 @@ public class donationController {
 	private ProjectRepository projectRepo;
 	
 	
-	@RequestMapping("/ourProject/paginaDonacion")
+	@RequestMapping("/ourProject/project/paginaDonacion")
 	public String load(Model model, @RequestParam long id) {
 		
 		Optional<Project> proyecto = projectRepo.findById(id);

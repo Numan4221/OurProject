@@ -10,7 +10,7 @@ public class errorCreandoProyectoController {
 
 	@RequestMapping("/ourProject/myProfile/error")
 	public String load(Model model,  @RequestParam  String nickname) {
-		System.out.println(nickname);
+		//System.out.println(nickname);
 		model.addAttribute("nick", nickname);
 		return "401";
 	}
