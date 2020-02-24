@@ -127,10 +127,7 @@
 						<td>{{projectName}}</td>
 						<td>{{moneyCollected}}</td>
 						<td>
-							<form action = "/ourProject/project" method = "post">
-                			<input name = "id" type= "hidden" value = {{id}}>
-							<button class="btn btn-primary" type = "submit">Ver</button>
-						</form>
+							<a class="btn btn-primary" href = "/ourProject/project/{{id}}" type = "button">Ver</a>
               			</td>
               			<td>
 	              			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id2{{-index}}">

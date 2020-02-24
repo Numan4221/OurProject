@@ -81,10 +81,7 @@
 		<p style="text-align: right">Posted on {{fecha}}</p>
         <p>{{desc}}</p>
 
-		<form method= "post" action = "/ourProject/project/paginaDonacion">
-			<input name = "id" type= "hidden" value = {{id}}>
-			<button class=" col-md-4 text-center btn btn-warning" type="submit">Donar</button>
-		</form>
+		<a class=" col-md-4 text-center btn btn-warning" type = "button" href = "/ourProject/project/donationPage/{{id}}" >Donar</a>
         <hr>
 
         <!-- Comments Form -->

@@ -35,7 +35,7 @@ public class projectController {
 	@Autowired
 	private GoalRepository goalRepo;
 
-	@RequestMapping("/ourProject/project/donation")
+	@PostMapping("/ourProject/project/donation")
 	public String donation(Model model, @RequestParam long id, String donation, String accountNumber, String service) {
 
 		User myUser = (User) userRepo.findFirstByNickname("sergjio");
@@ -74,11 +74,11 @@ public class projectController {
 		model.addAttribute("id", id);
 		model.addAttribute("usuarioPropio", myUser.nickname);
 		model.addAttribute("fecha", proyectoReal.fechaCreacion);
-
-		return "paginaProyecto";
+		return "redirect:/ourProject/project/" + id;
+		//return "paginaProyecto";
 	}
 
-	@RequestMapping("/ourProject/project/create")
+	@PostMapping("/ourProject/project/create")
 	public String creation(Model model, @RequestParam long id, String service, String newProject, String nombre,
 			String descripcion, String accountID, String m1_cant, String m1_desc, String m2_cant, String m2_desc,
 			String m3_cant, String m3_desc, String m4_cant, String m4_desc, String m5_cant, String m5_desc,
@@ -175,15 +175,15 @@ public class projectController {
 					model.addAttribute("id", p.id);
 					model.addAttribute("usuarioPropio", myUser.nickname);
 					model.addAttribute("fecha", p.fechaCreacion);
-					//return "redirect:/ourProject/project/" + p.id;
+					return "redirect:/ourProject/project/" + p.id;
 				}
 			}
 		}
-		//return "redirect:/ourProject";
-		return "paginaProyecto";
+		return "redirect:/ourProject";
+		//return "paginaProyecto";
 	}
 
-	@RequestMapping("/ourProject/project/comment")
+	@PostMapping("/ourProject/project/comment")
 	public String comment(Model model, @RequestParam long id, String comentario) {
 
 		User myUser = (User) userRepo.findFirstByNickname("sergjio");
@@ -209,12 +209,12 @@ public class projectController {
 			model.addAttribute("usuarioPropio", myUser.nickname);
 			model.addAttribute("fecha", proyectoReal.fechaCreacion);
 		}
-		//return "redirect:/ourProject/project/" + id;
-		return "paginaProyecto";
+		return "redirect:/ourProject/project/" + id;
+		//return "paginaProyecto";
 	}
 
-	@RequestMapping("/ourProject/project")
-	public String load(Model model, @RequestParam long id) {
+	@RequestMapping("/ourProject/project/{id}")
+	public String load(Model model, @PathVariable (required = false) long id) {
 
 		User myUser = (User) userRepo.findFirstByNickname("sergjio");
 
