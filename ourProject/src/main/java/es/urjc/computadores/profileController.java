@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,11 +24,50 @@ public class profileController {
 	private ProjectRepository projectRepo;
 	
 	@RequestMapping("/ourProject/myProfile")
-	public String profileMode(Model model, String id, String username, String name, String surname, String email, String option, String accountNumber, String newDev) {
+	public String profileMode(Model model) {
 		
 		User user = (User) userRepo.findFirstByNickname("sergjio");
 		
 		List<Contract> misContratos = contractRepo.findByContributorNickname(user.nickname);
+	
+		model.addAttribute("user", user);
+		model.addAttribute("account",user.getAccountID());
+		
+		if (user.getMyPaymentMethod() != null) {
+			if (user.getMyPaymentMethod() == paymentMethod.PAYPAL) {
+				model.addAttribute("paypal", true);
+			} else {
+				model.addAttribute("paypal", false);
+			}
+		}
+		
+		if (user.isDeveloper) {
+			List<Project> proyectosPropios = projectRepo.findByDeveloperNickname(user.nickname);
+			if (proyectosPropios.size()!= 0) {
+				model.addAttribute("proyectosPropios", proyectosPropios);
+				model.addAttribute("tieneProyectosPropios", true);
+			}
+			else 
+			{
+				model.addAttribute("tieneProyectosPropios", false);
+			}
+			
+		}
+		
+		if (misContratos.size()!=0) {
+			model.addAttribute("misContratos", misContratos);
+			model.addAttribute("tieneContratos", true);
+		}else {
+			model.addAttribute("tieneContratos", false);
+		}
+		
+		return "myProfile";
+	}
+	
+	@PostMapping("/ourProject/myProfile/change")
+	public String profileChange(Model model, String id, String username, String name, String surname, String email, String option, String accountNumber, String newDev) {
+		
+		User user = (User) userRepo.findFirstByNickname("sergjio");
 	
 		if (option != "" && option != null) {
 			if (option.equals("Paypal")) {
@@ -63,44 +103,11 @@ public class profileController {
 			userRepo.save(user);
 		}
 		
-		model.addAttribute("user", user);
-		model.addAttribute("account",user.getAccountID());
-		
-		if (user.getMyPaymentMethod() != null) {
-			if (user.getMyPaymentMethod() == paymentMethod.PAYPAL) {
-				model.addAttribute("paypal", true);
-			} else {
-				model.addAttribute("paypal", false);
-			}
-		}
-		
 		if (newDev != "" && newDev != null) {
 			user.isDeveloper= true;
 			userRepo.save(user);
 		}
-		
-		if (user.isDeveloper) {
-			List<Project> proyectosPropios = projectRepo.findByDeveloperNickname(user.nickname);
-			if (proyectosPropios.size()!= 0) {
-				model.addAttribute("proyectosPropios", proyectosPropios);
-				model.addAttribute("tieneProyectosPropios", true);
-			}
-			else 
-			{
-				model.addAttribute("tieneProyectosPropios", false);
-			}
-			
-		}
-		
-		
-		if (misContratos.size()!=0) {
-			model.addAttribute("misContratos", misContratos);
-			model.addAttribute("tieneContratos", true);
-		}else {
-			model.addAttribute("tieneContratos", false);
-		}
-		
-
-		return "myProfile";
+		return "redirect:/ourProject/myProfile";
 	}
+	
 }
