@@ -1,5 +1,6 @@
 package es.urjc.computadores;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import es.urjc.computadores.User.paymentMethod;
 
@@ -34,6 +36,9 @@ public class projectController {
 
 	@Autowired
 	private GoalRepository goalRepo;
+	
+	@Autowired
+	private ImageService imageService;
 
 	@PostMapping("/ourProject/project/donation")
 	public String donation(Model model, @RequestParam long id, String donation, String accountNumber, String service) {
@@ -74,6 +79,9 @@ public class projectController {
 		model.addAttribute("id", id);
 		model.addAttribute("usuarioPropio", myUser.nickname);
 		model.addAttribute("fecha", proyectoReal.fechaCreacion);
+		model.addAttribute("hasImage",proyectoReal.hasImage);
+		model.addAttribute("noHasImage",proyectoReal.noHasImage);
+		model.addAttribute("imageURL",proyectoReal.imageURL);
 		return "redirect:/ourProject/project/" + id;
 		//return "paginaProyecto";
 	}
@@ -83,7 +91,7 @@ public class projectController {
 			String descripcion, String accountID, String m1_cant, String m1_desc, String m2_cant, String m2_desc,
 			String m3_cant, String m3_desc, String m4_cant, String m4_desc, String m5_cant, String m5_desc,
 			String r1_cant, String r1_desc, String r2_cant, String r2_desc, String r3_cant, String r3_desc,
-			String r4_cant, String r4_desc, String r5_cant, String r5_desc) {
+			String r4_cant, String r4_desc, String r5_cant, String r5_desc, MultipartFile imagenFile) {
 
 		User myUser = (User) userRepo.findFirstByNickname("sergjio");
 
@@ -114,23 +122,25 @@ public class projectController {
 
 					List<Goal> lista = new ArrayList<>();
 					Goal g1, g2, g3, g4, g5;
-					if (m1_cant != "" && m1_cant != null && m1_desc != "" && m1_desc != null) {
+					if (!m1_cant.isEmpty()  && !m1_desc.isEmpty()) {
 						g1 = new Goal(p, Double.valueOf(m1_cant), m1_desc);
 						lista.add(g1);
 					}
-					if (m2_cant != "" && m2_cant != null && m2_desc != "" && m2_desc != null) {
+					if (!m2_cant.isEmpty() && !m2_desc.isEmpty()) {
+						System.out.println(m2_cant);
+						System.out.println(m2_desc);
 						g2 = new Goal(p, Double.valueOf(m2_cant), m2_desc);
 						lista.add(g2);
 					}
-					if (m3_cant != "" && m3_cant != null && m3_desc != "" && m3_desc != null) {
+					if (!m3_cant.isEmpty()  && !m3_desc.isEmpty()) {
 						g3 = new Goal(p, Double.valueOf(m3_cant), m3_desc);
 						lista.add(g3);
 					}
-					if (m4_cant != "" && m4_cant != null && m4_desc != "" && m4_desc != null) {
+					if (!m4_cant.isEmpty()  && !m4_desc.isEmpty()) {
 						g4 = new Goal(p, Double.valueOf(m4_cant), m4_desc);
 						lista.add(g4);
 					}
-					if (m5_cant != "" && m5_cant != null && m5_desc != "" && m5_desc != null) {
+					if (!m5_cant.isEmpty()  && !m5_desc.isEmpty()) {
 						g5 = new Goal(p, Double.valueOf(m5_cant), m5_desc);
 						lista.add(g5);
 					}
@@ -138,33 +148,50 @@ public class projectController {
 					// Guardamos las recompensas que se ofrecen a los contribuyentes
 					List<Reward> listaRe = new ArrayList<>();
 					Reward r1, r2, r3, r4, r5;
-					if (r1_cant != "" && r1_cant != null && r1_desc != "" && r1_desc != null) {
+					if (!r1_cant.isEmpty()  && !r1_desc.isEmpty()) {
 						r1 = new Reward(Double.valueOf(r1_cant), r1_desc, p);
 						listaRe.add(r1);
 					}
-					if (r2_cant != "" && r2_cant != null && r2_desc != "" && r2_desc != null) {
+					if (!r2_cant.isEmpty()  && !r2_desc.isEmpty()) {
 						r2 = new Reward(Double.valueOf(r2_cant), r2_desc, p);
 						listaRe.add(r2);
 					}
-					if (r3_cant != "" && r3_cant != null && r3_desc != "" && r3_desc != null) {
+					if (!r3_cant.isEmpty()  && !r3_desc.isEmpty()) {
 						r3 = new Reward(Double.valueOf(r3_cant), r3_desc, p);
 						listaRe.add(r3);
 					}
-					if (r4_cant != "" && r4_cant != null && r4_desc != "" && r4_desc != null) {
+					if (!r4_cant.isEmpty()  && !r4_desc.isEmpty()) {
 						r4 = new Reward(Double.valueOf(r4_cant), r4_desc, p);
 						listaRe.add(r4);
 					}
-					if (r5_cant != "" && r5_cant != null && r5_desc != "" && r5_desc != null) {
+					if (!r5_cant.isEmpty()  && !r5_desc.isEmpty()) {
 						r5 = new Reward(Double.valueOf(r5_cant), r5_desc, p);
 						listaRe.add(r5);
 					}
 
 					p.setRewards(listaRe);
 					p.setGoals(lista);
+					
+
+					
 					projectRepo.save(p);
 					goalRepo.saveAll(lista);
 					userRepo.save(myUser);
 					
+					//comprobamos si hay imagen
+					if(imagenFile != null) {
+						p.hasImage = true;
+						p.noHasImage = false;
+						try {
+							p.imageURL = imageService.saveImage("proyectos", p.id, imagenFile);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else {
+						System.out.println(" no hay imagen");
+					}
+					projectRepo.save(p);
 					model.addAttribute("titulo", p.projectName);
 					model.addAttribute("desc", p.description);
 					model.addAttribute("goals", p.goals);
@@ -175,6 +202,9 @@ public class projectController {
 					model.addAttribute("id", p.id);
 					model.addAttribute("usuarioPropio", myUser.nickname);
 					model.addAttribute("fecha", p.fechaCreacion);
+					model.addAttribute("hasImage",p.hasImage);
+					model.addAttribute("noHasImage",p.noHasImage);
+					model.addAttribute("imageURL",p.imageURL);
 					return "redirect:/ourProject/project/" + p.id;
 				}
 			}
@@ -208,6 +238,9 @@ public class projectController {
 			model.addAttribute("id", id);
 			model.addAttribute("usuarioPropio", myUser.nickname);
 			model.addAttribute("fecha", proyectoReal.fechaCreacion);
+			model.addAttribute("hasImage",proyectoReal.hasImage);
+			model.addAttribute("noHasImage",proyectoReal.noHasImage);
+			model.addAttribute("imageURL",proyectoReal.imageURL);
 		}
 		return "redirect:/ourProject/project/" + id;
 		//return "paginaProyecto";
@@ -231,6 +264,9 @@ public class projectController {
 		model.addAttribute("id", id);
 		model.addAttribute("usuarioPropio", myUser.nickname);
 		model.addAttribute("fecha", proyectoReal.fechaCreacion);
+		model.addAttribute("hasImage",proyectoReal.hasImage);
+		model.addAttribute("noHasImage",proyectoReal.noHasImage);
+		model.addAttribute("imageURL",proyectoReal.imageURL);
 
 		return "paginaProyecto";
 	}

@@ -35,7 +35,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Perfil</a>
+            <a class="nav-link" href="/ourProject/myProfile">Perfil</a>
           </li>
         </ul>
       </div>
@@ -49,14 +49,20 @@
 
       <!-- Post Content Column -->
       <div class="col-lg-8">
-
+      	{{#comeFromDonation}}
+      	<div style = "padding-top: 10px;background-color: red">
+      		<a> Gracias por su donación. Puede consultar el recibo en su </a>
+      		<a href="/ourProject/myProfile">perfil</a>.
+      	</div>
+		
+		{{/comeFromDonation}}
         <!-- Title -->
         <h1 class="mt-4">{{titulo}}</h1>
 
         <!-- Author -->
         <p class="lead">
           by
-          <a href="#">{{developer}}</a>
+          <a>{{developer}}</a>
         </p>
 
         <hr>
@@ -72,18 +78,17 @@
         <hr>
 
         <!-- Post Content -->
-		<p style="text-align: right">Posted on January 1, 2019 at 12:00 PM</p>
+		<p style="text-align: right">Posted on {{fecha}}</p>
         <p>{{desc}}</p>
 
-		<button class=" col-md-4 text-center btn btn-warning" type="button">Donar</button>
-
+		<a class=" col-md-4 text-center btn btn-warning" type = "button" href = "/ourProject/project/donationPage/{{id}}" >Donar</a>
         <hr>
 
         <!-- Comments Form -->
         <div class="card my-4">
           <h5 class="card-header">Deja un comentario:</h5>
           <div class="card-body">
-            <form action = "project" method = "post">
+            <form action = "/ourProject/project/comment" method = "post">
                 	<input name = "id" type= "hidden" value = {{id}}>
               <div class="form-group">
                 <textarea name="comentario" class="form-control" rows="3"></textarea>

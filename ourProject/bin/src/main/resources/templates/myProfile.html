@@ -1,11 +1,263 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<title>OurProject</title>
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>{{user.nickname}} - OurProject</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="/css/blog-post.css" rel="stylesheet">
+
 </head>
+
 <body>
-	<p>Bienvenido, {{username}}</p>
-	<a href= "/ourProject">Pagina principal</a>
+
+	<!-- Navigation -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<div class="container">
+			<a class="navbar-brand" href="/ourProject">OurProject</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarResponsive" aria-controls="navbarResponsive"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="/ourProject">Inicio <span class="sr-only">(current)</span></a>
+					</li>
+		            <li class="nav-item">
+		                <a class="nav-link" href="#misDonaciones">Mis Donaciones</a>
+		            </li>
+		             <li class="nav-item">
+		                <a class="nav-link" href="#misProyectos">Mis Proyectos</a>
+		            </li>
+		            <li class="nav-item">
+		                <a class="nav-link" href="#personal">Información Perfil</a>
+		            </li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Page Content -->
+	<div class="container" id="misDonaciones">
+			<!-- Title -->
+			<h1 class="mt-4">Mis donaciones</h1>
+			{{#tieneContratos}}
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Nombre Proyecto</th>
+						<th scope="col">Desarrollador</th>
+						<th scope="col">Aportacion Realizada</th>
+						<th scope="col">Dinero Recaudado Total</th>
+						<th scope="col">Ver</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#misContratos}}
+					<tr>
+						<th scope="row">{{-index}}</th>
+						<td>{{project.projectName}}</td>
+						<td>{{project.developer.nickname}}</td>
+						<td>{{contribution}}</td>
+						<td>{{project.moneyCollected}}</td>
+						<td>
+							<!-- Button trigger modal -->
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id1{{-index}}">
+							  Ver Contrato
+							</button>
+							
+							<!-- Modal -->
+							<div class="modal fade" id="id1{{-index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLongTitle">Contrato con {{project.projectName}}</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+							        {{{information}}}
+							      </div>
+							    </div>
+							  </div>
+							</div>
+						</td>
+					</tr>
+					{{/misContratos}}
+				</tbody>
+			</table>
+			<br></br>
+			{{/tieneContratos}}
+			{{^tieneContratos}}
+				<p>No tienes ningún contrato aún</p>
+			{{/tieneContratos}}
+			
+			{{#user.isDeveloper}}
+			<!-- Title -->
+			<h1 class="mt-4" id="misProyectos">Mis proyectos</h1>
+			{{#tieneProyectosPropios}}
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Nombre Proyecto</th>
+						<th scope="col">Aportacion Recibida</th>
+						<th scope="col">Ver</th>
+						<th scope="col">Eliminar</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#proyectosPropios}}
+					<tr>
+						<th scope="row">{{-index}}</th>
+						<td>{{projectName}}</td>
+						<td>{{moneyCollected}}</td>
+						<td>
+							<a class="btn btn-primary" href = "/ourProject/project/{{id}}" type = "button">Ver</a>
+              			</td>
+              			<td>
+	              			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id2{{-index}}">
+							  X
+							</button>
+							
+							<!-- Modal -->
+							<div class="modal fade" id="id2{{-index}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea eliminar el proyecto?</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+							        Todas las donaciones volverán a sus dueños y se perderán los contratos
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+							        	<form action = "/ourProject/myProfile/deleteProject" method = "post">
+						                	<input name = "projectName" type= "hidden" value = {{projectName}}>
+						                	<input name = "developerNickname" type= "hidden" value = {{user.nickname}}>
+											<button class="btn btn-primary" type ="submit">Sí, eliminar</button>
+										</form>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+              			</td>
+					</tr>
+					{{/proyectosPropios}}
+				</tbody>
+			</table>
+			{{/tieneProyectosPropios}}
+			{{^tieneProyectosPropios}}
+			<p>Aún no tienes ningún proyecto propio</p>
+			{{/tieneProyectosPropios}}
+				<form method = "post" action = "/ourProject/myProfile/newProject">
+					<input type="hidden"  name = "nickname" value = {{user.nickname}}>
+					<button class=" col-md-4 text-center btn btn-warning" type="submit">Subir un Proyecto</button>
+				</form>
+			{{/user.isDeveloper}}
+			{{^user.isDeveloper}}
+			
+				<button class=" col-md-4 text-center btn btn-warning" type="button" data-toggle="modal" data-target="#exampleModal2">
+					Convertir en Desarrollador
+				</button>
+							
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">¿Desea cambiar su cuenta a desarrollador?</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        Se mantendrán todos los contratos, pero tendrá opción de subir sus propios proyectos.
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				        	<form method= "post" action = "/ourProject/myProfile/changeToDeveloper">
+								<input name = "username" type= "hidden" value = {{user.nickname}}>
+								<button class="btn btn-primary" type ="submit">Sí, aceptar</button>
+							</form>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			{{/user.isDeveloper}}
+		
+		<br> <br>
+		<h1 class="mt-4" id = "personal">Información Personal</h1>
+		<form method="post" action = "/ourProject/myProfile/change">
+			<div style="padding-bottom: 10px">
+				<p>Nombre de usuario</p>
+				<input type="text" value={{user.nickname}} name="username">
+			</div>
+			<div style="padding-bottom: 10px">
+				<p>Nombre</p>
+				<input type="text" value={{user.name}} name="name">
+			</div>
+			<div style="padding-bottom: 10px">
+				<p>Apellido</p>
+				<input type="text" value={{user.surname}} name="surname">
+			</div>
+			<div style="padding-bottom: 10px">
+				<p>Email</p>
+				<input type="text" value={{user.email}} name="email">
+			</div>
+			<div style="padding-bottom: 10px">
+				<p>Método de pago:</p>
+				<select class="selection-2 select2-hidden-accessible" name="option"
+					tabindex="-1" aria-hidden="true"> 
+					{{#paypal}}
+					<option>Tarjeta de crédito</option>
+					<option selected>Paypal</option> 
+					{{/paypal}} 
+					{{^paypal}}
+					<option selected>Tarjeta de crédito</option>
+					<option>Paypal</option> 
+					{{/paypal}}
+				</select>
+			</div>
+			<div style="padding-bottom: 10px">
+				<p>Número de cuenta:</p>
+				{{#account}} 
+				<input type="text" id="paymentMethod" name="accountNumber" value={{account}} size="30" >
+				{{/account}} 
+				{{^account}} 
+				<input type="text" id="paymentMethod" name="accountNumber" placeholder="Introduzca el numero de cuenta" size="30" >
+				{{/account}}
+			</div>
+			<input name = id type = "hidden" value = {{user.id}}>
+			<button type="submit">Guardar cambios</button>
+		</form>
+		<div style = "padding-top: 20px">
+	</div>
+	</div>
+	<br> <br>
+	<!-- /.container -->
+
+	<!-- Bootstrap core JavaScript -->
+	<script src="/vendor/jquery/jquery.min.js"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>

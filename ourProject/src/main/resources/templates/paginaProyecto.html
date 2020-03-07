@@ -73,7 +73,14 @@
         <hr>
 
         <!-- Preview Image -->
-        <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+            {{#noHasImage}}
+            <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+            {{/noHasImage}}
+            
+            {{#hasImage}}
+            <img class="img-fluid" src={{imageURL}}  alt="">
+            {{/hasImage}}
+
 
         <hr>
 

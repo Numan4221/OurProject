@@ -1,5 +1,6 @@
 package es.urjc.computadores;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -61,9 +62,12 @@ public class Project {
 	
 	@OneToMany(mappedBy="project", cascade = CascadeType.ALL,orphanRemoval = true)
 	public List<Reward> rewards = new ArrayList<Reward>();
+
 	
-	@Lob
-	public byte[] projectPic;
+	boolean hasImage = false;
+	boolean noHasImage = true;
+	
+	String imageURL;
 	
 	// comentarios
 	

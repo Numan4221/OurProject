@@ -8,13 +8,14 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Blog Post - Start Bootstrap Template</title>
+
+  <title>Donar a {{project.projectName}}</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="css/blog-post.css" rel="stylesheet">
+  <link href="/css/blog-post.css" rel="stylesheet">
 
 </head>
 
@@ -23,19 +24,19 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">OurProject</a>
+      <a class="navbar-brand" href="/ourProject">OurProject</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Inicio
+            <a class="nav-link" href="/ourProject">Inicio
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Perfil</a>
+            <a class="nav-link" href="/ourProject/myProfile">Perfil</a>
           </li>
         </ul>
       </div>
@@ -48,27 +49,45 @@
     <div class="row">
 
       <!-- Post Content Column -->
-      <div class="col-lg-8">
+      <div class="col-lg-6">
 
         <!-- Title -->
-        <h1 class="mt-4">T&iacute;tulo Juego</h1>
+        <h1 class="mt-4">{{project.projectName}}</h1>
 
         <!-- Author -->
         <p class="lead">
-          by
-          <a href="#">Equipo Desarrollo</a>
+          por
+          <a>{{project.developer.nickname}}</a>
         </p>
 
 
         <p>Descripci&oacute;n del proyecto</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
-        <p>Elija la cantidad que quiere donar al proyecto.</p>
-        <form method = "post">
-          <input type = "number" id = "donation" step="0.1" min="0">
-          <div style = "padding-top: 10px;">
-            <button class=" col-md-4 text-center btn btn-warning" type="button">Donar</button>
-          </div>
-          
+        <p>{{project.description}}</p>
+        <form action = "/ourProject/project/donation" method = "post">
+	        <div style = "padding-bottom: 10px">
+	          Método de pago:
+	         {{#account}} 
+				<input type="text" id="paymentMethod" name="accountNumber" value={{account}} size="30" >
+				{{/account}} 
+				{{^account}} 
+	          <div class="form-group">
+                <p class="masthead-subheading font-weight-light mb-0">Tipo de cuenta</p>
+                <div style = "padding-bottom: 10px">
+                <select class="selection-2 select2-hidden-accessible" name="service" tabindex="-1" aria-hidden="true">
+                	<option selected>Tarjeta de crédito</option>
+               		<option>Paypal</option>
+                </select>
+              </div>
+	          	<input type = "text" id = "paymentMethod" name = "accountNumber" placeholder = "Introduzca el numero de cuenta" size= "30" required >
+	          {{/account}}
+	        </div>
+	        Cantidad a donar: 
+	        <input type = "number" name = "donation" step="0.1" min="0" placeholder = "€">
+	        <input type = "hidden" name = "id" value = "{{project.id}}" >
+	        <div style = "padding-top: 10px;">
+	           	<button class=" col-md-4 text-center btn btn-warning" type="submit">Donar</button>
+	        </div>
+	        
         </form>
 
 
@@ -82,8 +101,8 @@
 
 
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

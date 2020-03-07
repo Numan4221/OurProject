@@ -31,6 +31,7 @@ public class profileController {
 		List<Contract> misContratos = contractRepo.findByContributorNickname(user.nickname);
 	
 		model.addAttribute("user", user);
+		model.addAttribute("nickname", user.name);
 		model.addAttribute("account",user.getAccountID());
 		
 		if (user.getMyPaymentMethod() != null) {

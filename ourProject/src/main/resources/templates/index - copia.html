@@ -98,7 +98,14 @@
                 <i class="fas fa-plus fa-3x"></i>
               </div>
             </div>
+            {{#noHasImage}}
             <img class="img-fluid" src="/img/portfolio/projectButtonNotFound.jpg" alt="">
+            {{/noHasImage}}
+            
+            {{#hasImage}}
+            <img class="img-fluid" src={{imageURL}}  alt="">
+            {{/hasImage}}
+            
 			<h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">{{projectName}}</h2>
           </div>
         </div>
@@ -144,7 +151,14 @@
                   <div class="divider-custom-line"></div>
                 </div>
                 <!-- Portfolio Modal - Image -->
-                <img class="img-fluid rounded mb-5" src="/img/portfolio/projectButtonNotFound.jpg" alt="">
+                {{#noHasImage}}
+	            <img class="img-fluid" src="/img/portfolio/projectButtonNotFound.jpg" alt="">
+	            {{/noHasImage}}
+	            
+	            {{#hasImage}}
+	            <img class="img-fluid" src={{imageURL}} alt="">
+	            {{/hasImage}}
+            
                 <!-- Portfolio Modal - Text -->
                 <p class="mb-5">{{description}}</p>
 				<a class="btn btn-primary" href = "ourProject/project/{{id}}" type="button">Ver Más</a>
