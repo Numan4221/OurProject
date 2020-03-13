@@ -11,7 +11,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,18 +23,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class JavaMail {
  
-	@RequestMapping (value = "/ourProject/project/message", method = RequestMethod.GET)
-	@ResponseStatus(HttpStatus.CREATED)
-	public String sendEmail() {
-	//public String sendEmail(@RequestParam String receptor, String title, String content) {
-		
-		String receptor = "axelsax1998@gmail.com";
+	@RequestMapping (value = "/ourProject/project/message", method = RequestMethod.POST)
+	//@ResponseStatus(HttpStatus.CREATED)
+	//public String sendEmail() {
+	//public String sendEmail(@RequestParam(value="mail") Mail email) {
+	public ResponseEntity<String> sendEmail(@RequestBody Mail email) {
+		/*String receptor = "axelsax1998@gmail.com";
 		String title = "Esto funciona putoooooo";
-		String content = "Bueno, eso creo";
+		String content = "Bueno, eso creo";*/
 		
 		final String username = "ourprojectdistribuidas@gmail.com";
         final String password = "chocopiso123";
-
+        
         Properties prop = new Properties();
 		prop.put("mail.smtp.host", "smtp.gmail.com");
         prop.put("mail.smtp.port", "587");
@@ -51,10 +53,10 @@ public class JavaMail {
             message.setFrom(new InternetAddress("from@gmail.com"));
             message.setRecipients(
                     Message.RecipientType.TO,
-                    InternetAddress.parse(receptor)
+                    InternetAddress.parse(email.getReceiver())
             );
-            message.setSubject(title);
-            message.setText(content);
+            message.setSubject(email.getTitle());
+            message.setText(email.getContent());
 
             Transport.send(message);
 
@@ -63,7 +65,8 @@ public class JavaMail {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-		return "redirect:/ourProject";
+        return new ResponseEntity<>("Correctametne enviado", HttpStatus.OK);
+		//return "redirect:/ourProject";
 	}
 	
 }

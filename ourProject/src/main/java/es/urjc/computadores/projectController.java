@@ -10,10 +10,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
 import es.urjc.computadores.User.paymentMethod;
 
@@ -196,18 +200,26 @@ public class projectController {
 			if (comentario != null) {
 				Comment myComment = new Comment(myUser, proyectoReal, comentario, new Date());
 				commentRepo.save(myComment);
+				
+				// ENVÍA UN CORREO BÁSICO
+				RestTemplate restTemplate = new RestTemplate();
+				
+				String username = "ourprojectdistribuidas@gmail.com";
+				String receptor = "axelsax1998@gmail.com";
+				String title = "Tienes un nuevo comentario en el proyecto: " + proyectoReal.projectName;
+				String content = "Comentario de " + myComment.user.name + ":\n" + myComment.comment;
+				
+				Mail mail = new Mail (0, username, receptor, title, content);
+				
+				String url="http://127.0.0.1:9999/ourProject/project/message";
+				//restTemplate.getForObject(url, Mail.class, mail);
+				String data = restTemplate.postForEntity(url, mail, String.class).getBody();
+				System.out.println(data);
+				//String data = restTemplate.getForObject(url, String.class);
 			}
 
-			model.addAttribute("titulo", proyectoReal.projectName);
-			model.addAttribute("desc", proyectoReal.description);
-			model.addAttribute("goals", proyectoReal.goals);
-			model.addAttribute("recompensas", proyectoReal.rewards);
-			model.addAttribute("moneyCollected", proyectoReal.moneyCollected);
-			model.addAttribute("comments", proyectoReal.myComments);
-			model.addAttribute("developer", proyectoReal.developer.nickname);
-			model.addAttribute("id", id);
-			model.addAttribute("usuarioPropio", myUser.nickname);
-			model.addAttribute("fecha", proyectoReal.fechaCreacion);
+			
+			
 		}
 		return "redirect:/ourProject/project/" + id;
 		//return "paginaProyecto";
