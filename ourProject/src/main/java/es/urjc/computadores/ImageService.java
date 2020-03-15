@@ -17,8 +17,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class ImageService implements WebMvcConfigurer {
 
-	private static final Path FILES_FOLDER = Paths.get("./src/main/resources/static/img");
-	private static final Path SEARCH_DIR = Paths.get("/img");
+	private static final Path FILES_FOLDER = Paths.get(System.getProperty("user.dir"), "images");
+	private static final Path SEARCH_DIR = Paths.get("/images");
 
 	private Path createFilePath(long id, Path folder) {
 		return folder.resolve("image-" + id + ".png");
@@ -35,6 +35,7 @@ public class ImageService implements WebMvcConfigurer {
 		image.transferTo(newFile);
 		System.out.println("imagen guardada en : " + newFile);
 		System.out.println("imagen guardada en : " + newFile.toString());
+		System.out.println("la imagen se leera de : " + newSearch.toString());
 
 		return newSearch.toString();
 	}
@@ -43,6 +44,7 @@ public class ImageService implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 	registry.addResourceHandler("/images/**")
 	.addResourceLocations("file:" + FILES_FOLDER.toAbsolutePath().toString() + "/");
+	
 	registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
 	}
 
