@@ -7,23 +7,35 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.urjc.computadores.User.paymentMethod;
 
 @Controller
 public class OurProjectController {
+	
+	@Autowired
+	public UserRepositoryAuthenticationProvider authenticationProvider;
+	
 
 	@GetMapping("/ourProject")
 	public String ourProject(Model model, /* @RequestParam */ String usern) {
+
 		if (usern != null) {
 			model.addAttribute("usern", usern);
 		}
@@ -43,8 +55,51 @@ public class OurProjectController {
 		 */
 		return "index - copia";
 	}
+	
+	@PostMapping("/ourProject/init")
+	public String outProjectInit (Model model , @RequestParam String nickname, @RequestParam String pass) {
+		
+		System.out.println("Iniciar sesion");
+		
+		UsernamePasswordAuthenticationToken authReq
+	      = new UsernamePasswordAuthenticationToken(nickname, pass);
+	    Authentication auth = authenticationProvider.authenticate(authReq);
+	    
+	    /*
+	    SecurityContext sc = SecurityContextHolder.getContext();
+	    sc.setAuthentication(auth);
+	    //HttpSession session = req.getSession(true);
+	    //session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
+		
+		//authenticationProvider.authenticate(auth)
+		*/
+	    return "redirect:/ourProject";
+	}
+	
+	@PostMapping("/ourProject/newUser")
+	public String outProjectRegister (Model model, @RequestParam String nickname, @RequestParam String pass,  @RequestParam String email,  @RequestParam String name,  @RequestParam String surname) throws Exception {
+		
+		System.out.println("OHIO MINA SAAAN");
+		
+		User a = userRepo.findFirstByNickname(nickname);
+		if (a != null) {
+			throw new Exception("Nombre de usuario ya en uso");
+		}
+		
+		User b = userRepo.findFirstByEmail(email);
+		if (b != null) {
+			throw new Exception("Email ya registrado");
+		}
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(pass);
+		
+		User newUser = new User(nickname, hashedPassword, email, name, surname);
+		
+		userRepo.save(newUser);
+		return "redirect:/ourProject";
+	}
 
-	// me pones aqui una isntancia de este repo
 	@Autowired
 	private UserRepository userRepo;
 
@@ -72,7 +127,7 @@ public class OurProjectController {
 	@PostConstruct
 	public void init() {
 
-		if (userRepo.findAll().isEmpty()) {
+		//if (userRepo.findAll().isEmpty()) {
 
 			User us = new User("sergjio", "1234", "soysergio@sergio.com", "sergio", "plaza");
 			User us1 = new User("dani", "45sdf", "soydani@dani.com", "daniel", "jimenez");
@@ -196,7 +251,7 @@ public class OurProjectController {
 			rewardRepo.save(r7);
 			rewardRepo.save(r8);
 			rewardRepo.save(r9);
-		}
+		//}
 	}
 
 }

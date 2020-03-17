@@ -95,7 +95,7 @@
         <div class="card my-4">
           <h5 class="card-header">Deja un comentario:</h5>
           <div class="card-body">
-            <form action = "/ourProject/project/comment" method = "post">
+            <form action = "/ourProject/project/{{id}}/comment" method = "post">
                 	<input name = "id" type= "hidden" value = {{id}}>
               <div class="form-group">
                 <textarea name="comentario" class="form-control" rows="3"></textarea>

@@ -213,7 +213,7 @@ public class projectController {
 		//return "paginaProyecto";
 	}
 
-	@PostMapping("/ourProject/project/comment")
+	@PostMapping("/ourProject/project/{id}/comment")
 	public String comment(Model model, @RequestParam long id, String comentario) {
 
 		User myUser = (User) userRepo.findFirstByNickname("sergjio");
