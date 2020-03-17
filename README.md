@@ -95,6 +95,54 @@ ___
 - Generador de facturas de los contratos firmados entre contribuidor y desarrollador.
 - Envio de notificaciones por correo, tanto cuando se firma un contrato, como cuando se realiza una interacción entre desarrollador y contribuidor.
 ___
+# Instrucciones ejecución
+## Instrucciones obtención del .jar
+Dentro de Spring nos situamos en la raiz del proyecto. Hacemos click con el boton derecho y nos situamos sobre las *Run as*. En el desplegable pulsamos *Maven build..*.
+En el apartado golas escribimos *package*
+
+![alt text](./Documentos/ImgREADME/crearJar.png "Configuracion Jar")
+
+Tras esto pulsamos sobre *Apply* y posteriormente sobre *Run*
+Cuando haya acabado el proceso, en la consola aparecerá la ruta en donde tenemos el jar, normalmente en */ourProject/target/ourProject-0.0.1-SNAPSHOT.jar*.
+
+## Instruciones para instalación en Ubuntu 18.04
+Todo el proceso se llevará a cabo en una misma terminal
+- ### Instalación máquina virtual de Java
+    - Abrimos una terminal y ejecutamos:
+        - sudo apt install default-jre
+    - Si al ejecutar el comando la terminal nos devuelve este error:
+        - *E: No se pudo bloquear /var/lib/dpkg/lock-frontend - open (11: Recurso no disponible temporalmente) E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?* 
+        - Deberemos ejecutar:
+            - sudo fuser -vki  /var/lib/dpkg/lock
+        - Y posteriormente reintentar la instalación
+- ### Instalación MySQL
+    - Actualizamos los repositorios para obtener la última versión:
+        - sudo apt update
+    - Ahora ya estamos preparados para instalar MySQL:
+        - sudo apt install mysql-server
+- ### Configuración de MySQL y creación de base de datos
+    - Abrimos una terminal MySQL
+        - sudo mysql
+    - A partir de aqui trabajamos dentro de la propia terminal de MySQL
+    - Indicamos que el método de autenticación de nuestro usuario root será por contraseña, le indicamos que la contraseña será “password”
+        - ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+    - Ahora debemos actualizar los privilegios que le hemos otorgado
+        - FLUSH PRIVILEGES;
+    - Ahora creamos la base de datos:
+        - CREATE DATABASE our_project;
+    - Salimos de la terminal de MySQL:
+        - EXIT;
+- ### Ejecución de la aplicación principal
+    - Nos dirigimos con la terminal a la ruta en la que tengamos el .jar.
+        - cd rutadelJar
+    - Damos a nuestro usuario permisos de administrador:
+        -  chmod 777 ourProject-0.0.1-SNAPSHOT.jar 
+    - Ahora ejecutamos la aplicación principal:
+        - java -jar ourProject-0.0.1-SNAPSHOT.jar 
+- ### Acceder a la página web 
+    - Ejecutamos un navegador y buscamos:
+        - http://127.0.0.1:9999/ourProject
+
 ## Equipo
 | Nombres | Correo URJC  | Usuario Git Hub  |
 | ------------- |:-------------:| -----:|
