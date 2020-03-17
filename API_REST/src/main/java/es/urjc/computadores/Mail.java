@@ -6,16 +6,6 @@ public class Mail {
 	private String receiver;
 	private String title;
 	private String content;
-	private PDFClass document;
-
-	public Mail(long id, String sender, String receiver, String title, String content, PDFClass document) {
-		this.id = id;
-		this.sender = sender;
-		this.receiver = receiver;
-		this.title = title;
-		this.content = content;
-		this.document = document;
-	}
 	
 	public Mail(long id, String sender, String receiver, String title, String content) {
 		this.id = id;
@@ -54,12 +44,6 @@ public class Mail {
 	}
 	public void setContent(String content) {
 		this.content = content;
-	}
-	public PDFClass getDocument() {
-		return document;
-	}
-	public void setDocument(PDFClass document) {
-		this.document = document;
 	}
 	
 	

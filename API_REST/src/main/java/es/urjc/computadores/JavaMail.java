@@ -23,11 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class JavaMail {
  
-	@RequestMapping (value = "/ourProject/project/message", method = RequestMethod.POST)
+	@PostMapping(path="/ourProject/project/message", consumes = "application/json", produces = "application/json")
+	public String sendEmail (@RequestBody Mail email) {
+	//@RequestMapping (value = "/ourProject/project/message", method = RequestMethod.POST)
 	//@ResponseStatus(HttpStatus.CREATED)
 	//public String sendEmail() {
 	//public String sendEmail(@RequestParam(value="mail") Mail email) {
-	public ResponseEntity<String> sendEmail(@RequestBody Mail email) {
+	//public ResponseEntity<String> sendEmail(@RequestBody Mail email) {
 		/*String receptor = "axelsax1998@gmail.com";
 		String title = "Esto funciona putoooooo";
 		String content = "Bueno, eso creo";*/
@@ -65,7 +67,8 @@ public class JavaMail {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<>("Correctametne enviado", HttpStatus.OK);
+        //return new ResponseEntity<>("Correctametne enviado", HttpStatus.OK);
+        return "Correcto";
 		//return "redirect:/ourProject";
 	}
 	

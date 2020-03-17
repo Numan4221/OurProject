@@ -1,5 +1,7 @@
 package es.urjc.computadores;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -188,7 +190,7 @@ public class projectController {
 	}
 
 	@PostMapping("/ourProject/project/comment")
-	public String comment(Model model, @RequestParam long id, String comentario) {
+	public String comment(Model model, @RequestParam long id, String comentario) throws URISyntaxException {
 
 		User myUser = (User) userRepo.findFirstByNickname("sergjio");
 		// model.addAttribute(attributeName, attributeValue);
@@ -202,18 +204,20 @@ public class projectController {
 				commentRepo.save(myComment);
 				
 				// ENVÍA UN CORREO BÁSICO
-				RestTemplate restTemplate = new RestTemplate();
-				
 				String username = "ourprojectdistribuidas@gmail.com";
 				String receptor = "axelsax1998@gmail.com";
 				String title = "Tienes un nuevo comentario en el proyecto: " + proyectoReal.projectName;
 				String content = "Comentario de " + myComment.user.name + ":\n" + myComment.comment;
 				
+				RestTemplate restTemplate = new RestTemplate();
+				String url="http://127.0.0.1:9999/ourProject/project/message";
+			    URI uri = new URI(url);
+				
 				Mail mail = new Mail (0, username, receptor, title, content);
 				
-				String url="http://127.0.0.1:9999/ourProject/project/message";
+				
 				//restTemplate.getForObject(url, Mail.class, mail);
-				String data = restTemplate.postForEntity(url, mail, String.class).getBody();
+				String data = restTemplate.postForEntity(uri, mail, String.class).getBody();
 				System.out.println(data);
 				//String data = restTemplate.getForObject(url, String.class);
 			}

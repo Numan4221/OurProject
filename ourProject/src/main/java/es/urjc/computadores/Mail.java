@@ -1,8 +1,5 @@
 package es.urjc.computadores;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-@JsonSerialize
 public class Mail {
 	private long id;
 	private String sender;
