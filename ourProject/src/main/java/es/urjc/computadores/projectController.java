@@ -1,5 +1,6 @@
 package es.urjc.computadores;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+
+import com.sun.xml.txw2.Document;
 
 import es.urjc.computadores.User.paymentMethod;
 
@@ -42,7 +45,8 @@ public class projectController {
 	private GoalRepository goalRepo;
 
 	@PostMapping("/ourProject/project/donation")
-	public String donation(Model model, @RequestParam long id, String donation, String accountNumber, String service) {
+	public String donation(Model model, @RequestParam long id, String donation, String accountNumber, String service)
+			throws URISyntaxException {
 
 		User myUser = (User) userRepo.findFirstByNickname("sergjio");
 
@@ -59,6 +63,72 @@ public class projectController {
 
 			Contract cont = new Contract(myUser, proyectoReal, "Gracias por su donación", quantity);
 			contractRepo.save(cont);
+
+			// CONTRATO A CREAR EN PDF PARA EL MECENAS
+			String[] pdfFile = new String[6];
+			pdfFile[0] = cont.contributor.nickname;
+			pdfFile[1] = cont.project.developerName;
+			pdfFile[2] = cont.project.projectName;
+			pdfFile[3] = cont.contribution.toString() + " €";
+			pdfFile[4] = cont.information2;
+			pdfFile[5] = "Gracias por su donación";
+
+			// Ya tenemos el contrato, se crea el pdf sobre este:
+			RestTemplate restTemplate = new RestTemplate();
+			String url = "http://127.0.0.1:9999/ourProject/project/pdf";
+			URI uri = new URI(url);
+
+			restTemplate.postForEntity(uri, pdfFile, String.class).getBody();
+			// String data = restTemplate.getForObject(url, String.class);
+
+			// ENVÍA UN CORREO CON PDF AL MECENAS DEL PROYECTO
+			String username = "ourprojectdistribuidas@gmail.com";
+			String receptor = "axelsax1998@gmail.com";
+			// String receptor = cont.contributor.email;
+			String title = "Contrato " + proyectoReal.projectName;
+			String content = "Contrato";
+			String document = pdfFile[0] + pdfFile[1] + pdfFile[2] + ".pdf";
+
+			url = "http://127.0.0.1:9999/ourProject/project/messagePDF";
+			uri = new URI(url);
+
+			Mail mail = new Mail(username, receptor, title, content, document);
+
+			// restTemplate.getForObject(url, Mail.class, mail);
+			String data = restTemplate.postForEntity(uri, mail, String.class).getBody();
+			System.out.println(data);
+			// String data = restTemplate.getForObject(url, String.class);
+
+			// CONTRATO A CREAR EN PDF PARA EL CREADOR
+			pdfFile[0] = cont.contributor.nickname;
+			pdfFile[1] = cont.project.developerName;
+			pdfFile[2] = cont.project.projectName;
+			pdfFile[3] = cont.contribution.toString() + " €";
+			pdfFile[4] = cont.information2;
+			pdfFile[5] = "Se ha recibido la siguiente donación: ";
+
+			// Ya tenemos el contrato, se crea el pdf sobre este:
+			url = "http://127.0.0.1:9999/ourProject/project/pdf";
+			uri = new URI(url);
+
+			restTemplate.postForEntity(uri, pdfFile, String.class).getBody();
+
+			// ENVÍA UN CORREO CON PDF AL CREADOR DEL PROYECTO
+			username = "ourprojectdistribuidas@gmail.com";
+			receptor = "ourprojectdistribuidas@gmail.com";
+			// receptor = cont.project.developer.email;
+			title = "Contrato " + proyectoReal.projectName;
+			content = "Contrato";
+			document = pdfFile[0] + pdfFile[1] + pdfFile[2] + ".pdf";
+
+			url = "http://127.0.0.1:9999/ourProject/project/messagePDF";
+			uri = new URI(url);
+
+			mail = new Mail(username, receptor, title, content, document);
+
+			// restTemplate.getForObject(url, Mail.class, mail);
+			restTemplate.postForEntity(uri, mail, String.class).getBody();
+			// String data = restTemplate.getForObject(url, String.class);
 		}
 
 		if (service != "" && service != null) {
@@ -81,7 +151,7 @@ public class projectController {
 		model.addAttribute("usuarioPropio", myUser.nickname);
 		model.addAttribute("fecha", proyectoReal.fechaCreacion);
 		return "redirect:/ourProject/project/" + id;
-		//return "paginaProyecto";
+		// return "paginaProyecto";
 	}
 
 	@PostMapping("/ourProject/project/create")
@@ -170,7 +240,7 @@ public class projectController {
 					projectRepo.save(p);
 					goalRepo.saveAll(lista);
 					userRepo.save(myUser);
-					
+
 					model.addAttribute("titulo", p.projectName);
 					model.addAttribute("desc", p.description);
 					model.addAttribute("goals", p.goals);
@@ -186,7 +256,7 @@ public class projectController {
 			}
 		}
 		return "redirect:/ourProject";
-		//return "paginaProyecto";
+		// return "paginaProyecto";
 	}
 
 	@PostMapping("/ourProject/project/comment")
@@ -202,35 +272,32 @@ public class projectController {
 			if (comentario != null) {
 				Comment myComment = new Comment(myUser, proyectoReal, comentario, new Date());
 				commentRepo.save(myComment);
-				
-				// ENVÍA UN CORREO BÁSICO
+
+				// Envio de un correo básico cuando se haga un comentario
+				// Solo lo recibe el creador del proyecto
+
 				String username = "ourprojectdistribuidas@gmail.com";
+				// String receptor = proyectoReal.developer.email;
 				String receptor = "axelsax1998@gmail.com";
 				String title = "Tienes un nuevo comentario en el proyecto: " + proyectoReal.projectName;
 				String content = "Comentario de " + myComment.user.name + ":\n" + myComment.comment;
-				
-				RestTemplate restTemplate = new RestTemplate();
-				String url="http://127.0.0.1:9999/ourProject/project/message";
-			    URI uri = new URI(url);
-				
-				Mail mail = new Mail (0, username, receptor, title, content);
-				
-				
-				//restTemplate.getForObject(url, Mail.class, mail);
-				String data = restTemplate.postForEntity(uri, mail, String.class).getBody();
-				System.out.println(data);
-				//String data = restTemplate.getForObject(url, String.class);
-			}
 
-			
-			
+				RestTemplate restTemplate = new RestTemplate();
+				String url = "http://127.0.0.1:9999/ourProject/project/message";
+				URI uri = new URI(url);
+				Mail mail = new Mail(username, receptor, title, content, "");
+
+				// restTemplate.getForObject(url, Mail.class, mail);
+				restTemplate.postForEntity(uri, mail, String.class).getBody();
+				// String data = restTemplate.getForObject(url, String.class);
+			}
 		}
 		return "redirect:/ourProject/project/" + id;
-		//return "paginaProyecto";
+		// return "paginaProyecto";
 	}
 
 	@RequestMapping("/ourProject/project/{id}")
-	public String load(Model model, @PathVariable (required = false) long id) {
+	public String load(Model model, @PathVariable(required = false) long id) {
 
 		User myUser = (User) userRepo.findFirstByNickname("sergjio");
 

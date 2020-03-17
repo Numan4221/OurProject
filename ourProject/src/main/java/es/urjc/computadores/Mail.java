@@ -1,26 +1,21 @@
 package es.urjc.computadores;
 
 public class Mail {
-	private long id;
 	private String sender;
 	private String receiver;
 	private String title;
 	private String content;
+	private String pdfDocument;
 	
-	public Mail(long id, String sender, String receiver, String title, String content) {
-		this.id = id;
+
+	public Mail(String sender, String receiver, String title, String content, String document) {
 		this.sender = sender;
 		this.receiver = receiver;
 		this.title = title;
 		this.content = content;
+		this.pdfDocument = document;
 	}
 	
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
 	public String getSender() {
 		return sender;
 	}
@@ -45,6 +40,10 @@ public class Mail {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
-	
+	public String getPdfDocument() {
+		return pdfDocument;
+	}
+	public void setPdfDocument(String pdfDocument) {
+		this.pdfDocument = pdfDocument;
+	}
 }

@@ -2,35 +2,91 @@ package es.urjc.computadores;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itextpdf.text.Anchor;
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Section;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 @RestController
 public class PDFCreator {
 
-	@RequestMapping (value = "/ourProject/project/pdf", method = RequestMethod.GET)
-	@ResponseStatus(HttpStatus.CREATED)
-	public void createPDF() throws FileNotFoundException, DocumentException {
+	private static final Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 26, Font.BOLDITALIC);
+    private static final Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
+         
+    private static final Font categoryFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
+    private static final Font subcategoryFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
+    private static final Font blueFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.RED);    
+    private static final Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+    
+    private static final String iTextExampleImage = "D:\\Users\\axels\\Desktop\\UNI\\2º Cuatri\\Desarrollo de Aplicaciones Distribuidas\\Repositorio Practica\\OurProject\\API_REST\\src\\main\\resources\\static\\img\\topImage.png";
+	
+    //@PostMapping(path="/ourProject/project/pdf", consumes = "application/json", produces = "application/json")
+    @PostMapping(path="/ourProject/project/pdf")
+	public void createPDF(@RequestBody String[] contrato ) throws FileNotFoundException, DocumentException {
 		Document document = new Document();
-		PdfWriter.getInstance(document, new FileOutputStream("iTextHelloWorld.pdf"));
-		 
+		//PdfWriter.getInstance(document, new FileOutputStream("contrato.pdf"));
+		String documentName = contrato[0] + contrato[1] + contrato[2] + ".pdf";
+		PdfWriter.getInstance(document, new FileOutputStream(documentName));
+		/*try {
+	        PdfWriter.getInstance(document, new FileOutputStream(pdfDocument));
+	    } catch (FileNotFoundException fileNotFoundException) {
+	        System.out.println("No such file was found to generate the PDF "
+	                + "(No se encontró el fichero para generar el pdf)" + fileNotFoundException);
+	    }*/
 		document.open();
-		Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
-		Chunk chunk = new Chunk("Hello World", font);
-		 
-		document.add(chunk);
+		
+		document.addTitle("Contrato " + contrato[2]);
+		document.addSubject("OurProject");
+		document.addKeywords("OurProject, PDF, Contract");
+		document.addAuthor("OurProject");
+		document.addCreator(contrato[1]);
+		
+		Chunk chunk = new Chunk("Contrato: " + contrato[2], chapterFont);
+		chunk.setBackground(BaseColor.LIGHT_GRAY);
+		
+		Chapter chapter = new Chapter(new Paragraph(chunk), 1);
+		chapter.setNumberDepth(0);
+		chapter.add(new Paragraph(contrato[5] + " " + contrato[3], paragraphFont));
+		chapter.add(new Paragraph(contrato[4], paragraphFont));
+		
+		Image image;
+		try {
+		    image = Image.getInstance(iTextExampleImage);  
+		    image.setAbsolutePosition(450, 700);
+		    image.scalePercent(20);
+		    chapter.add(image);
+		} catch (BadElementException ex) {
+		    System.out.println("Image BadElementException" +  ex);
+		} catch (IOException ex) {
+		    System.out.println("Image IOException " +  ex);
+		}
+		document.add(chapter);
+		
 		document.close();
+		//return "Creado";
 	}
 }
