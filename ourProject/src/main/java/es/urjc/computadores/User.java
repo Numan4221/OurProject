@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -41,6 +42,10 @@ public class User {
 	private paymentMethod myPaymentMethod;
 	public boolean isDeveloper;
 	private String accountID;
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roles;
+
 	
 
 	public String getAccountID() {
@@ -89,6 +94,8 @@ public class User {
 		this.name = name;
 		this.surname = surname;
 		isDeveloper = false;
+		roles= new ArrayList<>();
+		roles.add("USER");
 	}
 
 	
@@ -105,7 +112,9 @@ public class User {
 		return password;
 	}
 
-
+	public List<String> getRoles() {
+		return roles;
+	}
 
 	public void setPassword(String password) {
 		this.password = password;

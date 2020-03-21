@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -61,19 +62,25 @@ public class OurProjectController {
 		
 		System.out.println("Iniciar sesion");
 		
+		List<GrantedAuthority> roles = new ArrayList<>();
+		
 		UsernamePasswordAuthenticationToken authReq
-	      = new UsernamePasswordAuthenticationToken(nickname, pass);
+	      = new UsernamePasswordAuthenticationToken(nickname, pass, roles);
 	    Authentication auth = authenticationProvider.authenticate(authReq);
 	    
-	    /*
+	    System.out.println(auth);
+	    System.out.println("Iniciar sesion2");
+	    
 	    SecurityContext sc = SecurityContextHolder.getContext();
 	    sc.setAuthentication(auth);
 	    //HttpSession session = req.getSession(true);
 	    //session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
 		
-		//authenticationProvider.authenticate(auth)
-		*/
-	    return "redirect:/ourProject";
+		//authenticationProvider.authenticate(auth);
+	    
+	    System.out.println("Iniciar sesion");
+	    
+	    return "redirect:/ourProject/myProfile";
 	}
 	
 	@PostMapping("/ourProject/newUser")

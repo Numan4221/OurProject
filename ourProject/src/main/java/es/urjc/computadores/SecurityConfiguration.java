@@ -32,7 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 		 
 		 
-		 http.authorizeRequests().anyRequest().authenticated();
+		 http.authorizeRequests().anyRequest().hasAnyRole("USER");
 		 
 		 
 		// Login form
