@@ -8,11 +8,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,8 +47,16 @@ public class projectController {
 	private ImageService imageService;
 
 	@PostMapping("/ourProject/project/donation")
-	public String donation(Model model, HttpSession session, @RequestParam long id, String donation, String accountNumber, String service) {
+	public String donation(Model model, HttpSession session, @RequestParam long id,HttpServletRequest request , String donation, String accountNumber, String service) {
 
+		
+		System.out.println(request.isUserInRole("USER")+ " es su rol"); 
+		System.out.println(request.isUserInRole("[USER]")+ " es su rol"); 
+		System.out.println(request.isUserInRole("ROLE_USER")+ " es su rol"); 
+		System.out.println(request.getUserPrincipal().getName()); 
+		
+		
+		
 		String username = (String) session.getAttribute("username");
 
 		User myUser = (User) userRepo.findFirstByNickname(username);
@@ -257,8 +267,14 @@ public class projectController {
 	}
 
 	@RequestMapping("/ourProject/project/{id}")
-	public String load(Model model, @PathVariable (required = false) long id) {
+	public String load(Model model, @PathVariable (required = false) long id , HttpServletRequest request ) {
 
+		//Hay que proteger la pagina de un proyecto ya que se puede comentar directamente desde ahi
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		System.out.println();
+		model.addAttribute("token", token.getToken());
+		
+		
 		
 		Optional<Project> proyecto = projectRepo.findById(id);
 		Project proyectoReal = proyecto.get();

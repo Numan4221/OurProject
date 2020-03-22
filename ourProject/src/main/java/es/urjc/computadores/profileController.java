@@ -2,6 +2,7 @@ package es.urjc.computadores;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,8 +36,10 @@ public class profileController {
 	public UserRepositoryAuthenticationProvider authenticationProvider;
 	
 	@RequestMapping("/ourProject/myProfile")
-	public String profileMode(Model model, HttpSession session) {
+	public String profileMode(Model model, HttpSession session, HttpServletRequest request) {
 		
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		model.addAttribute("token", token.getToken());
 
 		String username = (String) session.getAttribute("username");
 
@@ -79,7 +83,10 @@ public class profileController {
 	}
 	
 	@PostMapping("/ourProject/myProfile/change")
-	public String profileChange(Model model, HttpSession session, String id, String username, String name, String surname, String email, String option, String accountNumber, String newDev) {
+	public String profileChange(Model model, HttpSession session,HttpServletRequest request, String id, String username, String name, String surname, String email, String option, String accountNumber, String newDev) {
+		
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		model.addAttribute("token", token.getToken());
 		
 		String usern = (String) session.getAttribute("username");
 

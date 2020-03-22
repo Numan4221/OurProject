@@ -1,6 +1,9 @@
 package es.urjc.computadores;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +16,10 @@ public class deleteProjectController {
 	private ServicioInterno serv;
 	
 	@RequestMapping("/ourProject/myProfile/deleteProject")
-	public String deleteProject(Model model, @RequestParam String projectName, @RequestParam String developerNickname) {
+	public String deleteProject(Model model, HttpServletRequest request, @RequestParam String projectName, @RequestParam String developerNickname) {
+		
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		model.addAttribute("token", token.getToken());
 		
 		if (serv.deleteProject(projectName, developerNickname)) {
 			return "redirect:/ourProject/myProfile";

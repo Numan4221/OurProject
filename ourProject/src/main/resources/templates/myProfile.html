@@ -152,7 +152,7 @@
 							        	<form action = "/ourProject/myProfile/deleteProject" method = "post">
 						                	<input name = "projectName" type= "hidden" value = {{projectName}}>
 						                	<input name = "developerNickname" type= "hidden" value = {{nickname}}>
-						                	
+						                	<input type="hidden" name="_csrf"value="{{token}}"/>
 											<button class="btn btn-primary" type ="submit">Sí, eliminar</button>
 										</form>
 							      </div>
@@ -170,7 +170,7 @@
 			{{/tieneProyectosPropios}}
 				<form method = "post" action = "/ourProject/myProfile/newProject">
 					<input type="hidden"  name = "nickname" value = {{user.nickname}}>
-					
+					<input type="hidden"name="_csrf"value="{{token}}"/>
 					<button class=" col-md-4 text-center btn btn-warning" type="submit">Subir un Proyecto</button>
 				</form>
 			{{/user.isDeveloper}}
@@ -197,6 +197,7 @@
 				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 				        	<form method= "post" action = "/ourProject/myProfile/changeToDeveloper">
 								<input name = "username" type= "hidden" value = {{user.nickname}}>
+								<input type="hidden"name="_csrf"value="{{token}}"/>
 								<button class="btn btn-primary" type ="submit">Sí, aceptar</button>
 							</form>
 				      </div>
@@ -248,6 +249,7 @@
 				{{/account}}
 			</div>
 			<input name = id type = "hidden" value = {{user.id}}>
+			<input type="hidden"name="_csrf"value="{{token}}"/>
 			<button type="submit">Guardar cambios</button>
 		</form>
 		<div style = "padding-top: 20px">

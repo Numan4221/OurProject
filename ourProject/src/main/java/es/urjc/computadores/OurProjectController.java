@@ -35,6 +35,8 @@ public class OurProjectController {
 	public UserRepositoryAuthenticationProvider authenticationProvider;
 	
 
+	
+	
 	@GetMapping("/ourProject")
 	public String ourProject(Model model, /* @RequestParam */ String usern) {
 
@@ -60,6 +62,7 @@ public class OurProjectController {
 	
 	@PostMapping("/ourProject/init")
 	public String outProjectInit (Model model , HttpSession session, @RequestParam String nickname, @RequestParam String pass) {
+		
 		
 		System.out.println("Iniciar sesion");
 		
