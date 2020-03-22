@@ -28,11 +28,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		 http.authorizeRequests().antMatchers("/ourProject/register").permitAll();
 		 http.authorizeRequests().antMatchers("/ourProject/newUser").permitAll();
 		 http.authorizeRequests().antMatchers("/ourProject/init").permitAll();
-		 http.authorizeRequests().antMatchers("/*.css").permitAll();
 
 		 
-		 
-		 http.authorizeRequests().anyRequest().hasAnyRole("USER");
+		 http.authorizeRequests().antMatchers("/ourProject/myProfile").authenticated();
+		 http.authorizeRequests().anyRequest().authenticated();
 		 
 		 
 		// Login form

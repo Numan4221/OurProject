@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,7 +59,7 @@ public class OurProjectController {
 	}
 	
 	@PostMapping("/ourProject/init")
-	public String outProjectInit (Model model , @RequestParam String nickname, @RequestParam String pass) {
+	public String outProjectInit (Model model , HttpSession session, @RequestParam String nickname, @RequestParam String pass) {
 		
 		System.out.println("Iniciar sesion");
 		
@@ -68,19 +69,23 @@ public class OurProjectController {
 	      = new UsernamePasswordAuthenticationToken(nickname, pass, roles);
 	    Authentication auth = authenticationProvider.authenticate(authReq);
 	    
-	    System.out.println(auth);
-	    System.out.println("Iniciar sesion2");
+	
 	    
 	    SecurityContext sc = SecurityContextHolder.getContext();
+	    
 	    sc.setAuthentication(auth);
-	    //HttpSession session = req.getSession(true);
-	    //session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
-		
-		//authenticationProvider.authenticate(auth);
+	   
 	    
-	    System.out.println("Iniciar sesion");
+	    session.setAttribute("username", nickname);
+	    session.setAttribute("password", pass);
+	    session.setAttribute("roles", roles);
+	    session.setAttribute("token", auth);
 	    
-	    return "redirect:/ourProject/myProfile";
+	    session.setMaxInactiveInterval(-1);
+	    
+	    
+	    
+	    return "redirect:/ourProject";
 	}
 	
 	@PostMapping("/ourProject/newUser")

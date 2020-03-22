@@ -8,7 +8,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,9 +45,11 @@ public class projectController {
 	private ImageService imageService;
 
 	@PostMapping("/ourProject/project/donation")
-	public String donation(Model model, @RequestParam long id, String donation, String accountNumber, String service) {
+	public String donation(Model model, HttpSession session, @RequestParam long id, String donation, String accountNumber, String service) {
 
-		User myUser = (User) userRepo.findFirstByNickname("sergjio");
+		String username = (String) session.getAttribute("username");
+
+		User myUser = (User) userRepo.findFirstByNickname(username);
 
 		Optional<Project> proyecto = projectRepo.findById(id);
 		Project proyectoReal = proyecto.get();
@@ -87,13 +93,15 @@ public class projectController {
 	}
 
 	@PostMapping("/ourProject/project/create")
-	public String creation(Model model, @RequestParam long id, String service, String newProject, String nombre,
+	public String creation(Model model,HttpSession session,  @RequestParam long id, String service, String newProject, String nombre,
 			String descripcion, String accountID, String m1_cant, String m1_desc, String m2_cant, String m2_desc,
 			String m3_cant, String m3_desc, String m4_cant, String m4_desc, String m5_cant, String m5_desc,
 			String r1_cant, String r1_desc, String r2_cant, String r2_desc, String r3_cant, String r3_desc,
 			String r4_cant, String r4_desc, String r5_cant, String r5_desc, MultipartFile imagenFile) {
 
-		User myUser = (User) userRepo.findFirstByNickname("sergjio");
+		String username = (String) session.getAttribute("username");
+
+		User myUser = (User) userRepo.findFirstByNickname(username);
 
 		if (id == -1) {
 			List<Project> projectAux = projectRepo.findByProjectName(nombre);
@@ -214,9 +222,11 @@ public class projectController {
 	}
 
 	@PostMapping("/ourProject/project/{id}/comment")
-	public String comment(Model model, @RequestParam long id, String comentario) {
+	public String comment(Model model, HttpSession session, @RequestParam long id, String comentario) {
 
-		User myUser = (User) userRepo.findFirstByNickname("sergjio");
+		String username = (String) session.getAttribute("username");
+
+		User myUser = (User) userRepo.findFirstByNickname(username);
 		// model.addAttribute(attributeName, attributeValue);
 		// Si id no es -1, significa que el proyecto ya estaba creado
 		if (id != -1) {
@@ -249,8 +259,7 @@ public class projectController {
 	@RequestMapping("/ourProject/project/{id}")
 	public String load(Model model, @PathVariable (required = false) long id) {
 
-		User myUser = (User) userRepo.findFirstByNickname("sergjio");
-
+		
 		Optional<Project> proyecto = projectRepo.findById(id);
 		Project proyectoReal = proyecto.get();
 
@@ -262,7 +271,6 @@ public class projectController {
 		model.addAttribute("comments", proyectoReal.myComments);
 		model.addAttribute("developer", proyectoReal.developer.nickname);
 		model.addAttribute("id", id);
-		model.addAttribute("usuarioPropio", myUser.nickname);
 		model.addAttribute("fecha", proyectoReal.fechaCreacion);
 		model.addAttribute("hasImage",proyectoReal.hasImage);
 		model.addAttribute("noHasImage",proyectoReal.noHasImage);
