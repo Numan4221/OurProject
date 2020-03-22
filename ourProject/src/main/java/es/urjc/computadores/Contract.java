@@ -23,6 +23,7 @@ public class Contract {
 	Project project;
 	@Column(length=1000000)
 	String information;
+	String information2;
 	String contractContent;
 	Double contribution;
 	
@@ -36,7 +37,8 @@ public class Contract {
 		this.project = project;
 		this.contribution = cont;
 		this.contractContent = contractContent;
-		this.information = createContractContent(project, contractContent, cont);	
+		this.information = createContractContent(project, contractContent, cont);
+		this.information2 = createContractContent2(project, contractContent, cont);
 	}
 	
 	private String createContractContent(Project project, String contractContent, Double cont) {
@@ -55,6 +57,27 @@ public class Contract {
 			}
 		}
 		cad+="</p>";
+		return cad;
+	}
+	
+	private String createContractContent2(Project project, String contractContent, Double cont) {
+		String cad = "";
+		if (project.rewards.size()>0) {
+			cad = "Recompensas Obtenidas:\n";
+			
+			List<Reward> recom = project.rewards;
+			int i = 1;
+			for (Reward m : recom) {
+				if (m.recompensa <= cont) {
+					cad+="Recompensa " + i + ": " + m.descripcion + " -> " + m.recompensa + "\n";
+					i++;
+				}
+			}
+			cad+="\n";
+		}else {
+			cad = "Ninguna recompensa";
+		}
+		
 		return cad;
 	}
 	
