@@ -2,9 +2,11 @@ package es.urjc.computadores;
 
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +24,10 @@ public class donationController {
 	
 	
 	@RequestMapping("/ourProject/project/donationPage/{id}")
-	public String load(Model model, HttpSession session, @PathVariable (required = true) long id) {
+	public String load(Model model, HttpSession session, @PathVariable (required = true) long id,HttpServletRequest request) {
+		
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		model.addAttribute("token", token.getToken());
 		
 		Optional<Project> proyecto = projectRepo.findById(id);
 		Project proyectoReal = proyecto.get();

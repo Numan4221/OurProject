@@ -23,7 +23,7 @@
                                         <form action = "/ourProject/init" method = "post">
                                             <div class="form-group"><label class="small mb-1" for="inputEmailAddress">Usuario</label><input class="form-control py-4" id="inputEmailAddress" name = "nickname" type="text" placeholder="Introduzca el usuario" required/></div>
                                             <div class="form-group"><label class="small mb-1" for="inputPassword">Contraseña</label><input class="form-control py-4" id="inputPassword" name = "pass" type="password" placeholder="Introduzca la contraseña" required/></div>
-                                            
+                                            <input type="hidden" name="_csrf"value="{{token}}"/>
                                             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0"><button class="btn btn-primary"  type = "submit">Iniciar sesión</button></div>
                                         </form>
                                     </div>

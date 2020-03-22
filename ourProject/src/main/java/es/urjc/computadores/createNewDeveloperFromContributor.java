@@ -1,6 +1,9 @@
 package es.urjc.computadores;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +16,10 @@ public class createNewDeveloperFromContributor {
 	private ServicioInterno serv;
 	
 	@RequestMapping("/ourProject/myProfile/changeToDeveloper")
-	public String changeUser(Model model, @RequestParam String username) {
+	public String changeUser(Model model, @RequestParam String username , HttpServletRequest request) {
+		
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		model.addAttribute("token", token.getToken());
 		
 		if (serv.convertirseDesarrollador(username)) {
 			return "redirect:/ourProject/myProfile";

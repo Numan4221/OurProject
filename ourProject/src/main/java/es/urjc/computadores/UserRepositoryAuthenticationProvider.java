@@ -48,7 +48,13 @@ public class UserRepositoryAuthenticationProvider implements AuthenticationProvi
 		}
  
 		System.out.println(roles);
-		return new UsernamePasswordAuthenticationToken(user.nickname, password, roles);
+		
+		UsernamePasswordAuthenticationToken aux = new UsernamePasswordAuthenticationToken(user.nickname, password, roles);
+		
+		
+		System.out.println(aux.getAuthorities());
+		
+		return aux;
 	}
 
 	@Override
