@@ -95,7 +95,7 @@ public class User {
 		this.surname = surname;
 		isDeveloper = false;
 		roles= new ArrayList<>();
-		roles.add("USER");
+		roles.add("ROLE_USER");
 	}
 
 	

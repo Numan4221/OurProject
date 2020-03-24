@@ -30,7 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		 http.authorizeRequests().antMatchers("/ourProject/init").permitAll();
 
 		 
-		 http.authorizeRequests().antMatchers("/ourProject/myProfile").authenticated();
+		 http.authorizeRequests().antMatchers("/ourProject/myProfile").hasAnyRole("USER");
 		 http.authorizeRequests().anyRequest().authenticated();
 		 
 		 
