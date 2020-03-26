@@ -11,7 +11,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -50,10 +56,19 @@ public class projectController {
 	private ImageService imageService;
 
 	@PostMapping("/ourProject/project/donation")
-	public String donation(Model model, @RequestParam long id, String donation, String accountNumber, String service)
-			throws URISyntaxException {
+	public String donation(Model model, HttpSession session, @RequestParam long id,HttpServletRequest request , String donation, String accountNumber, String service) throws URISyntaxException {
 
-		User myUser = (User) userRepo.findFirstByNickname("sergjio");
+		
+		System.out.println(request.isUserInRole("USER")+ " es su rol"); 
+		System.out.println(request.isUserInRole("[USER]")+ " es su rol"); 
+		System.out.println(request.isUserInRole("ROLE_USER")+ " es su rol"); 
+		System.out.println(request.getUserPrincipal().getName()); 
+		
+		
+		
+		String username = (String) session.getAttribute("username");
+
+		User myUser = (User) userRepo.findFirstByNickname(username);
 
 		Optional<Project> proyecto = projectRepo.findById(id);
 		Project proyectoReal = proyecto.get();
@@ -87,7 +102,7 @@ public class projectController {
 			// String data = restTemplate.getForObject(url, String.class);
 
 			// ENVÍA UN CORREO CON PDF AL MECENAS DEL PROYECTO
-			String username = "ourprojectdistribuidas@gmail.com";
+			String email = "ourprojectdistribuidas@gmail.com";
 			String receptor = "axelsax1998@gmail.com";
 			// String receptor = cont.contributor.email;
 			String title = "Contrato " + proyectoReal.projectName;
@@ -97,7 +112,7 @@ public class projectController {
 			url = "http://127.0.0.1:9999/ourProject/project/messagePDF";
 			uri = new URI(url);
 
-			Mail mail = new Mail(username, receptor, title, content, document);
+			Mail mail = new Mail(email, receptor, title, content, document);
 
 			// restTemplate.getForObject(url, Mail.class, mail);
 			String data = restTemplate.postForEntity(uri, mail, String.class).getBody();
@@ -119,7 +134,7 @@ public class projectController {
 			restTemplate.postForEntity(uri, pdfFile, String.class).getBody();
 
 			// ENVÍA UN CORREO CON PDF AL CREADOR DEL PROYECTO
-			username = "ourprojectdistribuidas@gmail.com";
+			email = "ourprojectdistribuidas@gmail.com";
 			receptor = "ourprojectdistribuidas@gmail.com";
 			// receptor = cont.project.developer.email;
 			title = "Contrato " + proyectoReal.projectName;
@@ -129,7 +144,7 @@ public class projectController {
 			url = "http://127.0.0.1:9999/ourProject/project/messagePDF";
 			uri = new URI(url);
 
-			mail = new Mail(username, receptor, title, content, document);
+			mail = new Mail(email, receptor, title, content, document);
 
 			// restTemplate.getForObject(url, Mail.class, mail);
 			restTemplate.postForEntity(uri, mail, String.class).getBody();
@@ -163,13 +178,15 @@ public class projectController {
 	}
 
 	@PostMapping("/ourProject/project/create")
-	public String creation(Model model, @RequestParam long id, String service, String newProject, String nombre,
+	public String creation(Model model,HttpSession session,  @RequestParam long id, String service, String newProject, String nombre,
 			String descripcion, String accountID, String m1_cant, String m1_desc, String m2_cant, String m2_desc,
 			String m3_cant, String m3_desc, String m4_cant, String m4_desc, String m5_cant, String m5_desc,
 			String r1_cant, String r1_desc, String r2_cant, String r2_desc, String r3_cant, String r3_desc,
 			String r4_cant, String r4_desc, String r5_cant, String r5_desc, MultipartFile imagenFile) {
 
-		User myUser = (User) userRepo.findFirstByNickname("sergjio");
+		String username = (String) session.getAttribute("username");
+
+		User myUser = (User) userRepo.findFirstByNickname(username);
 
 		if (id == -1) {
 			List<Project> projectAux = projectRepo.findByProjectName(nombre);
@@ -289,10 +306,12 @@ public class projectController {
 		// return "paginaProyecto";
 	}
 
-	@PostMapping("/ourProject/project/comment")
-	public String comment(Model model, @RequestParam long id, String comentario) throws URISyntaxException {
+	@PostMapping("/ourProject/project/{id}/comment")
+	public String comment(Model model, HttpSession session, @RequestParam long id, String comentario)throws URISyntaxException {
 
-		User myUser = (User) userRepo.findFirstByNickname("sergjio");
+		String username = (String) session.getAttribute("username");
+
+		User myUser = (User) userRepo.findFirstByNickname(username);
 		// model.addAttribute(attributeName, attributeValue);
 		// Si id no es -1, significa que el proyecto ya estaba creado
 		if (id != -1) {
@@ -327,10 +346,15 @@ public class projectController {
 	}
 
 	@RequestMapping("/ourProject/project/{id}")
-	public String load(Model model, @PathVariable(required = false) long id) {
+	public String load(Model model, @PathVariable (required = false) long id , HttpServletRequest request ) {
 
-		User myUser = (User) userRepo.findFirstByNickname("sergjio");
-
+		//Hay que proteger la pagina de un proyecto ya que se puede comentar directamente desde ahi
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		System.out.println();
+		model.addAttribute("token", token.getToken());
+		
+		
+		
 		Optional<Project> proyecto = projectRepo.findById(id);
 		Project proyectoReal = proyecto.get();
 
@@ -342,7 +366,6 @@ public class projectController {
 		model.addAttribute("comments", proyectoReal.myComments);
 		model.addAttribute("developer", proyectoReal.developer.nickname);
 		model.addAttribute("id", id);
-		model.addAttribute("usuarioPropio", myUser.nickname);
 		model.addAttribute("fecha", proyectoReal.fechaCreacion);
 		model.addAttribute("hasImage",proyectoReal.hasImage);
 		model.addAttribute("noHasImage",proyectoReal.noHasImage);

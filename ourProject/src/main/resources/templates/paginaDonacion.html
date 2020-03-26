@@ -84,6 +84,7 @@
 	        Cantidad a donar: 
 	        <input type = "number" name = "donation" step="0.1" min="0" placeholder = "€">
 	        <input type = "hidden" name = "id" value = "{{project.id}}" >
+	        <input type="hidden"name="_csrf"value="{{token}}"/>
 	        <div style = "padding-top: 10px;">
 	           	<button class=" col-md-4 text-center btn btn-warning" type="submit">Donar</button>
 	        </div>
