@@ -42,10 +42,18 @@ public class OurProjectController {
 	
 	
 	@GetMapping("/ourProject")
-	public String ourProject(Model model, /* @RequestParam */ String usern) {
+	public String ourProject(Model model, HttpServletRequest req,/* @RequestParam */ String usern) {
 
 		if (usern != null) {
 			model.addAttribute("usern", usern);
+		}
+		
+		
+		//session.getAttribute("nickname");
+		if ( req.getUserPrincipal() == null) {
+			model.addAttribute("isLogged", false);
+		} else {
+			model.addAttribute("isLogged", true);
 		}
 
 		List<Project> listProject = projectRepo.findAll();
@@ -61,14 +69,13 @@ public class OurProjectController {
 		 * arrayProjects[i].goals.get(0)); model.addAttribute(money,
 		 * arrayProjects[i].moneyCollected); }
 		 */
-		return "index - copia";
+		return "index";
 	}
 	
 	@PostMapping("/ourProject/init")
-	public String outProjectInit (Model model , HttpSession session, @RequestParam String nickname, @RequestParam String pass) {
+	public String ourProjectInit (Model model , HttpSession session, @RequestParam String nickname, @RequestParam String pass) {
 		
 		
-		System.out.println("Iniciar sesion");
 		
 		List<GrantedAuthority> roles = new ArrayList<>();
 		
@@ -105,9 +112,8 @@ public class OurProjectController {
 	}
 	
 	@PostMapping("/ourProject/newUser")
-	public String outProjectRegister (Model model, @RequestParam String nickname, @RequestParam String pass,  @RequestParam String email,  @RequestParam String name,  @RequestParam String surname) throws Exception {
+	public String outProjectRegister (Model model, HttpSession session, @RequestParam String nickname, @RequestParam String pass,  @RequestParam String email,  @RequestParam String name,  @RequestParam String surname) throws Exception {
 		
-		System.out.println("OHIO MINA SAAAN");
 		
 		User a = userRepo.findFirstByNickname(nickname);
 		if (a != null) {
@@ -124,8 +130,36 @@ public class OurProjectController {
 		
 		User newUser = new User(nickname, hashedPassword, email, name, surname);
 		
+		model.addAttribute("nickname", nickname);
+		model.addAttribute("password", pass);
+		
 		userRepo.save(newUser);
-		return "redirect:/ourProject";
+		
+		
+		//Le iniciamos sesion
+		List<GrantedAuthority> roles = new ArrayList<>();
+		
+		UsernamePasswordAuthenticationToken authReq
+	      = new UsernamePasswordAuthenticationToken(nickname, pass, roles);
+	    Authentication auth = authenticationProvider.authenticate(authReq);
+	    
+	
+	    
+	    SecurityContext sc = SecurityContextHolder.getContext();
+	    
+	    sc.setAuthentication(auth);
+	   
+	    
+	    session.setAttribute("username", nickname);
+	    session.setAttribute("password", pass);
+	    session.setAttribute("roles", roles);
+	    session.setAttribute("token", auth);
+	    
+	    session.setMaxInactiveInterval(-1);
+	    
+	    
+	    
+	    return "redirect:/ourProject";
 	}
 
 	@Autowired
@@ -155,7 +189,7 @@ public class OurProjectController {
 	@PostConstruct
 	public void init() {
 
-		//if (userRepo.findAll().isEmpty()) {
+		if (userRepo.findAll().isEmpty()) {
 
 			User us = new User("sergjio", "1234", "soysergio@sergio.com", "sergio", "plaza");
 			User us1 = new User("dani", "45sdf", "soydani@dani.com", "daniel", "jimenez");
@@ -279,7 +313,7 @@ public class OurProjectController {
 			rewardRepo.save(r7);
 			rewardRepo.save(r8);
 			rewardRepo.save(r9);
-		//}
+		}
 	}
 
 }
