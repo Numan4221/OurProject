@@ -121,7 +121,7 @@ public class JavaMail {
         	texto.setText(email.getContent());
         	
         	BodyPart adjunto = new MimeBodyPart();
-        	adjunto.setDataHandler(new DataHandler(new FileDataSource("D:\\Users\\axels\\Desktop\\UNI\\2º Cuatri\\Desarrollo de Aplicaciones Distribuidas\\Repositorio Practica\\OurProject\\API_REST\\"+email.getPdfDocument())));
+        	adjunto.setDataHandler(new DataHandler(new FileDataSource(email.getPdfDocument())));
         	adjunto.setFileName(email.getPdfDocument());
         	
         	MimeMultipart multiParte = new MimeMultipart();
