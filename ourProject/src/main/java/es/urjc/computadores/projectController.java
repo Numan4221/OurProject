@@ -277,6 +277,7 @@ public class projectController {
 						p.noHasImage = false;
 						try {
 							p.imageURL = imageService.saveImage("proyectos", p.id, imagenFile);
+							imageService.resize(p.imageURL);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

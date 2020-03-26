@@ -155,20 +155,20 @@ public class OurProjectController {
 	@PostConstruct
 	public void init() {
 
-		//if (userRepo.findAll().isEmpty()) {
+		if (userRepo.findAll().isEmpty()) {
 
-			User us = new User("sergjio", "1234", "soysergio@sergio.com", "sergio", "plaza");
-			User us1 = new User("dani", "45sdf", "soydani@dani.com", "daniel", "jimenez");
-			User us2 = new User("fonti", "suhfued", "soyfonti@fonti.com", "david", "fontela");
+			User us = new User("sergjio", "1234", "sergioplarrosaps@gmail.com", "sergio", "plaza");
+			User us1 = new User("dani", "45sdf", "danijimpac@gmail.com", "daniel", "jimenez");
+			User us2 = new User("fonti", "suhfued", "sergioplarrosaps@gmail.com", "david", "fontela");
 			/*
 			 * User us2 = new User("dani","1234","soyfeo@dani2.com","daniel2","jimenez");
 			 * User us3 = new User("dani","1234","soyfeo@dani3.com","daniel3","jimenez");
 			 * User us4 = new User("dani","1234","soyfeo@dani4.com","daniel4","jimenez");
 			 */
 
-			Developer dev = new Developer("axwel", "35658945", "soydevAxwel@axwel.com", "alejandro", "garcia");
-			Developer dev2 = new Developer("carlos", "chefff5", "soydevCarlos@carlos.com", "carlos", "ruiz");
-			Developer dev3 = new Developer("chonoOut", "chefff5", "chonoOut@studios.com", "chono", "out");
+			Developer dev = new Developer("axwel", "35658945", "axelheart1998@gmail.com", "alejandro", "garcia");
+			Developer dev2 = new Developer("carlos", "chefff5", "alexgr15ro@gmail.com", "carlos", "ruiz");
+			Developer dev3 = new Developer("chonoOut", "chefff5", "danijimpac@gmail.com", "chono", "out");
 			
 			userRepo.save(dev);
 			userRepo.save(dev2);
@@ -279,7 +279,7 @@ public class OurProjectController {
 			rewardRepo.save(r7);
 			rewardRepo.save(r8);
 			rewardRepo.save(r9);
-		//}
+		}
 	}
 
 }

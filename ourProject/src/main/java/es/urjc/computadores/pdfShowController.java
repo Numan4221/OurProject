@@ -67,8 +67,8 @@ public class pdfShowController {
 
 		// ENVÍA UN CORREO CON PDF AL MECENAS DEL PROYECTO
 		String username = "ourprojectdistribuidas@gmail.com";
-		String receptor = "axelsax1998@gmail.com";
-		// String receptor = cont.contributor.email;
+		//String receptor = "axelsax1998@gmail.com";
+		String receptor = cont.contributor.email;
 		String title = "Reenvío del Contrato " + cont.project.projectName;
 		String content = "Contrato";
 		String document = pdfFile[0] + pdfFile[1] + pdfFile[2] + ".pdf";

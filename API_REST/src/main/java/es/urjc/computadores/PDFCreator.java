@@ -41,7 +41,7 @@ public class PDFCreator {
 	private static final Font blueFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.RED);
 	private static final Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 
-	private static final String iTextExampleImage = "/src/main/resources/static/img/topImage.png";
+	private static final String iTextExampleImage = "src/main/resources/static/img/topImage.png";
 
 	// @PostMapping(path="/ourProject/project/pdf", consumes = "application/json",
 	// produces = "application/json")
