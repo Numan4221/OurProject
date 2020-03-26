@@ -103,8 +103,8 @@ public class projectController {
 
 			// ENVÍA UN CORREO CON PDF AL MECENAS DEL PROYECTO
 			String email = "ourprojectdistribuidas@gmail.com";
-			String receptor = "axelsax1998@gmail.com";
-			// String receptor = cont.contributor.email;
+			//String receptor = "axelsax1998@gmail.com";
+			String receptor = cont.contributor.email;
 			String title = "Contrato " + proyectoReal.projectName;
 			String content = "Contrato";
 			String document = pdfFile[0] + pdfFile[1] + pdfFile[2] + ".pdf";
@@ -135,8 +135,8 @@ public class projectController {
 
 			// ENVÍA UN CORREO CON PDF AL CREADOR DEL PROYECTO
 			email = "ourprojectdistribuidas@gmail.com";
-			receptor = "ourprojectdistribuidas@gmail.com";
-			// receptor = cont.project.developer.email;
+			//receptor = "ourprojectdistribuidas@gmail.com";
+			receptor = cont.project.developer.email;
 			title = "Contrato " + proyectoReal.projectName;
 			content = "Contrato";
 			document = pdfFile[0] + pdfFile[1] + pdfFile[2] + ".pdf";
@@ -325,16 +325,16 @@ public class projectController {
 				// Envio de un correo básico cuando se haga un comentario
 				// Solo lo recibe el creador del proyecto
 
-				String username = "ourprojectdistribuidas@gmail.com";
-				// String receptor = proyectoReal.developer.email;
-				String receptor = "axelsax1998@gmail.com";
+				String email = "ourprojectdistribuidas@gmail.com";
+				String receptor = proyectoReal.developer.email;
+				//String receptor = "axelsax1998@gmail.com";
 				String title = "Tienes un nuevo comentario en el proyecto: " + proyectoReal.projectName;
 				String content = "Comentario de " + myComment.user.name + ":\n" + myComment.comment;
 
 				RestTemplate restTemplate = new RestTemplate();
 				String url = "http://127.0.0.1:9999/ourProject/project/message";
 				URI uri = new URI(url);
-				Mail mail = new Mail(username, receptor, title, content, "");
+				Mail mail = new Mail(email, receptor, title, content, "");
 
 				// restTemplate.getForObject(url, Mail.class, mail);
 				restTemplate.postForEntity(uri, mail, String.class).getBody();
