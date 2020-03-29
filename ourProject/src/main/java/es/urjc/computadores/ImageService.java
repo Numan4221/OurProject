@@ -39,7 +39,7 @@ public class ImageService implements WebMvcConfigurer {
 		Path newFile = createFilePath(id, folder);
 		Path newSearch = createFilePath(id, searchFolder);
 		image.transferTo(newFile);
-		System.out.println("imagen guardada en : " + newFile);
+		System.out.println("imagen guardada en : " + newSearch);
 		System.out.println("imagen guardada en : " + newFile.toString());
 
 		return newSearch.toString();
@@ -65,7 +65,9 @@ public class ImageService implements WebMvcConfigurer {
     public static void resize(String inputImagePath)
             throws IOException {
 
-    	String cadena = "./src/main/resources/static" + inputImagePath;
+    	String cadena =  "."+inputImagePath;
+    	
+    	System.out.println(cadena);
 
         // reads input image
         File inputFile = new File(cadena);

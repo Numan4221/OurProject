@@ -44,6 +44,10 @@ public class Developer extends User {
 		isDeveloper = true;
 	}
 	
+	public void addRole() {
+		roles.add("ROLE_DEVELOPER");
+	}
+	
 	
 	public void createProject() {
 		

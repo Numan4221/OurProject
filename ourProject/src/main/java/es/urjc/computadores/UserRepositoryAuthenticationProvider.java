@@ -36,19 +36,9 @@ public class UserRepositoryAuthenticationProvider implements AuthenticationProvi
 		if (!new BCryptPasswordEncoder().matches(password, user.getPassword())) {
 			throw new BadCredentialsException("Wrong password");
 		}
+
 		
-		/*
-		if (!password.equals(user.getPassword())) {
-			throw new BadCredentialsException("Wrong password");
-		}*/
-		List<GrantedAuthority> roles = new ArrayList<>();
-		 
-		for (String role : user.getRoles()) {
-			 roles.add(new SimpleGrantedAuthority(role));
-		}
- 
-		
-		UsernamePasswordAuthenticationToken aux = new UsernamePasswordAuthenticationToken(user.nickname, password, roles);
+		UsernamePasswordAuthenticationToken aux = new UsernamePasswordAuthenticationToken(user.nickname, password, auth.getAuthorities());
 	
 		
 		return aux;

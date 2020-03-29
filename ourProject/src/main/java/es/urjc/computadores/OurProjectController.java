@@ -18,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -75,9 +76,13 @@ public class OurProjectController {
 	@PostMapping("/ourProject/init")
 	public String ourProjectInit (Model model , HttpSession session, @RequestParam String nickname, @RequestParam String pass) {
 		
-		
+		User newUser = userRepo.findFirstByNickname(nickname);
 		
 		List<GrantedAuthority> roles = new ArrayList<>();
+		
+		for (String role : newUser.getRoles()) {
+			 roles.add(new SimpleGrantedAuthority(role));
+		}
 		
 		UsernamePasswordAuthenticationToken authReq
 	      = new UsernamePasswordAuthenticationToken(nickname, pass, roles);
@@ -95,7 +100,7 @@ public class OurProjectController {
 	    session.setAttribute("roles", roles);
 	    session.setAttribute("token", auth);
 	    
-	    session.setMaxInactiveInterval(-1);
+	    session.setMaxInactiveInterval(300);
 	    
 	    
 	    
@@ -138,6 +143,10 @@ public class OurProjectController {
 		
 		//Le iniciamos sesion
 		List<GrantedAuthority> roles = new ArrayList<>();
+		
+		for (String role : newUser.getRoles()) {
+			 roles.add(new SimpleGrantedAuthority(role));
+		}
 		
 		UsernamePasswordAuthenticationToken authReq
 	      = new UsernamePasswordAuthenticationToken(nickname, pass, roles);
@@ -189,7 +198,7 @@ public class OurProjectController {
 	@PostConstruct
 	public void init() {
 
-		if (userRepo.findAll().isEmpty()) {
+		if (userRepo.findAll().size()<=1) {
 
 			User us = new User("sergjio", "1234", "sergioplarrosaps@gmail.com", "sergio", "plaza");
 			User us1 = new User("dani", "45sdf", "danijimpac@gmail.com", "daniel", "jimenez");

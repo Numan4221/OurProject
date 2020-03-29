@@ -44,7 +44,7 @@ public class User {
 	private String accountID;
 	
 	@ElementCollection(fetch = FetchType.EAGER)
-	private List<String> roles;
+	protected List<String> roles;
 
 	
 
@@ -97,6 +97,8 @@ public class User {
 		roles= new ArrayList<>();
 		roles.add("ROLE_USER");
 	}
+	
+
 
 	
 	public List<Project> getFinancedProjects() {
