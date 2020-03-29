@@ -41,7 +41,6 @@ public class PDFCreator {
 	private static final Font blueFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.RED);
 	private static final Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 
-	private static final String iTextExampleImage = "src/main/resources/static/img/topImage.png";
 
 	// @PostMapping(path="/ourProject/project/pdf", consumes = "application/json",
 	// produces = "application/json")
@@ -73,17 +72,6 @@ public class PDFCreator {
 		chapter.add(new Paragraph(contrato[5] + " " + contrato[3], paragraphFont));
 		chapter.add(new Paragraph(contrato[4], paragraphFont));
 
-		Image image;
-		try {
-			image = Image.getInstance(iTextExampleImage);
-			image.setAbsolutePosition(450, 700);
-			image.scalePercent(20);
-			chapter.add(image);
-		} catch (BadElementException ex) {
-			System.out.println("Image BadElementException" + ex);
-		} catch (IOException ex) {
-			System.out.println("Image IOException " + ex);
-		}
 		document.add(chapter);
 
 		document.close();

@@ -100,7 +100,7 @@ public class OurProjectController {
 	    session.setAttribute("roles", roles);
 	    session.setAttribute("token", auth);
 	    
-	    session.setMaxInactiveInterval(300);
+	    session.setMaxInactiveInterval(600);
 	    
 	    
 	    
@@ -164,7 +164,7 @@ public class OurProjectController {
 	    session.setAttribute("roles", roles);
 	    session.setAttribute("token", auth);
 	    
-	    session.setMaxInactiveInterval(-1);
+	    session.setMaxInactiveInterval(600);
 	    
 	    
 	    

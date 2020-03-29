@@ -83,7 +83,7 @@ public class profileController {
 	}
 	
 	@PostMapping("/ourProject/myProfile/change")
-	public String profileChange(Model model, HttpSession session,HttpServletRequest request, String id, String username, String name, String surname, String email, String option, String accountNumber, String newDev) {
+	public String profileChange(Model model, HttpSession session,HttpServletRequest request, String id, String name, String surname, String email, String option, String accountNumber, String newDev) {
 		
 		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
 		model.addAttribute("token", token.getToken());
@@ -106,10 +106,6 @@ public class profileController {
 			userRepo.save(user);
 		}
 		
-		if (username != "" && username != null) {		
-			user.nickname = username;
-			userRepo.save(user);
-		}
 		
 		if (name != "" && name != null) {		
 			user.name = name;
