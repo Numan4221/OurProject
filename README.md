@@ -109,6 +109,13 @@ Realizamos un proceso análogo con el proyecto Api_Rest. En este caso el jar se 
 
 ## Instruciones para instalación en Ubuntu 18.04
 Necesitaremos dos terminales para ejecutar toda la aplicación:
+El proyecto se guardara en la ruta donde clonemos el repositorio, las rutas habrá que adaptarlas a nuestra carpeta elegida.
+Los Jars están proporcionados en la carpeta Jars en la raíz del repositorio
+- ### Obtenemos el repositorio
+    - Para ello debemos instalar git:
+        - **sudo apt install git**
+    - Ahora clonamos el proyecto:
+        - **git clone https://github.com/Numan4221/OurProject.git**
 - ### Instalación máquina virtual de Java
     - Abrimos una terminal y ejecutamos:
         - **sudo apt install default-jre**
@@ -135,15 +142,16 @@ Necesitaremos dos terminales para ejecutar toda la aplicación:
     - Salimos de la terminal de MySQL:
         - **EXIT;**
 - ### Ejecución de la aplicación principal
-    - Nos dirigimos con la terminal a la ruta en la que tengamos ourProject-0.0.1-SNAPSHOT.jar. *rutadelJar* se sustituirá por la ruta de ourProject-0.0.1-SNAPSHOT.jar.
-        - **cd *rutadelJar***
+    - A continuación nos dirigimos a la carpeta del proyecto.
+        - Recordamos que la ruta es relativa a donde se halla clonaod el repositorio
+        - **cd OurProject/Jars**
     - Damos a nuestro usuario permisos de ejecución:
         -  **chmod 777 ourProject-0.0.1-SNAPSHOT.jar**
     - Ahora ejecutamos la aplicación principal:
         - **java -jar ourProject-0.0.1-SNAPSHOT.jar**
 - ### Ejecución del servicio interno 
-    - Ejecutamos una segunda terminal y nos dirigimos a la ruta donde tengamos el archivo API_REST-0.0.1-SNAPSHOT.jar.*rutadelJar* se sustituirá por la ruta de API_REST-0.0.1-SNAPSHOT.jar. 
-        - **cd *rutadelJar***
+    - A continuación nos dirigimos a la carpeta del proyecto.
+        - **cd OurProject/Jars**
     - Damos a nuestro usuario permisos de ejecución:
         -  **chmod 777 API_REST-0.0.1-SNAPSHOT.jar**
     - Ahora ejecutamos la aplicación principal:
