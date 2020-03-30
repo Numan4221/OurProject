@@ -60,12 +60,20 @@ A continuación se muestra el esquema general de navegación y transiciones entr
 
 ![alt text](./Documentos/diagramaFlujoOurProject.png "Diagrama Flujo")
 
-- Página Principal: contendrá los proyectos disponibles, de todos los desarrolladores, con su nombre y una imagen. Al hacer clic sobre estos proyectos, se despliega un modal que presenta una pequeña descripción del proyecto y permite el acceso a su página con información completa. Además, tendrá accesos directos tanto para cerrar sesión (o iniciar sesión en versiones futuras) como al perfil del propio usuario.
+- Página Principal: contendrá los proyectos disponibles, de todos los desarrolladores, con su nombre y una imagen. Al hacer clic sobre estos proyectos, se despliega un modal que presenta una pequeña descripción del proyecto y permite el acceso a su página con información completa. Además, tendrá accesos directos tanto para cerrar sesión como al perfil del propio usuario (si se tiene sesión iniciada) u otros como iniciar sesión y registrarse.
 
 ![alt text](./Documentos/ImgREADME/PP.png "Página Principal")
 ![alt text](./Documentos/ImgREADME/PP_modal.png "Página Principal - Modal")
 
-- Página Proyecto: en la página del proyecto se puede ver con todo detalle la información del mismo: el nombre, el desarrollador, la imagen, la descripción, así como dos bloques con las diferentes metas y recompensas. Además, en la parte inferior se encuentra la sección de comentarios.
+- Página Iniciar Sesión: contiene dos campos de texto, uno para el usuario y otro para la contraseña. Además, ofrece un enlace directo a la página de crear cuenta.
+
+![alt text](./Documentos/ImgREADME/inicioSesion.png "Página Principal - Modal")
+
+- Página Registrarse: contiene varios campos de texto, que son: nick de usuario, nombre y apellidos, email y contraseña. Además, ofrece un enlace directo a la página de iniciar sesión.
+
+![alt text](./Documentos/ImgREADME/crearCuenta.png "Página Principal - Modal")
+
+- Página Proyecto: en la página del proyecto se puede ver con todo detalle la información del mismo: el nombre, el desarrollador, la imagen, la descripción, así como dos bloques con las diferentes metas y recompensas. Además, en la parte inferior se encuentra la sección de comentarios. 
 
 ![alt text](./Documentos/ImgREADME/PProj.png "Página Proyecto")
 ![alt text](./Documentos/ImgREADME/PProj2.png "Página Proyecto")
@@ -81,11 +89,11 @@ A continuación se muestra el esquema general de navegación y transiciones entr
 ![alt text](./Documentos/ImgREADME/PPerfil_noDesarrollador_noProyectos.png "Perfil Contribuidor")
 ![alt text](./Documentos/ImgREADME/PPerfil_desarrollador_conProyectos.png "Página Desarrollador")
 
-- Contrato: en la página del perfil, si haces clic en ver contrato, aparecerá un modal en el que podrás ver su información específica, así como las recompensas obtenidas según la cantidad que hayas donado.
+- Contrato: en la página del perfil, si haces clic en ver contrato, aparecerá un modal en el que podrás ver su información específica, así como las recompensas obtenidas según la cantidad que hayas donado. Además, se puede reenviar un pdf del contrato generado al correo del usuario.
 
 ![alt text](./Documentos/ImgREADME/modalContrato.png "Modal Contrato")
 
-- Página Añadir Proyecto: aparecerá un formulario en el que podrás configurar todos los parámetros necesarios para la creación de un proyecto. Estos son: el nombre, una descripción, un tipo de cuenta y número al que se deberá ingresar el dinero de las donaciones. Además, aparecen cinco campos para especificar metas y cinco para recompensas, siendo solo obligatorios el primero de cada tipo.
+- Página Añadir Proyecto: aparecerá un formulario en el que podrás configurar todos los parámetros necesarios para la creación de un proyecto. Estos son: el nombre, una descripción, un tipo de cuenta y número al que se deberá ingresar el dinero de las donaciones. También se ofrece la posibilidad de subir una imagen que represente al proyecto. Además, aparecen cinco campos para especificar metas y cinco para recompensas, siendo solo obligatorios el primero de cada tipo.
 
 ![alt text](./Documentos/ImgREADME/anadirProj.png "Modal Contrato")
 
@@ -160,6 +168,10 @@ Los Jars están proporcionados en la carpeta Jars en la raíz del repositorio
     - Ejecutamos un navegador y buscamos:
         - **https://127.0.0.1:8443/ourProject**
         - Si es la primera vez que accedemos es probable que tengamos que aceptar los riesgos de entrar en una página web que no cuenta con certificacion de autenticación de una CA
+
+___
+# Diagrama de clases y templates
+![alt text](./Documentos/ImgREADME/diagramaTemplates.png "Diagrama templates")
 
 ## Equipo
 | Nombres | Correo URJC  | Usuario Git Hub  |
