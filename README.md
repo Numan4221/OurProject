@@ -107,18 +107,38 @@ Cuando haya acabado el proceso, en la consola aparecerá la ruta en donde tenemo
 
 Realizamos un proceso análogo con el proyecto Api_Rest. En este caso el jar se encontrará en *./OurProject/API_REST/target/API_REST-0.0.1-SNAPSHOT.jar*
 
-## Instruciones para instalación en Ubuntu 18.04
 Necesitaremos dos terminales para ejecutar toda la aplicación:
-El proyecto se guardara en la ruta donde clonemos el repositorio, las rutas habrá que adaptarlas a nuestra carpeta elegida.
-Los Jars están proporcionados en la carpeta Jars en la raíz del repositorio
-- ### Obtenemos el repositorio
-    - Para ello debemos instalar git:
-        - **sudo apt install git**
-    - Ahora clonamos el proyecto:
-        - **git clone https://github.com/Numan4221/OurProject.git**
+
+## Instruciones para despliegue de la aplicacion en Máquina Virtual Ubuntu 14.04 desde Ubuntu 18.04
+
+- ### Creacición máquina virtual:
+    - Instalamos VirtualBox  .deb en una version inferior a la 5.2
+        - https://www.virtualbox.org/wiki/Download_Old_Builds_5_2
+    - Instalamos Vagrant .deb
+        - https://www.vagrantup.com/downloads.html
+    - Abrimos una terminal:
+    - Creamos el directorio para la maquina virtual y nos dirigimos a él:
+        - **mkdir -p ~/vagrant/spring**
+        - **cd ~/vagrant/spring**
+    - Inicializamos vagrant:
+        - **sudo vagrant init ubuntu/trusty32**
+    - Para acceder a la máquina virtual por red, se descomenta la siguiente línea de Vagrantfile, para ello:
+        - **sudo gedit Vagrantfile**
+        - Se descomenta **# config.vm.network "private_network", ip: "192.168.33.10”** guardamos el archivo.
+    - A continuación, levantamos la máquina virtual:
+        - **sudo vagrant up**
+    - Una vez ya tenemos nuestra Máquina virtual, abrimos su terminal:
+        - vagrant ssh
+
+
+- ### Obtención de los JARS
+    - Copiamos los JARS que hemos obtenido en ~/vagrant/spring
+
 - ### Instalación máquina virtual de Java
-    - Abrimos una terminal y ejecutamos:
-        - **sudo apt install default-jre**
+    - En la terminal anterior ejecutamos:
+        - **sudo add-apt-repository ppa:openjdk-r/ppa**
+        - **sudo apt-get update**
+        - **sudo apt-get install openjdk-8-jdk**
     - Si al ejecutar el comando la terminal nos devuelve este error:
         - *E: No se pudo bloquear /var/lib/dpkg/lock-frontend - open (11: Recurso no disponible temporalmente) E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?* 
         - Deberemos ejecutar:
@@ -129,36 +149,50 @@ Los Jars están proporcionados en la carpeta Jars en la raíz del repositorio
         - **sudo apt update**
     - Ahora ya estamos preparados para instalar MySQL:
         - **sudo apt install mysql-server**
+        - Debemos indicar que la contraseña del root es “password”
 - ### Configuración de MySQL y creación de base de datos
     - Abrimos una terminal MySQL
-        - **sudo mysql**
+        - **mysql -u root -p**
+        - Escribimos la contraseña "password"
+        - Si nos da un error es probable que se deba a que el servicio no esta iniciado, lo arrancamos:
+            - **sudo service mysql start**
     - A partir de aqui trabajamos dentro de la propia terminal de MySQL
-    - Indicamos que el método de autenticación de nuestro usuario root será por contraseña, le indicamos que la contraseña será “password”. Por defecto, esta configurado el inicio de sesión del usuario root mediante auto_socket.
-        - **ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';**
+    - Indicamos que el método de autenticación de nuestro usuario root será por contraseña. Por defecto, esta configurado el inicio de sesión del usuario root mediante auto_socket.
+        - **use mysql;**
+        - **update user set plugin='mysql_native_password' where User='root';**
     - Ahora debemos actualizar los privilegios que le hemos otorgado
         - **FLUSH PRIVILEGES;**
     - Ahora creamos la base de datos:
         - **CREATE DATABASE our_project;**
     - Salimos de la terminal de MySQL:
         - **EXIT;**
+
+- ### Actualizamos los certificados de seguridad de nuetsra máquina virtual
+    - **sudo apt-get install -y ca-certificates-java**
+    - **sudo mkdir /etc/ssl/certs/java/**
+    - **sudo update-ca-certificates -f**
+
 - ### Ejecución de la aplicación principal
     - A continuación nos dirigimos a la carpeta del proyecto.
-        - Recordamos que la ruta es relativa a donde se halla clonaod el repositorio
-        - **cd OurProject/Jars**
+        - **cd /vagrant**
     - Damos a nuestro usuario permisos de ejecución:
         -  **chmod 777 ourProject-0.0.1-SNAPSHOT.jar**
     - Ahora ejecutamos la aplicación principal:
         - **java -jar ourProject-0.0.1-SNAPSHOT.jar**
 - ### Ejecución del servicio interno 
-    - A continuación nos dirigimos a la carpeta del proyecto.
-        - **cd OurProject/Jars**
+    - Abrimos una nueva terminal y nos dirigimos a la carpeta donde hemos instalado vagrant:
+        - **cd ~/vagrant/spring**
+    - Abrimos una nueva terminal de la maquina virtual:
+        - **vagrant ssh**
+    - Vamos a la carpeta donde estan los Jars:
+        -  **cd /vagrant**
     - Damos a nuestro usuario permisos de ejecución:
         -  **chmod 777 API_REST-0.0.1-SNAPSHOT.jar**
     - Ahora ejecutamos la aplicación principal:
         - **java -jar API_REST-0.0.1-SNAPSHOT.jar**
 - ### Acceder a la página web 
     - Ejecutamos un navegador y buscamos:
-        - **https://127.0.0.1:8443/ourProject**
+        - **https://192.168.33.10:8443/ourProject**
         - Si es la primera vez que accedemos es probable que tengamos que aceptar los riesgos de entrar en una página web que no cuenta con certificacion de autenticación de una CA
 
 ## Equipo
