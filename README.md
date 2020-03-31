@@ -136,7 +136,7 @@ Necesitaremos dos terminales para ejecutar toda la aplicación:
     - A continuación, levantamos la máquina virtual:
         - **sudo vagrant up**
     - Una vez ya tenemos nuestra Máquina virtual, abrimos su terminal:
-        - vagrant ssh
+        - **sudo vagrant ssh**
 
 
 - ### Obtención de los JARS
@@ -191,7 +191,7 @@ Necesitaremos dos terminales para ejecutar toda la aplicación:
     - Abrimos una nueva terminal y nos dirigimos a la carpeta donde hemos instalado vagrant:
         - **cd ~/vagrant/spring**
     - Abrimos una nueva terminal de la maquina virtual:
-        - **vagrant ssh**
+        - **sudo vagrant ssh**
     - Vamos a la carpeta donde estan los Jars:
         -  **cd /vagrant**
     - Damos a nuestro usuario permisos de ejecución:

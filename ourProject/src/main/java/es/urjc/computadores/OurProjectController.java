@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -197,8 +198,10 @@ public class OurProjectController {
 	 */
 	@PostConstruct
 	public void init() {
+		
+		Iterator it = userRepo.findAll().iterator();
 
-		if (userRepo.findAll().size()<=1) {
+		if (!it.hasNext()) {
 
 			User us = new User("sergjio", "1234", "sergioplarrosaps@gmail.com", "sergio", "plaza");
 			User us1 = new User("dani", "45sdf", "danijimpac@gmail.com", "daniel", "jimenez");
