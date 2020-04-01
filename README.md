@@ -175,7 +175,7 @@ Necesitaremos dos terminales para ejecutar toda la aplicación:
     - Salimos de la terminal de MySQL:
         - **EXIT;**
 
-- ### Actualizamos los certificados de seguridad de nuetsra máquina virtual
+- ### Actualizamos los certificados de seguridad de nuestra máquina virtual
     - **sudo apt-get install -y ca-certificates-java**
     - **sudo mkdir /etc/ssl/certs/java/**
     - **sudo update-ca-certificates -f**

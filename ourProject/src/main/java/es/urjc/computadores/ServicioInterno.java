@@ -60,7 +60,6 @@ public class ServicioInterno {
 			HttpServletResponse response) {
 		User user = userRepo.findFirstByNickname(userName);
 		
-		System.out.println("print 1");
 		
 		if (user != null) {
 			if (user.getClass() != Developer.class) {
@@ -72,7 +71,6 @@ public class ServicioInterno {
 						authentication, extraAuths);
 				SecurityContextHolder.getContext().setAuthentication(midSessionAuthentication);
 
-				System.out.println("print 2");
 				
 				List<Project> financedProjects = user.getFinancedProjects();
 				List<Contract> contracts = user.getMyContracts();
@@ -82,7 +80,6 @@ public class ServicioInterno {
 				dev.setMyPaymentMethod(user.getMyPaymentMethod());
 				dev.addRole();
 
-				System.out.println("print 3");
 
 				userRepo.save(dev);
 				for (Project pro : financedProjects) {
@@ -110,7 +107,6 @@ public class ServicioInterno {
 				Authentication authentication2 = midSessionAuthentication2.getWrapped();
 				SecurityContextHolder.getContext().setAuthentication(authentication2);
 				*/
-				System.out.println("print 4");
 				return true;
 			}
 		}

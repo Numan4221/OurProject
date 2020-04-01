@@ -75,9 +75,13 @@ public class OurProjectController {
 	}
 	
 	@PostMapping("/ourProject/init")
-	public String ourProjectInit (Model model , HttpSession session, @RequestParam String nickname, @RequestParam String pass) {
+	public String ourProjectInit (Model model , HttpSession session, @RequestParam String nickname, @RequestParam String pass) throws Exception {
 		
 		User newUser = userRepo.findFirstByNickname(nickname);
+		if (newUser == null) {
+			throw new Exception("Ese Usuario no existe");
+		}
+		
 		
 		List<GrantedAuthority> roles = new ArrayList<>();
 		
