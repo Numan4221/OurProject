@@ -60,7 +60,8 @@ public class profileController {
 		}
 		
 		if (user.isDeveloper) {
-			List<Project> proyectosPropios = projectRepo.findByDeveloperNickname(user.nickname);
+			
+			List<Project> proyectosPropios = (List<Project>)projectRepo.findByDeveloperNickname(user.nickname);
 			if (proyectosPropios.size()!= 0) {
 				model.addAttribute("proyectosPropios", proyectosPropios);
 				model.addAttribute("tieneProyectosPropios", true);

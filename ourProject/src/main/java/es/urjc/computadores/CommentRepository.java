@@ -1,12 +1,20 @@
 package es.urjc.computadores;
 
 import java.util.List;
+
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CommentRepository extends JpaRepository<Comment,Long>{
 	
+	
+	@CacheEvict(allEntries=true)
+	Comment save(Comment comment);
+	
+	@CacheEvict(allEntries=true)
+	void delete(Comment comment);
 	/***
 	 * Filtra los comentarios por nombre de Usuario y Nombre del proyecto
 	 * @param nickname

@@ -1,12 +1,21 @@
 package es.urjc.computadores;
 
 import java.util.List;
+
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ContractRepository extends JpaRepository<Contract,Long>{
+	
+	
+	@CacheEvict(allEntries=true)
+	Contract save(Contract contract);
+	
+	@CacheEvict(allEntries=true)
+	void delete(Contract contract);
 	
 	/***
 	 * Filtra los contratos por el nombre del contribuidor y el nombre del proyecto
