@@ -9,12 +9,18 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @PrimaryKeyJoinColumn(referencedColumnName="id")
 public class Developer extends User {
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JsonBackReference
 	@OneToMany(mappedBy="developer", cascade = CascadeType.REMOVE)
 	private List<Project> myProjects = new ArrayList<Project>();
 	

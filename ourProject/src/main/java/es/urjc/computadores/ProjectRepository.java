@@ -1,6 +1,7 @@
 package es.urjc.computadores;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.cache.annotation.CacheConfig;
@@ -19,13 +20,19 @@ public interface ProjectRepository extends JpaRepository<Project,Long>{
 	@CacheEvict(allEntries=true)
 	void delete(Project project);
 	
+	@Cacheable
+	List<Project> findAll();
+	
+	@Cacheable
+	Optional<Project> findById(long id);
+	
 	/***
 	 * Busca por nombre de Usuario  y nombre del Proyecto
 	 * @param projectName
 	 * @param developer
 	 * @return Priemr proyecto encontrado
 	 */
-	@Cacheable
+	//@Cacheable
 	Project findFirstByProjectNameAndDeveloperNickname(String projectName,String nickname);
 
 	/***
@@ -33,7 +40,7 @@ public interface ProjectRepository extends JpaRepository<Project,Long>{
 	 * @param projectName
 	 * @return Lista de Proyectos 
 	 */
-	@Cacheable
+	//@Cacheable
 	List<Project> findByProjectName(String projectName);
 	
 	/***
@@ -42,7 +49,7 @@ public interface ProjectRepository extends JpaRepository<Project,Long>{
 	 * @param page
 	 * @return Pagina de projectos
 	 */
-	@Cacheable
+	//@Cacheable
 	Page<Project> findByProjectName(String projectName,Pageable page);
 	
 	/***
@@ -50,6 +57,7 @@ public interface ProjectRepository extends JpaRepository<Project,Long>{
 	 * @param nickname
 	 * @return Lista de Proyectos
 	 */
+	//@Cacheable
 	List<Project> findByDeveloperNickname(String nickname);
 	
 	/***
@@ -58,7 +66,7 @@ public interface ProjectRepository extends JpaRepository<Project,Long>{
 	 * @param page
 	 * @return
 	 */
-	@Cacheable
+	//@Cacheable
 	Page<Project> findByDeveloperNickname(String nickname,Pageable page);
 	
 }

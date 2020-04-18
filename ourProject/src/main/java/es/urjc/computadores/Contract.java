@@ -10,6 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Contract {
 	
@@ -17,10 +22,16 @@ public class Contract {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JsonBackReference
 	@ManyToOne
 	User contributor;
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JsonBackReference
 	@ManyToOne
 	Project project;
+	
 	@Column(length=1000000)
 	String information;
 	String information2;

@@ -2,11 +2,14 @@ package es.urjc.computadores;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+@CacheConfig(cacheNames="ourProject")
 public interface CommentRepository extends JpaRepository<Comment,Long>{
 	
 	
@@ -21,6 +24,11 @@ public interface CommentRepository extends JpaRepository<Comment,Long>{
 	 * @param projectname
 	 * @return Lista de comentarios
 	 */
+	
+	//@Cacheable
+	List<Comment> findAll();
+	
+	//@Cacheable
 	List<Comment> findByUserNicknameAndProjectProjectName(String nickname, String projectname);
 	
 	/***
@@ -29,6 +37,7 @@ public interface CommentRepository extends JpaRepository<Comment,Long>{
 	 * @param projectname
 	 * @return Pagina de comentarios
 	 */
+	//@Cacheable
 	Page<Comment> findByUserNicknameAndProjectProjectName(String nickname, String projectname, Pageable page);
 	
 	/***
@@ -36,6 +45,7 @@ public interface CommentRepository extends JpaRepository<Comment,Long>{
 	 * @param nickName
 	 * @return Lista de comentarios
 	 */
+	//@Cacheable
 	List<Comment> findByUserNickname(String nickName);
 	
 	/***
@@ -43,6 +53,7 @@ public interface CommentRepository extends JpaRepository<Comment,Long>{
 	 * @param nickName
 	 * @return Pagina de comentarios
 	 */ 
+	//@Cacheable
 	Page<Comment> findByUserNickname(String nickName,Pageable page);
 	
 	/***
@@ -50,6 +61,7 @@ public interface CommentRepository extends JpaRepository<Comment,Long>{
 	 * @param projectName
 	 * @return Lista de comentarios
 	 */
+	//@Cacheable
 	List<Comment> findByProjectProjectName(String projectName);
 	
 	/***
@@ -58,6 +70,7 @@ public interface CommentRepository extends JpaRepository<Comment,Long>{
 	 * @param page
 	 * @return Pagina de comentarios
 	 */
+	//@Cacheable
 	Page<Comment> findByProjectProjectName(String projectName,Pageable page);
 
 }

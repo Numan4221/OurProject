@@ -34,6 +34,7 @@ public class Project {
 	public String projectName;
 	public String description;
 
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="project", cascade = CascadeType.ALL,orphanRemoval = true)
 	public List<Goal> goals = new ArrayList<Goal>();
 	
@@ -49,17 +50,22 @@ public class Project {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany 
 	private List<User> contributors = new ArrayList<User>();
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="project",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<Contract> myProjectContracts = new ArrayList<Contract>();
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="project",cascade = CascadeType.ALL,orphanRemoval = true)
 	public List<Comment> myComments = new ArrayList<Comment>();
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToOne
 	public Developer developer;
 	
 	public String developerName;
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="project", cascade = CascadeType.ALL,orphanRemoval = true)
 	public List<Reward> rewards = new ArrayList<Reward>();
 

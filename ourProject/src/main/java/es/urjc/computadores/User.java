@@ -22,12 +22,12 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Inheritance(strategy= InheritanceType.JOINED)
 public class User {
-
-	
 
 	@Id
 	@Column(name = "ID")
@@ -59,6 +59,7 @@ public class User {
 	}
 
 	@LazyCollection(LazyCollectionOption.FALSE)
+	@JsonBackReference
 	@ManyToMany(mappedBy="contributors")
 	private List<Project> financedProjects = new ArrayList<Project>();
 	

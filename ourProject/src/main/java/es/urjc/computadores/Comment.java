@@ -9,6 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Comment {
 	
@@ -16,10 +21,13 @@ public class Comment {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JsonBackReference
 	@ManyToOne
 	public User user;
 	
-	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@JsonBackReference
 	@ManyToOne
 	public Project project;
 	
