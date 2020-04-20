@@ -41,6 +41,12 @@ public class OurProjectController {
 	public UserRepositoryAuthenticationProvider authenticationProvider;
 	
 
+	@GetMapping("")
+	public String initPage() {
+		
+		return "redirect:/ourProject";
+		
+	}
 	
 	
 	@GetMapping("/ourProject")
