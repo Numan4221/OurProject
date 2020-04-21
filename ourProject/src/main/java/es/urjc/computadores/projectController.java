@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.client.RestTemplate;
 
-import com.sun.xml.txw2.Document;
 
 import es.urjc.computadores.User.paymentMethod;
 
