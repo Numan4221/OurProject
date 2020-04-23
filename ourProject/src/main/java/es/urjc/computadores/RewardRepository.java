@@ -20,7 +20,6 @@ public interface RewardRepository extends JpaRepository<Reward,Long>{
 	@CacheEvict(allEntries=true)
 	void delete(Reward reward);
 	
-	//@Cacheable
 	List<Reward> findAll();
 	
 	/***
@@ -29,7 +28,6 @@ public interface RewardRepository extends JpaRepository<Reward,Long>{
 	 * @return
 	 */
 	
-	//@Cacheable
 	List <Reward> findByProjectProjectName(String projectName);
 	
 	/***
@@ -38,7 +36,6 @@ public interface RewardRepository extends JpaRepository<Reward,Long>{
 	 * @param page
 	 * @return
 	 */
-	//@Cacheable
 	Page <Reward> findByProjectProjectName(String projectName,Pageable page);
 
 }

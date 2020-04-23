@@ -18,10 +18,8 @@ public interface UserRepository extends CrudRepository<User,Long>{
 	 * @param nickname
 	 * @return
 	 */
-	@Cacheable
 	User findFirstByNickname(String nickname);
 	
-	//@Cacheable
 	List<User> findAll();
 	
 	/***
@@ -29,7 +27,6 @@ public interface UserRepository extends CrudRepository<User,Long>{
 	 * @param email
 	 * @return
 	 */
-	//@Cacheable
 	User findFirstByEmail(String email);
 	
 	@CacheEvict(allEntries=true)
