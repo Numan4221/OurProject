@@ -1,0 +1,85 @@
+version: "3"
+services:
+    haproxy: 
+        build: ./dockerhaproxy/
+        ports:
+              - "8445:8445"
+              - "9999:9999"
+              - "443:443"
+        networks:
+              our-net:
+                 aliases:
+                   - myhaproxy
+        depends_on:
+              - ourproject
+              - ourproject1
+              - apirest
+              - apirest1
+    db:
+        image: mysql:5.7.29
+        environment:
+              - MYSQL_ROOT_PASSWORD=password
+              - MYSQL_DATABASE=our_project
+        ports: 
+               - "3306:3306"
+        networks:
+             our-net:
+               aliases:
+                   - db
+
+    ourproject:
+        build: ./dockerourproject/
+        restart: on-failure
+        environment:
+               - SERVER_PORT=8443
+        ports: 
+               - "8443:8443"
+        depends_on:
+               - db
+        networks:
+             our-net:
+               aliases:
+                   - ourproject
+    ourproject1:
+        build: ./dockerourproject/
+        environment:
+               - SERVER_PORT=8444
+        restart: on-failure
+        ports: 
+               - "8444:8444"
+        depends_on:
+               - db
+        networks:
+             our-net:
+               aliases:
+                   - ourproject1
+
+    apirest:
+        build: ./dockerapi/
+        environment:
+               - SERVER_PORT=9997
+        restart: on-failure
+        ports: 
+              - "9997:9997"
+        networks:
+             our-net:
+                 aliases:
+                    - apirest
+
+
+    apirest1:
+        build: ./dockerapi/
+        environment:
+               - SERVER_PORT=9998
+        restart: on-failure
+        ports: 
+              - "9998:9998"
+        networks:
+             our-net:
+                 aliases:
+                    - apirest1
+
+networks:
+     our-net:
+        driver: bridge
+
