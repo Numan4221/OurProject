@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
 import es.urjc.computadores.User.paymentMethod;
 
@@ -34,6 +35,7 @@ public class profileController {
 	
 	@Autowired
 	public UserRepositoryAuthenticationProvider authenticationProvider;
+
 	
 	@RequestMapping("/ourProject/myProfile")
 	public String profileMode(Model model, HttpSession session, HttpServletRequest request) {
@@ -105,27 +107,32 @@ public class profileController {
 		if (accountNumber != "" && accountNumber != null) {		
 			user.setAccountID(accountNumber);
 			userRepo.save(user);
+			
 		}
 		
 		
 		if (name != "" && name != null) {		
 			user.name = name;
 			userRepo.save(user);
+			
 		}
 		
 		if (surname != "" && surname != null) {		
 			user.surname = surname;
 			userRepo.save(user);
+			
 		}
 		
 		if (email != "" && email != null) {		
 			user.email = email;
 			userRepo.save(user);
+			
 		}
 		
 		if (newDev != "" && newDev != null) {
 			user.isDeveloper= true;
 			userRepo.save(user);
+			
 		}
 		return "redirect:/ourProject/myProfile";
 	}

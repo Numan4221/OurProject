@@ -18,7 +18,6 @@ public interface UserRepository extends CrudRepository<User,Long>{
 	 * @param nickname
 	 * @return
 	 */
-	@Cacheable
 	User findFirstByNickname(String nickname);
 	
 	//@Cacheable

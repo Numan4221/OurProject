@@ -20,6 +20,7 @@ import javax.mail.internet.MimeMultipart;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,14 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 @RestController
 public class JavaMail {
+	
+
+	@GetMapping("")
+	public String initPage() {
+		
+		return "true";
+		
+	}
  
 	//@PostMapping(path="/ourProject/project/message", consumes = "application/json", produces = "application/json")
 	@PostMapping(path="/ourProject/project/message")

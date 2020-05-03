@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,6 +54,9 @@ public class projectController {
 	
 	@Autowired
 	private ImageService imageService;
+	
+
+	
 
 	@PostMapping("/ourProject/project/donation")
 	public String donation(Model model, HttpSession session, @RequestParam long id,HttpServletRequest request , String donation, String accountNumber, String service) throws URISyntaxException {
@@ -76,12 +80,15 @@ public class projectController {
 			Double quantity = Double.valueOf(donation);
 			proyectoReal.moneyCollected += quantity;
 			projectRepo.save(proyectoReal);
+			
+
 			myUser.setAccountID(accountNumber);
 			userRepo.save(myUser);
 			model.addAttribute("comeFromDonation", true);
 
 			Contract cont = new Contract(myUser, proyectoReal, "Gracias por su donación", quantity);
 			contractRepo.save(cont);
+
 
 			// CONTRATO A CREAR EN PDF PARA EL MECENAS
 			String[] pdfFile = new String[6];
@@ -94,7 +101,7 @@ public class projectController {
 
 			// Ya tenemos el contrato, se crea el pdf sobre este:
 			RestTemplate restTemplate = new RestTemplate();
-			String url = "http://127.0.0.1:9999/ourProject/project/pdf";
+			String url = "http://myhaproxy:9999/ourProject/project/pdf";
 			URI uri = new URI(url);
 
 			restTemplate.postForEntity(uri, pdfFile, String.class).getBody();
@@ -108,7 +115,7 @@ public class projectController {
 			String content = "Contrato";
 			String document = pdfFile[0] + pdfFile[1] + pdfFile[2] + ".pdf";
 
-			url = "http://127.0.0.1:9999/ourProject/project/messagePDF";
+			url = "http://myhaproxy:9999/ourProject/project/messagePDF";
 			uri = new URI(url);
 
 			Mail mail = new Mail(email, receptor, title, content, document);
@@ -127,7 +134,7 @@ public class projectController {
 			pdfFile[5] = "Se ha recibido la siguiente donación: ";
 
 			// Ya tenemos el contrato, se crea el pdf sobre este:
-			url = "http://127.0.0.1:9999/ourProject/project/pdf";
+			url = "http://myhaproxy:9999/ourProject/project/pdf";
 			uri = new URI(url);
 
 			restTemplate.postForEntity(uri, pdfFile, String.class).getBody();
@@ -140,7 +147,7 @@ public class projectController {
 			content = "Contrato";
 			document = pdfFile[0] + pdfFile[1] + pdfFile[2] + ".pdf";
 
-			url = "http://127.0.0.1:9999/ourProject/project/messagePDF";
+			url = "http://myhaproxy:9999/ourProject/project/messagePDF";
 			uri = new URI(url);
 
 			mail = new Mail(email, receptor, title, content, document);
@@ -267,9 +274,11 @@ public class projectController {
 
 					
 					projectRepo.save(p);
+
+					
 					goalRepo.saveAll(lista);
 					userRepo.save(myUser);
-					
+
 					//comprobamos si hay imagen
 					if(imagenFile != null) {
 						p.hasImage = true;
@@ -285,6 +294,7 @@ public class projectController {
 						System.out.println(" no hay imagen");
 					}
 					projectRepo.save(p);
+
 					model.addAttribute("titulo", p.projectName);
 					model.addAttribute("desc", p.description);
 					model.addAttribute("goals", p.goals);
@@ -322,6 +332,7 @@ public class projectController {
 				Comment myComment = new Comment(myUser, proyectoReal, comentario, new Date());
 				commentRepo.save(myComment);
 
+
 				// Envio de un correo básico cuando se haga un comentario
 				// Solo lo recibe el creador del proyecto
 
@@ -332,7 +343,7 @@ public class projectController {
 				String content = "Comentario de " + myComment.user.name + ":\n" + myComment.comment;
 
 				RestTemplate restTemplate = new RestTemplate();
-				String url = "http://127.0.0.1:9999/ourProject/project/message";
+				String url = "http://myhaproxy:9999/ourProject/project/message";
 				URI uri = new URI(url);
 				Mail mail = new Mail(email, receptor, title, content, "");
 

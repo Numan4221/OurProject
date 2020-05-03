@@ -33,8 +33,8 @@ public class OurProjectApplication {
 	 public Config config() {
 		 Config config = new Config();
 		 JoinConfig joinConfig = config.getNetworkConfig().getJoin();
-		 joinConfig.getMulticastConfig().setEnabled(false);
-		 joinConfig.getTcpIpConfig().setEnabled(true).setMembers(Collections.singletonList("127.0.0.1"));
+		 joinConfig.getMulticastConfig().setEnabled(true);
+		 //joinConfig.getTcpIpConfig().setEnabled(true).setMembers(Collections.singletonList("172.17.255.255"));
 	 return config;
 	 }
 	 
