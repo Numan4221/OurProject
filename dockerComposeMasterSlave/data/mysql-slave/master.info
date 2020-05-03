@@ -1,6 +1,6 @@
 25
-mysql-bin.000008
-581
+mysql-bin.000004
+37674
 mysqlmaster
 repl
 password
@@ -16,12 +16,10 @@ password
 30.000
 
 0
-ad631010-8d49-11ea-a6e0-0242ac130004
+ca1e7bd3-8d88-11ea-8ab7-0242c0a89003
 86400
 
 
 0
-
-
 
 
