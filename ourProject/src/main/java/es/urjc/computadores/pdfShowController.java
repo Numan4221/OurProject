@@ -52,7 +52,7 @@ public class pdfShowController {
 
 		// Ya tenemos el contrato, se crea el pdf sobre este:
 		RestTemplate restTemplate = new RestTemplate();
-		String url = "http://127.0.0.1:9999/ourProject/project/pdf";
+		String url = "http://myhaproxy:9999/ourProject/project/pdf";
 		URI uri = new URI(url);
 
 		restTemplate.postForEntity(uri, pdfFile, Document.class).getBody();
@@ -74,7 +74,7 @@ public class pdfShowController {
 		String content = "Contrato";
 		String document = pdfFile[0] + pdfFile[1] + pdfFile[2] + ".pdf";
 
-		url = "http://127.0.0.1:9999/ourProject/project/messagePDF";
+		url = "http://myhaproxy:9999/ourProject/project/messagePDF";
 		uri = new URI(url);
 
 		Mail mail = new Mail(username, receptor, title, content, document);

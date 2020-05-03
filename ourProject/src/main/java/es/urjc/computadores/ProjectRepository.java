@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,10 +21,10 @@ public interface ProjectRepository extends JpaRepository<Project,Long>{
 	@CacheEvict(allEntries=true)
 	void delete(Project project);
 	
-	@Cacheable
+	@CachePut
 	List<Project> findAll();
 	
-	@Cacheable
+	@CachePut
 	Optional<Project> findById(long id);
 	
 	/***
@@ -68,5 +69,7 @@ public interface ProjectRepository extends JpaRepository<Project,Long>{
 	 */
 	//@Cacheable
 	Page<Project> findByDeveloperNickname(String nickname,Pageable page);
+	
+	
 	
 }
