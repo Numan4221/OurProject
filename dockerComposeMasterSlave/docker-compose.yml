@@ -1,0 +1,128 @@
+version: '3'
+services:
+    mysqlmaster:
+        container_name: mysqlmaster
+        image: mysql:5.7.15
+        environment:
+              - "MYSQL_ROOT_PASSWORD=password"
+        volumes:
+              - ./data/mysql-master:/var/lib/mysql/
+              - ./config/mysql-master:/etc/mysql/conf.d/
+        networks:
+             our-net:
+               aliases:
+                   - db
+                   - mysqlmaster
+
+    mysqlslave:
+        image: mysql:5.7
+        container_name: mysqlslave
+        environment:
+              - "MYSQL_ROOT_PASSWORD=password"
+        volumes:
+              - ./data/mysql-slave:/var/lib/mysql/
+              - ./config/mysql-slave:/etc/mysql/conf.d/
+        networks:
+             our-net:
+               aliases:
+                   - mysqlslave
+
+    mysqlconfigure:
+        image: mysql:5.7.15
+        container_name: mysqlconfigure
+        depends_on:
+               - mysqlmaster
+               - mysqlslave
+        environment:
+             - "MYSQL_SLAVE_PASSWORD=password"
+             - "MYSQL_MASTER_PASSWORD=password"
+             - "MYSQL_ROOT_PASSWORD=password"
+             - "MYSQL_REPLICATION_USER=repl"
+             - "MYSQL_REPLICATION_PASSWORD=password"
+        volumes:
+             - ./mysql_connector.sh:/tmp/mysql_connector.sh
+        command: /bin/bash -x /tmp/mysql_connector.sh
+        networks:
+             our-net:
+               aliases:
+                   - mysqlconfigure
+
+    haproxy: 
+        build: ./dockerhaproxy/
+        container_name: haproxy
+        ports:
+              - "8445:8445"
+              - "9999:9999"
+              - "443:443"
+        networks:
+              our-net:
+                 aliases:
+                   - myhaproxy
+        depends_on:
+              - ourproject
+              - ourproject1
+              - apirest
+              - apirest1
+
+    ourproject:
+        build: ./dockerourproject/
+        container_name: ourproject
+        restart: on-failure
+        environment:
+               - SERVER_PORT=8443
+        ports: 
+               - "8443:8443"
+        depends_on:
+               - mysqlmaster
+               - mysqlslave
+               - mysqlconfigure
+        networks:
+             our-net:
+               aliases:
+                   - ourproject
+
+    ourproject1:
+        build: ./dockerourproject/
+        restart: on-failure
+        container_name: ourproject1
+        environment:
+               - SERVER_PORT=8444
+        ports: 
+               - "8444:8444"
+        depends_on:
+               - mysqlmaster
+               - mysqlslave
+               - mysqlconfigure
+        networks:
+             our-net:
+               aliases:
+                   - ourproject1
+
+    apirest:
+        build: ./dockerapi/
+        container_name: apirest
+        environment:
+               - SERVER_PORT=9997
+        ports: 
+              - "9997:9997"
+        networks:
+             our-net:
+                 aliases:
+                    - apirest
+
+    apirest1:
+        build: ./dockerapi/
+        container_name: apirest1
+        environment:
+               - SERVER_PORT=9998
+        ports: 
+              - "9998:9998"        
+        networks:
+             our-net:
+                 aliases:
+                    - apirest1
+
+networks:
+     our-net:
+        driver: bridge
+
