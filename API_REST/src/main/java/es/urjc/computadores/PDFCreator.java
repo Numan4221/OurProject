@@ -45,7 +45,7 @@ public class PDFCreator {
 	// @PostMapping(path="/ourProject/project/pdf", consumes = "application/json",
 	// produces = "application/json")
 	@PostMapping(path = "/ourProject/project/pdf")
-	public String createPDF(@RequestBody String[] contrato) throws FileNotFoundException, DocumentException {
+	public void createPDF(@RequestBody String[] contrato) throws FileNotFoundException, DocumentException {
 		Document document = new Document();
 		// PdfWriter.getInstance(document, new FileOutputStream("contrato.pdf"));
 		String documentName = contrato[0] + contrato[1] + contrato[2] + ".pdf";
@@ -75,7 +75,7 @@ public class PDFCreator {
 		document.add(chapter);
 
 		document.close();
-		return "Creado";
+		//return "Creado";
 	}
 
 	@PostMapping(path = "/ourProject/contract/pdf")
