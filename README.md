@@ -1,5 +1,9 @@
 # OurProject
 
+## Video Fase 4
+
+aqui va el video
+
 ## Descripción
 Servicio web basado en mecenazgo por recompensa, en el cual el usuario tendrá la posibilidad tanto de publicar un proyecto propio para conseguir financiación, como apoyar otros proyectos para que lleguen a la meta, y con ello conseguir recompensas.
 
@@ -207,7 +211,23 @@ ___
 # Diagrama de clases y templates
 ![alt text](./Documentos/ImgREADME/diagramaTemplates.png "Diagrama templates")
 
-## Equipo
+# Fase 4
+
+## Interfaz del servicio interno
+La aplicación dispone dos funcionalidades de servicio interno distintas implementadas mediente API Rest.
+- **Envío de emails** : permite enviar un email a un destinatario. Se utiliza a la hora de realizar un comentario sobre un proyecto (se envía al creador del proyecto) y al hacer una donación (tanto al creador como al propio usuario).
+- **Creador de PDFs**: cuando se realiza una donación a un proyecto, en el email que se envía se adjunta un PDF con la información del contrato creado entre esos dos usuarios, en el que se especifica la cantidad dondada y la recompensa obtenida por realizar dicha donación. 
+
+![alt text](./Documentos/ImgREADME/diagramaServicioInterno.png "Diagrama servicio interno")
+
+## Diagrama de clases de la aplicación
+El diagrama de clases y templates de la aplicación no ha cambiado con respecto a la entrega anterior. 
+![alt text](./Documentos/ImgREADME/diagramaTemplates.png "Diagrama templates")
+
+## Diagrama de la infraestructura 
+![alt text](./Documentos/ImgREADME/diagramaInfraestructura.png "Diagrama templates")
+
+# Equipo
 | Nombres | Correo URJC  | Usuario Git Hub  |
 | ------------- |:-------------:| -----:|
 | García Rodríguez, Alejandro | a.garciar.2016@alumnos.urjc.es | [DaxelTh](https://github.com/DaxelTH "Usuario Axel") |
