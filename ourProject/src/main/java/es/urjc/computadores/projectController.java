@@ -280,7 +280,7 @@ public class projectController {
 					userRepo.save(myUser);
 
 					//comprobamos si hay imagen
-					if(imagenFile != null) {
+					if(!imagenFile.isEmpty()) {
 						p.hasImage = true;
 						p.noHasImage = false;
 						try {
