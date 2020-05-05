@@ -52,10 +52,10 @@ public class pdfShowController {
 
 		// Ya tenemos el contrato, se crea el pdf sobre este:
 		RestTemplate restTemplate = new RestTemplate();
-		String url = "http://myhaproxy:9999/ourProject/project/pdf";
-		URI uri = new URI(url);
+		//String url = "http://myhaproxy:9999/ourProject/project/pdf";
+		//URI uri = new URI(url);
 
-		restTemplate.postForEntity(uri, pdfFile, Document.class).getBody();
+		//restTemplate.postForEntity(uri, pdfFile, Document.class).getBody();
 
 		/*
 		 * url = "http://127.0.0.1:9999/ourProject/contract/pdf"; uri = new URI(url);
@@ -73,12 +73,12 @@ public class pdfShowController {
 		String title = "Reenvío del Contrato " + cont.project.projectName;
 		String content = "Contrato";
 		String document = pdfFile[0] + pdfFile[1] + pdfFile[2] + ".pdf";
-
-		url = "http://myhaproxy:9999/ourProject/project/messagePDF";
-		uri = new URI(url);
+		
+		String url = "http://myhaproxy:9999/ourProject/project/messagePDF";
+		URI uri = new URI(url);
 
 		Mail mail = new Mail(username, receptor, title, content, document);
-
+		mail.setContrato(pdfFile);
 		// restTemplate.getForObject(url, Mail.class, mail);
 		String data = restTemplate.postForEntity(uri, mail, String.class).getBody();
 

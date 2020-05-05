@@ -29,14 +29,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chapter;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
 @RestController
 public class JavaMail {
 	
-
+	private static final Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 26, Font.BOLDITALIC);
+	private static final Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
+	
 	@GetMapping("")
 	public String initPage() {
 		
@@ -94,15 +102,43 @@ public class JavaMail {
 	}
 	
 	@PostMapping(path="/ourProject/project/messagePDF")
-	public String sendEmailPDF (@RequestBody Mail email) throws DocumentException {
+	public String sendEmailPDF (@RequestBody Mail email) throws DocumentException, FileNotFoundException {
 	//@RequestMapping (value = "/ourProject/project/message", method = RequestMethod.POST)
 	//@ResponseStatus(HttpStatus.CREATED)
 	//public String sendEmail() {
 	//public String sendEmail(@RequestParam(value="mail") Mail email) {
 	//public ResponseEntity<String> sendEmail(@RequestBody Mail email) {
-		/*String receptor = "axelsax1998@gmail.com";
-		String title = "Esto funciona putoooooo";
-		String content = "Bueno, eso creo";*/
+		
+		
+		Document document = new Document();
+		// PdfWriter.getInstance(document, new FileOutputStream("contrato.pdf"));
+		String documentName = email.contrato[0] + email.contrato[1] + email.contrato[2] + ".pdf";
+		PdfWriter.getInstance(document, new FileOutputStream(documentName));
+		/*
+		 * try { PdfWriter.getInstance(document, new FileOutputStream(pdfDocument)); }
+		 * catch (FileNotFoundException fileNotFoundException) {
+		 * System.out.println("No such file was found to generate the PDF " +
+		 * "(No se encontró el fichero para generar el pdf)" + fileNotFoundException); }
+		 */
+		document.open();
+
+		document.addTitle("Contrato " + email.contrato[2]);
+		document.addSubject("OurProject");
+		document.addKeywords("OurProject, PDF, Contract");
+		document.addAuthor("OurProject");
+		document.addCreator(email.contrato[1]);
+
+		Chunk chunk = new Chunk("Contrato: " + email.contrato[2], chapterFont);
+		chunk.setBackground(BaseColor.LIGHT_GRAY);
+
+		Chapter chapter = new Chapter(new Paragraph(chunk), 1);
+		chapter.setNumberDepth(0);
+		chapter.add(new Paragraph(email.contrato[5] + " " + email.contrato[3], paragraphFont));
+		chapter.add(new Paragraph(email.contrato[4], paragraphFont));
+
+		document.add(chapter);
+
+		document.close();
 		
 		final String username = "ourprojectdistribuidas@gmail.com";
         final String password = "chocopiso123";

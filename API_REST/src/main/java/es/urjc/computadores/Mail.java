@@ -6,7 +6,8 @@ public class Mail {
 	private String title;
 	private String content;
 	private String pdfDocument;
-	
+	public String[] contrato;
+
 	public Mail(String sender, String receiver, String title, String content, String document) {
 		this.sender = sender;
 		this.receiver = receiver;
@@ -44,5 +45,12 @@ public class Mail {
 	}
 	public void setPdfDocument(String pdfDocument) {
 		this.pdfDocument = pdfDocument;
+	}
+	public String[] getContrato() {
+		return contrato;
+	}
+
+	public void setContrato(String[] contrato) {
+		this.contrato = contrato;
 	}
 }
