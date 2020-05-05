@@ -2,7 +2,7 @@
 
 ## Video Fase 4
 
-aqui va el video
+https://youtu.be/datD85tpzDs
 
 ## Descripción
 Servicio web basado en mecenazgo por recompensa, en el cual el usuario tendrá la posibilidad tanto de publicar un proyecto propio para conseguir financiación, como apoyar otros proyectos para que lleguen a la meta, y con ello conseguir recompensas.
@@ -225,8 +225,38 @@ El diagrama de clases y templates de la aplicación no ha cambiado con respecto 
 ![alt text](./Documentos/ImgREADME/diagramaTemplates.png "Diagrama templates")
 
 ## Diagrama de la infraestructura 
+
+Toda la estructura del proyecto se levanta a través de Docker-compose, cada instancia en su propio Docker. El acceso a la aplicación se realiza a través de HAProxy, que se encarga de balancear la carga de trabajo entre las diferentes instancias de los distintos componentes de la web como son el servicio interno y la base de datos, además de la propia aplicación.
+
 ![alt text](./Documentos/ImgREADME/diagramaInfraestructura.png "Diagrama templates")
 
+## Instrucciones de ejecución
+
+Instrucciones para ejecutar la aplicación en Ubuntu 18.04. En primer lugar se debe instalar el Docker-Compose. Para ello se debe introducir en la consola los siguientes comandos:
+- sudo apt-get update
+- sudo apt-get install docker-compose
+
+A continuación, nos descargamos el repositorio de GitHub. Abrimos una terminal en la carpeta llamada **dockerComposeMasterSlave** y ejecutamos los siguiente comandos:
+- sudo docker-compose down
+- sudo docker-compose rm
+- sudo docker-compose up --build -d
+
+Con estos comandos ya tendríamos la aplicación levantada, pero a continuación se exponen unos comandos que ofrecen más información sobre la aplicación levantada.
+
+- Para acceder a las consolas de mysql:
+
+    - **sudo docker exec -it mysqlslave bash -l** o **sudo docker exec -it mysqlmaster bash -l**
+
+    - mysql -uroot -ppassword     
+    - use our_project;
+           
+- La base de datos maestro-esclavo se ejecuta mediante un script de bash. Para comprobar que se ha ejecutado satisfactoriamente, se puede consultar su log o salida. 
+    - sudo docker-compose logs -f mysqlconfigure
+    
+    En caso de encontrar algún error al realizar este comando, se deberá ejecutar la siguiente instrucción. Para ello deberá tener docker instalado. 
+    - sudo apt-get update
+    - sudo apt-get install docker
+    - sudo docker mysqlconfigure start
 # Equipo
 | Nombres | Correo URJC  | Usuario Git Hub  |
 | ------------- |:-------------:| -----:|
