@@ -228,7 +228,7 @@ El diagrama de clases y templates de la aplicación no ha cambiado con respecto 
 
 Toda la estructura del proyecto se levanta a través de Docker-compose, cada instancia en su propio Docker. El acceso a la aplicación se realiza a través de HAProxy, que se encarga de balancear la carga de trabajo entre las diferentes instancias de los distintos componentes de la web como son el servicio interno y la base de datos, además de la propia aplicación.
 
-![alt text](./Documentos/ImgREADME/diagramaInfraestructura.png "Diagrama templates")
+![alt text](./Documentos/ImgREADME/diagramaInfraestructura.PNG "Diagrama templates")
 
 ## Instrucciones de ejecución
 
